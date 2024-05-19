@@ -45,10 +45,10 @@ function updateProjectDetails(projectName) {
       You can check website.`,
     },
     {
-        name: "Blogsite",
+        name: "BlogSite",
         live:"https://zero3.pythonanywhere.com/",
         srcCode: "https://github.com/sandarva3/Blog-Site",
-        description: `A blog site.You can create account,post blogs with image.
+        description: `A Blog site.You can create account,post blogs with image.
         You can edit blogs and images posted by you. Forgot password?you can
         reset it from link that'll be provided to you in your email.
         Without an account,you can read blogs posted by others.You can check website.`,
