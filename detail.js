@@ -14,7 +14,7 @@ function updateProjectDetails(projectName) {
       being connected to any wifi. You can see the codebase on Github.`
     },
     {
-      name: "Boardsphere",
+      name: "Boardsphere -Live Group Chatting Website",
       srcCode: "https://github.com/sandarva3/BoardSphere",
       description: `BoardSphere is a collaborative discussion platform where users can have real-time
       conversations on a variety of topics. There are boards dedicated to broad fields(like Artificial Intelligence)
@@ -24,15 +24,37 @@ function updateProjectDetails(projectName) {
        I didn't find any platform that support Redis and Postgresql on free plan.
       You can see some screenshots on my GitHub repo.`
     },
+    // {
+    //   name: "Project Pencil",
+    //   live:"https://propen.pythonanywhere.com/",
+    //   srcCode: "https://github.com/sandarva3/BoardSphere",
+    //   description: `Once I had to compress an image of my citizenship card,but I can't trust other sites.
+    //   So,I decided to create my own image compressor. Then I thought why not add
+    //   other features to it that mightbe useful to me.I added some features.
+    //   But after deploying I noticed the hosting service's free plan doesn't support
+    //   the YouTube API,so two youtube features won't work,but the rest do.`,
+    // },
     {
-      name: "Project Pencil",
-      live:"https://propen.pythonanywhere.com/",
-      srcCode: "https://github.com/sandarva3/BoardSphere",
-      description: `Once I had to compress an image of my citizenship card,but I can't trust other sites.
-      So,I decided to create my own image compressor. Then I thought why not add
-      other features to it that mightbe useful to me.I added some features.
-      But after deploying I noticed the hosting service's free plan doesn't support
-      the YouTube API,so two youtube features won't work,but the rest do.`,
+      name: "Image Compressor",
+      live:"https://propen.pythonanywhere.com/image/",
+      srcCode: "https://github.com/sandarva3/project-Pencil",
+      description: `This is a image file size compressing program. It does Lossless compression. I built this for myself and 
+      I use this on a regular basis myself. You can have very big reduction on file size, but almost no reduction on image quality. Try it.`,
+    },
+    {
+      name: "File Converter",
+      live:"https://propen.pythonanywhere.com/file/",
+      srcCode: "https://github.com/sandarva3/project-Pencil",
+      description: `It's a simple file converter which can convert text documents and images from one file type to 
+      another. I just built this for fun. Supporting file types include: PDF, EPUB, TXT, PNG, JPG.`,
+    },
+    {
+      name: "Youtube Video/Audio downloader(Any resolution)",
+      live:"#",
+      srcCode: "https://github.com/sandarva3/project-Pencil",
+      description: `So it's a Youtube video downloader program. And youtube only Audio downloader program. They're separate.
+      It's not available for you to use direcly through web cause I didn't find any service which supports third party youtube API
+      and FFmpeg on free service. This program uses FFmpeg too.`,
     },
     {
       name: "Ecom",

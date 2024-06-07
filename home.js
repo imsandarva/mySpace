@@ -1,12 +1,27 @@
 const projects = [
     {
-        name: "Boardsphere",
+        name: "Boardsphere -Live Group Chatting Website",
         imageSrc: "images/Homepage.png",
         detailUrl: "projectdetail.html"
     },
+    // {
+    //     name: "Project Pencil",
+    //     imageSrc: "images/pp.png",
+    //     detailUrl: "projectdetail.html"
+    // },
     {
-        name: "Project Pencil",
+        name: "Image Compressor",
         imageSrc: "images/pp.png",
+        detailUrl: "projectdetail.html"
+    },
+    {
+        name: "File Converter",
+        imageSrc: "images/fileconverter2.png",
+        detailUrl: "projectdetail.html"
+    },
+    {
+        name: "Youtube Video/Audio downloader(Any resolution)",
+        imageSrc: "images/youtube.png",
         detailUrl: "projectdetail.html"
     },
     {
