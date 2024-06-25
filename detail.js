@@ -88,7 +88,7 @@ function updateProjectDetails(projectName) {
     },
     {
       name: "Epro",
-      live:"https://alpha3.pythonanywhere.com/",
+      live:"https://propen.pythonanywhere.com/epro",
       srcCode: "https://github.com/sandarva3/Epro",
       description: `I got to know about the Enigma code used by German troops in WW2 and the machine
       that decrypted it.That night I thought lot about it.Wrote a program to
