@@ -93,12 +93,15 @@ function updateProjectDetails(projectName) {
         name: "Cash-Flow Monitor",
         live:"https://expend.pythonanywhere.com/",
         srcCode: "https://github.com/sandarva3/CashFlow_Monitor",
-        description: `I once struggled with overspending on junk food and non-essentials.To gain control,I created this
-        site to track my expenses,allowing me to see where my money was going. It made me
-        more aware of wasteful spendings and savings.This dual feedback improved my habits,
-        so nowadays I waste very much less money.Hope this'll be helpful to people with similar problems.
-        You can go to the site.You only add to Notpurchase if u resist it from
-        purchasing and add Purchase if you regret from purchasing.`,
+        description: `So this is an Expense tracker website. It has 3 features:
+        1) This is for junk food addict or someone who often does 
+        unnecessary spendings. Here you can track down something you bought but later regretted Or resisted buying somethings and felt great about it
+        later. It shows both spendings and savings. This helped me get away from my unnecessary spending habits, it can help you too.. give a try. 
+        2) Whole thing:
+        Here you can add all your expenses on various things & it'll show you the total expenses each month.
+        3)Events: Here you add event and spendings on
+        each events. Like I can add tour or vacation or any other plan and track down the expenses that happened through that event. You can integrate
+        events with whole thing so your total spendings will be shown in whole thing.`,
     },
     {
       name: "Epro",
