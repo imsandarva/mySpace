@@ -1,5 +1,10 @@
 const projects = [
     {
+        name: "RoomApp -Enables seamless sharing on a same network",
+        imageSrc: "images/room.png",
+        detailUrl: "projectdetail.html"
+    },
+    {
         name: "Boardsphere -Live Group Chatting Website",
         imageSrc: "images/Homepage.png",
         detailUrl: "projectdetail.html"

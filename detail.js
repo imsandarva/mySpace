@@ -24,6 +24,20 @@ function updateProjectDetails(projectName) {
        I didn't find any platform that support Redis and Postgresql on free plan.
       You can see some screenshots on my GitHub repo.`
     },
+    {
+      name: "RoomApp -Enables seamless sharing on a same network",
+      live:"https://roomapp.pythonanywhere.com/",
+      srcCode: "http://sandarva.com.np/",
+      description: `It allows us to share files and texts seamlessly on a same network.
+      It has two features:
+      1)Locale: We can write texts & upload files and it'll instantly be shared with devices on a same wifi/network.
+	    2)ROOM: So the main motive here is to utilize the server's storage temporarily. We can upload files and write things on textbox.
+	    A separate room will be created on which there'll be files we uploaded & thing we wrote. 
+	    A unique code and link will be provided to you after room creation, only through which you/anyone can access that Room. 
+	    (Validation time: that Room you created will automatically be deleted after that validation time expires, and anyone won't be able to access that room.
+	    It ensures privacy & temporary use of storage. But it won't work RN cause I’m using the free tier.)`
+
+    },
     // {
     //   name: "Project Pencil",
     //   live:"https://propen.pythonanywhere.com/",
