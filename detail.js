@@ -25,18 +25,17 @@ function updateProjectDetails(projectName) {
       You can see some screenshots on my GitHub repo.`
     },
     {
-      name: "RoomApp -Enables seamless sharing on a same network",
-      live:"https://roomapp.pythonanywhere.com/",
+      name: "RoomApp -Share Anything Instantly",
+      live:"https://roomapp.live/",
       srcCode: "http://sandarva.com.np/",
-      description: `It allows us to share files and texts seamlessly on a same network.
-      It has two features:
-      1)Locale: We can write texts & upload files and it'll instantly be shared with devices on a same wifi/network.
-	    2)ROOM: So the main motive here is to utilize the server's storage temporarily. We can upload files and write things on textbox.
-	    A separate room will be created on which there'll be files we uploaded & thing we wrote. 
-	    A unique code and link will be provided to you after room creation, only through which you/anyone can access that Room. 
-	    (Validation time: that Room you created will automatically be deleted after that validation time expires, and anyone won't be able to access that room.
-	    It ensures privacy & temporary use of storage. But it won't work RN cause I’m using the free tier.)`
-
+      description: `Checkout: https://roomapp.live/about/   .
+      WE MAKE SHARING VERY SEAMLESS.
+      If you type something in the text box or upload some files in your Room, then you can access those files and text from any devices connected in the same wifi. 
+      You can download files, delete files or upload new files in your Room.We make sharing very seamless. If you want to share files with nearby people with 
+      whom you don't have a direct contact with.. then you can use Roomapp to share instantly, instead of asking for an email or something else.
+      You can also easily share computer programs or texts with people nearby, like in a computer lab or other places. It's a Roomapp where every network/wifi 
+      will act like a separate Room. You can share files and synchronize text very seamlessly on that Room, users not connected to your wifi/network can't 
+      those things. `
     },
     // {
     //   name: "Project Pencil",
