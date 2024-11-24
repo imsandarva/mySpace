@@ -27,7 +27,7 @@ const projects = [
     {
         name: "Youtube Video/Audio downloader(Any resolution)",
         imageSrc: "images/youtube.png",
-        detailUrl: "projectdetail.html"
+	detailUrl: "projectdetail.html"
     },
     {
         name: "Ecom",
