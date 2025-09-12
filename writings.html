@@ -1,1 +1,95 @@
-okay
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sandarva’s Writings</title>
+  <style>
+    /* --- Base --- */
+    :root {
+      --bg: #f7f3ef;
+      --card: #fff8f2;
+      --text: #3b2f2f;
+      --accent: #8b5e3c;
+      --accent-hover: #6e4427;
+    }
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+    main {
+      flex: 1;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+    li {
+      background: var(--card);
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    li:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+    a {
+      display: block;
+      text-decoration: none;
+      color: var(--accent);
+      padding: 1rem 1.2rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+    a:hover {
+      color: var(--accent-hover);
+    }
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      padding: 1rem;
+      color: #7b6a5a;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sandarva’s Writings</h1>
+    <p>A collection of thoughts and essays</p>
+  </header>
+  <main>
+    <ul>
+      <li><a href="writing1.html">• Why Simplicity Beats Complexity</a></li>
+      <li><a href="writing2.html">• Momentum Attracts People</a></li>
+      <li><a href="writing3.html">• Lessons from Building Tura</a></li>
+      <li><a href="writing4.html">• Courage as a Compass</a></li>
+      <li><a href="writing5.html">• The Illusion of Busy Work</a></li>
+    </ul>
+  </main>
+  <footer>
+    © 2025 Sandarva Paudel
+  </footer>
+</body>
+</html>
