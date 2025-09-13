@@ -1,91 +1,133 @@
-/* Shared brown-white aesthetic for all writing pages */
+/* ========== Variables ========== */
 :root {
-  --bg: #f7f3ef;
-  --card: #fff8f2;
-  --text: #3b2f2f;
-  --accent: #8b5e3c;
-  --accent-hover: #6e4427;
-  --max-width: 1500px;
+  --bg: #f5f1ec;           /* muted earthy background */
+  --card: #ffffff;         /* clean cards */
+  --text: #3d3330;         /* dark brown-gray for readability */
+  --accent: #a46b44;       /* warm but not overpowering */
+  --accent-hover: #814d2a; /* slightly darker accent on hover */
+  --max-width: 900px;
+  --font-heading: 'EB Garamond', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* ========== Base ========== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  font-family: Georgia, serif;
   background: var(--bg);
   color: var(--text);
-  font-size: 1.1rem;
-  line-height: 1.7;
+  font-family: var(--font-body);
+  line-height: 1.8;
+  font-size: 1.05rem;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* ========== Header / Hero ========== */
 header {
+  padding: 3rem 1rem 2rem;
   text-align: center;
-  padding: 2rem 1rem 1rem;
 }
 
 header h1 {
-  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
   color: var(--accent);
-  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
 }
 
-main {
-  flex: 1;
+.tagline {
+  font-style: italic;
+  color: #6f625e;
+}
+
+/* ========== Intro Section ========== */
+.intro {
+  max-width: var(--max-width);
+  margin: 0 auto 2.5rem;
+  padding: 0 1rem;
+  text-align: center;
+  font-size: 1.15rem;
+  color: #564c48;
+}
+
+/* ========== Writings List ========== */
+.writings-list {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0 1rem 3rem;
+}
+
+.writings-list h2 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+  color: var(--accent);
+  border-bottom: 1px solid #d9cfc7;
+  padding-bottom: 0.5rem;
 }
 
 ul {
   list-style: none;
-  padding: 0;
-  margin: 2rem 0;
 }
 
 li {
   background: var(--card);
   margin-bottom: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 li:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
 
 a {
   display: block;
-  padding: 1rem 1.2rem;
   text-decoration: none;
   color: var(--accent);
-  font-weight: 700;
+  padding: 1rem 1.2rem;
+  font-weight: 600;
   font-size: 1.1rem;
+  transition: color 0.2s ease;
 }
 
-a:hover { color: var(--accent-hover); }
-
-article h2 {
-  margin-top: 0;
-  color: var(--accent);
+a:hover {
+  color: var(--accent-hover);
 }
 
-article p {
-  font-size: 1.5rem;
-  line-height: 1.8;
-}
-
+/* ========== Footer ========== */
 footer {
   text-align: center;
-  font-size: 0.85rem;
-  padding: 1rem;
+  font-size: 0.9rem;
+  padding: 1.5rem 1rem;
   color: #7b6a5a;
+  background: rgba(255,255,255,0.3);
 }
 
-p {
-  margin-bottom: 1.2rem; /* adjust spacing between paragraphs */
-  line-height: 1.6;
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2.2rem;
+  }
+  .intro {
+    font-size: 1.05rem;
+  }
 }
