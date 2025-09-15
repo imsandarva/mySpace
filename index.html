@@ -192,18 +192,37 @@
       margin-bottom: 30px;
       padding: 25px 0;
       border-bottom: 1px solid #f0f0f0;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
+      position: relative;
     }
 
     .writing-item:last-child {
       border-bottom: none;
     }
 
+    .writing-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(135deg, #e6e6e6, #f0f0f0);
+      transition: all 0.3s ease;
+    }
+
+    .writing-item:hover::before {
+      background: linear-gradient(135deg, #333, #666);
+      width: 4px;
+    }
+
     .writing-item:hover {
-      background: #fafafa;
+      background: rgba(250, 250, 250, 0.8);
       margin: 0 -20px;
       padding: 25px 20px;
-      border-radius: 6px;
+      border-radius: 8px;
+      transform: translateX(5px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
 
     .writing-link {
@@ -289,6 +308,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Personal thoughts and writings by Sandarva Paudel - reflections on life, work, and creativity">
+  <meta name="keywords" content="personal blog, thoughts, writings, reflections, Sandarva Paudel">
+  <meta name="author" content="Sandarva Paudel">
+  <meta property="og:title" content="Thoughts — Sandarva Paudel">
+  <meta property="og:description" content="Personal writings and reflections">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Thoughts — Sandarva Paudel">
+  <meta name="twitter:description" content="Personal writings and reflections">
 </head>
 <body>
   <div class="container">
