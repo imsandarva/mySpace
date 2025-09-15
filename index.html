@@ -12,59 +12,65 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'PT Serif', Georgia, serif;
       line-height: 1.6;
-      color: #5a5a5a;
-      background: #f8f6f3;
-      font-size: 16px;
+      color: #222;
+      background: #fff;
+      font-size: 18px;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
     .container {
-      max-width: 680px;
+      max-width: 740px;
       margin: 0 auto;
-      padding: 60px 20px;
+      padding: 40px 20px;
     }
 
     header {
       text-align: center;
-      margin-bottom: 80px;
+      margin-bottom: 60px;
+      border-bottom: 1px solid #e6e6e6;
       padding-bottom: 40px;
     }
 
     .header-nav {
       display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-bottom: 60px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
     }
 
     .nav-link {
-      color: #8a8a8a;
+      color: #666;
       text-decoration: none;
-      font-size: 15px;
-      font-weight: 400;
-      transition: color 0.2s ease;
+      font-size: 16px;
+      padding: 8px 16px;
+      border: 1px solid #e6e6e6;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+      background: #fafafa;
     }
 
     .nav-link:hover {
-      color: #6b6b6b;
+      color: #333;
+      border-color: #333;
+      background: #fff;
     }
 
     h1 {
-      font-size: 28px;
-      font-weight: 300;
-      margin-bottom: 16px;
-      color: #4a4a4a;
-      letter-spacing: -0.3px;
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 12px;
+      color: #333;
+      letter-spacing: -0.5px;
     }
 
     .subtitle {
-      font-size: 15px;
-      color: #9a9a9a;
-      font-weight: 300;
-      margin-bottom: 0;
+      font-size: 16px;
+      color: #888;
+      font-style: italic;
+      margin-bottom: 20px;
     }
 
     .author {
@@ -86,31 +92,53 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: #f0f0f0;
-      color: #8a8a8a;
+      background: #f8f8f8;
+      color: #666;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
+      border: 1px solid #e6e6e6;
     }
 
     .social-link:hover {
-      background: #e8e8e8;
-      color: #6a6a6a;
+      background: #333;
+      color: #fff;
+      border-color: #333;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .social-link i {
-      font-size: 14px;
+      font-size: 16px;
+    }
+
+    .social-link.github:hover {
+      background: #333;
+    }
+
+    .social-link.twitter:hover {
+      background: #1da1f2;
+      border-color: #1da1f2;
+    }
+
+    .social-link.linkedin:hover {
+      background: #0077b5;
+      border-color: #0077b5;
+    }
+
+    .social-link.instagram:hover {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      border-color: #e6683c;
     }
 
     .intro {
-      margin-bottom: 60px;
-      font-size: 17px;
-      color: #6a6a6a;
+      margin-bottom: 50px;
+      font-size: 20px;
+      color: #444;
       text-align: center;
-      font-weight: 300;
-      line-height: 1.7;
+      font-style: italic;
     }
 
     .writings-list {
@@ -118,12 +146,21 @@
     }
 
     .writing-item {
-      margin-bottom: 50px;
-      padding: 0;
+      margin-bottom: 30px;
+      padding: 25px 0;
+      border-bottom: 1px solid #f0f0f0;
+      transition: all 0.2s ease;
     }
 
     .writing-item:last-child {
-      margin-bottom: 0;
+      border-bottom: none;
+    }
+
+    .writing-item:hover {
+      background: #fafafa;
+      margin: 0 -20px;
+      padding: 25px 20px;
+      border-radius: 6px;
     }
 
     .writing-link {
@@ -133,44 +170,43 @@
     }
 
     .writing-title {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 400;
-      margin-bottom: 12px;
-      color: #4a4a4a;
+      margin-bottom: 8px;
+      color: #333;
       line-height: 1.4;
     }
 
     .writing-excerpt {
-      font-size: 15px;
-      color: #7a7a7a;
-      line-height: 1.6;
-      margin-bottom: 16px;
-      font-weight: 300;
+      font-size: 16px;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 10px;
     }
 
     .writing-meta {
-      font-size: 13px;
-      color: #9a9a9a;
+      font-size: 14px;
+      color: #999;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .date {
-      font-weight: 300;
+      font-style: italic;
     }
 
     .read-time {
-      font-weight: 300;
+      color: #bbb;
     }
 
     footer {
-      margin-top: 100px;
+      margin-top: 80px;
       padding-top: 40px;
+      border-top: 1px solid #e6e6e6;
       text-align: center;
-      font-size: 13px;
-      color: #9a9a9a;
-      font-weight: 300;
+      font-size: 14px;
+      color: #999;
     }
 
     .footer-social {
@@ -208,7 +244,7 @@
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- SEO Meta Tags -->
@@ -225,7 +261,7 @@
 <body>
   <div class="container">
     <div class="header-nav">
-      <a href="index.html" class="nav-link home-link">Home</a>
+      <div></div>
       <a href="about.html" class="nav-link">About</a>
     </div>
     
