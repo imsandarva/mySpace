@@ -13,7 +13,7 @@ import json
 
 app = Flask(__name__)
 
-def create_post_from_data(title, content, excerpt="", category="thoughts"):
+def create_post_from_data(title, content, excerpt=""):
     """Create a new blog post using the existing create_post.py script"""
     
     # Generate filename
@@ -136,13 +136,12 @@ def create_post():
         title = data.get('title', '').strip()
         content = data.get('content', '').strip()
         excerpt = data.get('excerpt', '').strip()
-        category = data.get('category', 'thoughts')
         
         if not title or not content:
             return jsonify({'error': 'Title and content are required'}), 400
         
         # Create the post
-        filename, date = create_post_from_data(title, content, excerpt, category)
+        filename, date = create_post_from_data(title, content, excerpt)
         
         return jsonify({
             'success': True,
