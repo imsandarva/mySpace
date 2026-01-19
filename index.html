@@ -5,249 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>imsandarva</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'PT Serif', Georgia, serif;
-      line-height: 1.6;
-      color: #222;
-      background: #fff;
-      font-size: 18px;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    .container {
-      max-width: 740px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 60px;
-      border-bottom: 1px solid #e6e6e6;
-      padding-bottom: 40px;
-    }
-
-    .header-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 40px;
-    }
-
-    .nav-link {
-      color: #666;
-      text-decoration: none;
-      font-size: 16px;
-      padding: 8px 16px;
-      border: 1px solid #e6e6e6;
-      border-radius: 20px;
-      transition: all 0.2s ease;
-      background: #fafafa;
-    }
-
-    .nav-link:hover {
-      color: #333;
-      border-color: #333;
-      background: #fff;
-    }
-
-    h1 {
-      font-size: 32px;
-      font-weight: 400;
-      margin-bottom: 12px;
-      color: #333;
-      letter-spacing: -0.5px;
-    }
-
-    .subtitle {
-      font-size: 16px;
-      color: #888;
-      font-style: italic;
-      margin-bottom: 20px;
-    }
-
-    .author {
-      font-size: 14px;
-      color: #999;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 20px;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .social-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #f8f8f8;
-      color: #666;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      border: 1px solid #e6e6e6;
-    }
-
-    .social-link:hover {
-      background: #333;
-      color: #fff;
-      border-color: #333;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .social-link i {
-      font-size: 16px;
-    }
-
-    .social-link.github:hover {
-      background: #333;
-    }
-
-    .social-link.twitter:hover {
-      background: #1da1f2;
-      border-color: #1da1f2;
-    }
-
-    .social-link.linkedin:hover {
-      background: #0077b5;
-      border-color: #0077b5;
-    }
-
-    .social-link.instagram:hover {
-      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-      border-color: #e6683c;
-    }
-
-    .intro {
-      margin-bottom: 50px;
-      font-size: 20px;
-      color: #444;
-      text-align: center;
-      font-style: italic;
-    }
-
-    .writings-list {
-      list-style: none;
-    }
-
-    .writing-item {
-      margin-bottom: 30px;
-      padding: 25px 0;
-      border-bottom: 1px solid #f0f0f0;
-      transition: all 0.2s ease;
-    }
-
-    .writing-item:last-child {
-      border-bottom: none;
-    }
-
-    .writing-item:hover {
-      background: #fafafa;
-      margin: 0 -20px;
-      padding: 25px 20px;
-      border-radius: 6px;
-    }
-
-    .writing-link {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-
-    .writing-title {
-      font-size: 22px;
-      font-weight: 400;
-      margin-bottom: 8px;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    .writing-excerpt {
-      font-size: 16px;
-      color: #666;
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
-
-    .writing-meta {
-      font-size: 14px;
-      color: #999;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .date {
-      font-style: italic;
-    }
-
-    .read-time {
-      color: #bbb;
-    }
-
-    footer {
-      margin-top: 80px;
-      padding-top: 40px;
-      border-top: 1px solid #e6e6e6;
-      text-align: center;
-      font-size: 14px;
-      color: #999;
-    }
-
-    .footer-social {
-      margin-bottom: 20px;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 20px 15px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      .intro {
-        font-size: 18px;
-      }
-
-      .writing-title {
-        font-size: 20px;
-      }
-
-      .writing-item:hover {
-        margin: 0 -15px;
-        padding: 25px 15px;
-      }
-    }
-  </style>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
 
   <!-- SEO Meta Tags -->
   <meta name="description"
@@ -265,22 +28,24 @@
 <body>
   <div class="container">
     <div class="header-nav">
-      <div></div>
+      <div class="header-nav-left">
+        <a href="index.html" class="nav-link site-title">imsandarva</a>
+      </div>
       <a href="about.html" class="nav-link">About</a>
     </div>
 
-    <header>
+    <header class="site-header">
       <h1>Hi, good to see you here</h1>
-      <p class="subtitle"></p>
+      <p class="tagline">few of my worldviews</p>
     </header>
 
-    <div class="intro">
+    <p class="intro">
       hey, i'm sandarva. although i don't write often to publish it here, i made this page so that i can share few of my
       worldviews.
-    </div>
+    </p>
 
-    <div class="writings-list">
-      <article class="writing-item">
+    <ul class="writings-list">
+      <li class="writing-item">
         <a href="thoughts/what we get from reading a book.html" class="writing-link">
           <h2 class="writing-title">What we get from reading a book?</h2>
           <p class="writing-excerpt">Some thoughts on why read it even if we won't remember most things from it.</p>
@@ -288,9 +53,9 @@
             <span class="date">4 jan, 2026</span>
           </div>
         </a>
-      </article>
+      </li>
 
-      <article class="writing-item">
+      <li class="writing-item">
         <a href="thoughts/life of an idea.html" class="writing-link">
           <h2 class="writing-title">Life of an idea</h2>
           <p class="writing-excerpt">Willing things into existence.</p>
@@ -298,9 +63,9 @@
             <span class="date">8 october, 2025</span>
           </div>
         </a>
-      </article>
+      </li>
 
-      <article class="writing-item">
+      <li class="writing-item">
         <a href="thoughts/endurance.html" class="writing-link">
           <h2 class="writing-title">By endurance we conquer</h2>
           <p class="writing-excerpt">On Ernest Shackleton's voyage.</p>
@@ -308,8 +73,8 @@
             <span class="date">16 september, 2025</span>
           </div>
         </a>
-      </article>
-    </div>
+      </li>
+    </ul>
 
     <footer>
       <div class="footer-social">

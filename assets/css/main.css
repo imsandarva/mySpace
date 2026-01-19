@@ -1,0 +1,462 @@
+/* ========== Variables ========== */
+:root {
+  --bg: #f5f1ec;           /* muted earthy background */
+  --card: #ffffff;         /* clean cards */
+  --text: #3d3330;         /* dark brown-gray for readability */
+  --accent: #a46b44;       /* warm but not overpowering */
+  --accent-hover: #814d2a; /* slightly darker accent on hover */
+  --max-width: 900px;
+  --font-heading: 'EB Garamond', serif;
+  --font-body: 'Inter', sans-serif;
+  --header-nav-link-color: #666;
+  --header-nav-link-border: #e6e6e6;
+  --header-nav-link-bg: #fafafa;
+  --header-nav-link-hover-color: #333;
+  --header-nav-link-hover-border: #333;
+  --header-nav-link-hover-bg: #fff;
+  --social-link-bg: #f8f8f8;
+  --social-link-color: #666;
+  --social-link-border: #e6e6e6;
+  --social-link-hover-bg: #333;
+  --social-link-hover-color: #fff;
+  --social-link-hover-border: #333;
+  --social-link-shadow: rgba(0, 0, 0, 0.15);
+  --light-border: #e6e6e6;
+  --light-gray-text: #888;
+  --dark-gray-text: #333;
+  --medium-gray-text: #666;
+  --light-faint-border: #f0f0f0;
+  --extra-light-bg: #fafafa;
+  --footer-text: #999;
+  --article-date-color: #9a9a9a;
+  --article-date-dot-color: #8a8a8a;
+  --article-blockquote-border: #d0d0d0;
+  --article-blockquote-text: #4a4a4a;
+  --back-link-color: #6a6a6a;
+  --back-link-hover-color: #4a4a4a;
+}
+
+/* ========== Base ========== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.8;
+  font-size: 1.05rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography Overrides based on style.css and telegraph.css for headings and body */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--dark-gray-text); /* Adopted from style.css for general headings */
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.8rem; /* From writing_style.css */
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--accent); /* Original from writing_style.css for main heading */
+}
+
+h2 {
+  font-size: 1.6rem; /* From writing_style.css for section titles */
+  font-weight: 600;
+  margin: 2.5rem 0 1rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--light-faint-border);
+  padding-bottom: 0.5rem;
+}
+
+/* Article specific headings from telegraph.css, adjusted */
+.content h1 { /* This targets the main article title */
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: var(--dark-gray-text);
+  letter-spacing: -0.3px;
+}
+
+.content h2 { /* Subheadings within article content */
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 2.5rem 0 1.2rem;
+  color: var(--dark-gray-text);
+  border-bottom: none; /* Remove border for content H2s unless explicitly desired */
+  padding-bottom: 0;
+}
+
+.content h3 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin: 2rem 0 1rem;
+  color: var(--dark-gray-text);
+}
+
+.content p {
+  margin-bottom: 1.5rem; /* From telegraph.css */
+  font-size: 1.15rem; /* Slightly larger for readability */
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.content strong {
+  font-weight: 700;
+}
+
+.content em {
+  font-style: italic;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2.5rem 1rem; /* Adjusted padding */
+}
+
+/* ========== Header / Hero ========== */
+.site-header {
+  padding: 3rem 1rem 2rem;
+  text-align: center;
+}
+
+.site-header h1 {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.site-header .tagline {
+  font-style: italic;
+  color: #6f625e;
+  font-size: 1.15rem;
+}
+
+/* Navigation from style.css, adapted */
+.header-nav {
+  display: flex;
+  justify-content: flex-end; /* Align to right */
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--light-border);
+}
+
+.header-nav-left { /* For logo or site title if added later */
+  margin-right: auto;
+}
+
+.nav-link {
+  color: var(--header-nav-link-color);
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--header-nav-link-border);
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  background: var(--header-nav-link-bg);
+  margin-left: 0.8rem; /* Spacing between nav items */
+}
+
+.nav-link:hover {
+  color: var(--header-nav-link-hover-color);
+  border-color: var(--header-nav-link-hover-border);
+  background: var(--header-nav-link-hover-bg);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+
+/* Social Links - Consolidated from style.css and about.html */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 2rem; /* Adjusted margin */
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--social-link-bg);
+  color: var(--social-link-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid var(--social-link-border);
+}
+
+.social-link:hover {
+  background: var(--social-link-hover-bg);
+  color: var(--social-link-hover-color);
+  border-color: var(--social-link-hover-border);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--social-link-shadow);
+}
+
+.social-link i {
+  font-size: 1rem;
+}
+
+/* Specific social link hovers from style.css */
+.social-link.github:hover {
+  background: #333;
+}
+
+.social-link.twitter:hover {
+  background: #1da1f2;
+  border-color: #1da1f2;
+}
+
+.social-link.linkedin:hover {
+  background: #0077b5;
+  border-color: #0077b5;
+}
+
+.social-link.instagram:hover {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  border-color: #e6683c;
+}
+
+/* ========== Intro Section (index page specific) ========== */
+.intro {
+  max-width: 700px; /* Slightly smaller for intro text */
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+  text-align: center;
+  font-size: 1.15rem;
+  color: #564c48; /* From writing_style.css */
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ========== Writings List ========== */
+.writings-list {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+  list-style: none; /* Ensure no default list styling */
+}
+
+.writings-list h2.section-title { /* For general section titles */
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+  color: var(--accent);
+  border-bottom: 1px solid #d9cfc7;
+  padding-bottom: 0.5rem;
+}
+
+.writing-item {
+  background: var(--card);
+  margin-bottom: 1.25rem; /* From writing_style.css */
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: block; /* Make the whole item clickable */
+}
+
+.writing-item:hover {
+  transform: translateY(-3px); /* Slightly more pronounced hover */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Slightly more pronounced shadow */
+}
+
+.writing-link {
+  display: block;
+  text-decoration: none;
+  color: var(--text); /* Changed to text color for consistency */
+  padding: 1.5rem; /* Generous padding */
+  font-weight: 400; /* Normal weight */
+  font-size: 1.1rem; /* Base size */
+}
+
+.writing-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem; /* Adjusted for writing list */
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--dark-gray-text);
+  line-height: 1.3;
+}
+
+.writing-excerpt {
+  font-size: 1rem;
+  color: var(--medium-gray-text);
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.writing-meta {
+  font-size: 0.9rem;
+  color: var(--article-date-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date {
+  font-style: italic;
+}
+
+/* Back link for article pages - from telegraph.css */
+.back-link {
+  display: inline-block;
+  margin-bottom: 2.5rem;
+  color: var(--back-link-color);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 400;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--back-link-hover-color);
+  transform: translateX(-3px); /* Subtle slide on hover */
+}
+
+.back-link::before {
+  content: "← ";
+}
+
+/* Article content specific styles from telegraph.css */
+.content {
+  font-size: 1.15rem; /* From telegraph.css */
+  line-height: 1.75;
+  color: var(--text); /* Using main text color */
+}
+
+.content blockquote {
+  margin: 2rem 0;
+  padding: 0.5rem 1.5rem;
+  border-left: 3px solid var(--article-blockquote-border); /* Thicker border */
+  font-style: italic;
+  color: var(--article-blockquote-text);
+  font-weight: 400;
+}
+
+.content img {
+  max-width: 100%;
+  height: auto;
+  margin: 2rem 0;
+  border-radius: 6px; /* Slightly more rounded corners */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Subtle shadow for images */
+}
+
+
+/* ========== Footer ========== */
+footer {
+  margin-top: auto; /* Push footer to bottom */
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 2.5rem 1rem;
+  color: var(--footer-text); /* From writing_style.css */
+  background: rgba(255,255,255,0.3); /* Lighter background for footer */
+  border-top: 1px solid var(--light-border); /* Consistent border */
+}
+
+footer .footer-social { /* For the social links in footer from style.css */
+  margin-bottom: 1.5rem;
+}
+
+footer .social-links { /* Override margin-top for footer social links */
+  margin-top: 0;
+  gap: 1rem;
+}
+
+footer p {
+  margin-top: 1rem;
+  color: var(--footer-text);
+}
+
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem 0.8rem;
+  }
+
+  .site-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .site-header .tagline {
+    font-size: 1rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .intro {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .writing-title {
+    font-size: 1.3rem;
+  }
+
+  .writing-excerpt {
+    font-size: 0.9rem;
+  }
+
+  .writing-meta {
+    font-size: 0.8rem;
+  }
+
+  .content p {
+    font-size: 1rem;
+  }
+
+  .content h1 {
+    font-size: 2rem;
+  }
+
+  .content h2 {
+    font-size: 1.6rem;
+    margin: 2rem 0 1rem;
+  }
+
+  .content h3 {
+    font-size: 1.4rem;
+    margin: 1.5rem 0 0.8rem;
+  }
+
+  .back-link {
+    margin-bottom: 2rem;
+  }
+
+  .social-link {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .social-link i {
+    font-size: 0.9rem;
+  }
+}
