@@ -1,0 +1,30 @@
+[
+  {
+    "slug": "my-first-dynamic-article",
+    "title": "My First Dynamic Article",
+    "publishDate": "2026-01-20",
+    "excerpt": "This is a sample article to demonstrate the dynamic loading and rendering of content using Markdown and JavaScript.",
+    "author": "Sandarva"
+  },
+  {
+    "slug": "what-we-get-from-reading-a-book",
+    "title": "What we get from reading a book?",
+    "publishDate": "2026-01-04",
+    "excerpt": "To this point, I've read more than 30 books. At first i had that habit of highlighting sentences which I can later come and view, but I slowly learned that won't be much useful.",
+    "author": "Sandarva"
+  },
+  {
+    "slug": "life-of-an-idea",
+    "title": "Life of an idea",
+    "publishDate": "2025-10-08",
+    "excerpt": "I've heard a lot of times, an idea should not deserve a life, it should earn it. It's been months, and almost the only job as a founder for me till now has been talking with users and improving the product.",
+    "author": "Sandarva"
+  },
+  {
+    "slug": "endurance",
+    "title": "By endurance we conquer",
+    "publishDate": "2025-09-16",
+    "excerpt": "So today I watched this The endurance documentary, which is about the Ernest Shackleton's Antartic expedition. I've been wanting to read that book since more than 1 year, but it's not available here in Nepal.",
+    "author": "Sandarva"
+  }
+]
