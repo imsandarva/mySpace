@@ -1,0 +1,17 @@
+:root {
+  --bg: #faf7f2;
+  --ink: #1b1815;
+  --ink-soft: #5c564f;
+  --ink-mute: #9a938b;
+  --clay: #a85c3b;
+  --paper: #e8e0d6;
+  --rule: rgba(27, 24, 21, 0.09);
+  --serif: 'Fraunces', 'Iowan Old Style', Palatino, Georgia, serif;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --read: 38rem;
+  --wide: 70rem;
+  --pad: clamp(1.5rem, 5.5vw, 4.75rem);
+}
+
+::selection { background: rgba(168, 92, 59, 0.18); color: var(--ink); }

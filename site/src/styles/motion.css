@@ -1,0 +1,28 @@
+/* Rooms settle once — fade and rise, never bounce. */
+.room,
+.room-now {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 0.95s var(--ease), transform 0.95s var(--ease);
+}
+
+.room.is-in,
+.room-now.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.room-opening { transition-delay: 0.06s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .room,
+  .room-now {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .identity-line { transform: none !important; }
+  .photo-tile img,
+  .writing-thumb img { transition: none; }
+}
