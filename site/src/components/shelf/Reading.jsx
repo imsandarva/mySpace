@@ -6,7 +6,7 @@ export default function Reading() {
   return (
     <Panel id="reading" label="Readings">
       <ul className="book-list">
-        {books.map((b, i) => <BookEntry key={`${b.title}-${i}`} {...b} />)}
+        {books.map((b, i) => <BookEntry key={`${b.title}-${b.author}-${i}`} {...b} />)}
       </ul>
     </Panel>
   )
