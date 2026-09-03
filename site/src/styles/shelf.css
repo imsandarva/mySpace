@@ -102,57 +102,6 @@
   transition: opacity 0.4s var(--ease), transform 0.45s var(--ease);
 }
 
-/* Reading — typographic, inward. Stacked, not tabular. */
-.book-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.book {
-  display: flex;
-  flex-direction: column;
-  gap: 0.28rem;
-  padding: clamp(0.72rem, 1.55vh, 0.95rem) 0 clamp(0.72rem, 1.55vh, 0.95rem) 0.35rem;
-  border-left: 2px solid transparent;
-  transition: border-color 0.45s var(--ease), padding-left 0.45s var(--ease);
-}
-
-.book.is-current { border-left-color: var(--clay); padding-left: 0.75rem; }
-
-.book-head {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.45rem 0.7rem;
-}
-
-.book-title {
-  font-family: var(--serif);
-  font-size: clamp(1.05rem, 0.4vw + 0.96rem, 1.28rem);
-  font-weight: 500;
-  letter-spacing: -0.018em;
-  line-height: 1.28;
-  font-variation-settings: 'SOFT' 20, 'WONK' 0.22, 'opsz' 36;
-  transition: color 0.4s var(--ease);
-}
-
-.book-now {
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--clay);
-  line-height: 1;
-}
-
-.book-author {
-  font-size: clamp(0.76rem, 0.12vw + 0.74rem, 0.84rem);
-  font-weight: 400;
-  letter-spacing: 0.015em;
-  color: var(--ink-mute);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .writing:hover,
   .writing:focus-visible {
@@ -165,11 +114,6 @@
   .writing:focus-visible .writing-title { color: var(--clay); }
   .writing:hover .writing-exit,
   .writing:focus-visible .writing-exit { opacity: 1; transform: translate(2px, -2px); }
-  .book:hover {
-    border-left-color: var(--clay);
-    padding-left: 0.9rem;
-  }
-  .book:hover .book-title { color: var(--clay); }
 }
 
 @media (max-width: 959px) {

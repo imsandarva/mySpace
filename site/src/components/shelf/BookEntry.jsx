@@ -1,11 +1,16 @@
-export default function BookEntry({ title, author, current }) {
+import { accentVar } from '../../lib/accent'
+import AccentBar from './AccentBar'
+import BookCopy from './BookCopy'
+
+function bookClass(current) {
+  return current ? 'book is-current' : 'book'
+}
+
+export default function BookEntry({ title, author, accent, current }) {
   return (
-    <li className={current ? 'book is-current' : 'book'} aria-current={current || undefined}>
-      <span className="book-head">
-        <span className="book-title">{title}</span>
-        {current && <span className="book-now">now</span>}
-      </span>
-      <span className="book-author">{author}</span>
+    <li className={bookClass(current)} style={{ '--book-accent': accentVar(accent) }} aria-current={current || undefined}>
+      <AccentBar />
+      <BookCopy title={title} author={author} current={current} />
     </li>
   )
 }

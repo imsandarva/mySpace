@@ -67,8 +67,8 @@
   .writing-title,
   .writing-exit,
   .book-title,
-  .book-spine,
-  .book-mark,
+  .book,
+  .book-accent,
   .sign-email,
   .sign-link { transition: none; }
 }
