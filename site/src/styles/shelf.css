@@ -102,7 +102,7 @@
   transition: opacity 0.4s var(--ease), transform 0.45s var(--ease);
 }
 
-/* Reading — spine chips + generated marks. Typographic, inward. */
+/* Reading — typographic, inward. Stacked, not tabular. */
 .book-list {
   display: flex;
   flex-direction: column;
@@ -110,49 +110,15 @@
 }
 
 .book {
-  display: grid;
-  grid-template-columns: 2px minmax(0, 1fr);
-  gap: clamp(0.7rem, 1.4vw, 0.9rem);
-  align-items: stretch;
-  padding: clamp(0.72rem, 1.55vh, 0.95rem) 0;
-}
-
-.book.is-current { grid-template-columns: 3px minmax(0, 1fr); }
-
-.book-spine {
-  display: block;
-  width: 100%;
-  min-height: 100%;
-  border-radius: 1px;
-  background: var(--spine);
-  opacity: 0.84;
-  transition: opacity 0.45s var(--ease), filter 0.45s var(--ease);
-}
-
-.book.is-current .book-spine { opacity: 1; }
-
-.book-copy {
   display: flex;
   flex-direction: column;
   gap: 0.28rem;
-  min-width: 0;
+  padding: clamp(0.72rem, 1.55vh, 0.95rem) 0 clamp(0.72rem, 1.55vh, 0.95rem) 0.35rem;
+  border-left: 2px solid transparent;
+  transition: border-color 0.45s var(--ease), padding-left 0.45s var(--ease);
 }
 
-.book-mark {
-  display: block;
-  width: 0.82rem;
-  height: 0.52rem;
-  color: var(--spine);
-  opacity: 0.58;
-  margin-bottom: 0.08rem;
-  transition: opacity 0.45s var(--ease), color 0.45s var(--ease);
-}
-
-.book-mark line {
-  stroke: currentColor;
-  stroke-width: 1.15;
-  stroke-linecap: round;
-}
+.book.is-current { border-left-color: var(--clay); padding-left: 0.75rem; }
 
 .book-head {
   display: flex;
@@ -199,12 +165,11 @@
   .writing:focus-visible .writing-title { color: var(--clay); }
   .writing:hover .writing-exit,
   .writing:focus-visible .writing-exit { opacity: 1; transform: translate(2px, -2px); }
-  .book:hover .book-spine,
-  .book:focus-within .book-spine { opacity: 1; filter: brightness(1.08); }
-  .book:hover .book-mark,
-  .book:focus-within .book-mark { opacity: 0.82; }
-  .book:hover .book-title,
-  .book:focus-within .book-title { color: var(--clay); }
+  .book:hover {
+    border-left-color: var(--clay);
+    padding-left: 0.9rem;
+  }
+  .book:hover .book-title { color: var(--clay); }
 }
 
 @media (max-width: 959px) {
