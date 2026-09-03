@@ -12,20 +12,17 @@
 }
 
 .band-rest,
-.sign-social,
 .shelf {
   opacity: 0;
 }
 
 .page.is-scatter .band-rest,
-.page.is-scatter .sign-social,
 .page.is-scatter .shelf {
   animation: arrive 0.85s var(--ease) both;
   animation-delay: var(--settle);
 }
 
 .page.is-fade .band-rest,
-.page.is-fade .sign-social,
 .page.is-fade .shelf {
   animation: arrive 0.55s var(--ease) both;
   animation-delay: 0.08s;
@@ -53,10 +50,8 @@
   .identity-line.is-scatter .identity-word,
   .identity-line.is-fade .identity-word,
   .page.is-scatter .band-rest,
-  .page.is-scatter .sign-social,
   .page.is-scatter .shelf,
   .page.is-fade .band-rest,
-  .page.is-fade .sign-social,
   .page.is-fade .shelf {
     animation: none;
     opacity: 1;
@@ -70,5 +65,6 @@
   .book,
   .book-accent,
   .sign-email,
-  .sign-link { transition: none; }
+  .sign-link-primary,
+  .sign-icon-link { transition: none; }
 }

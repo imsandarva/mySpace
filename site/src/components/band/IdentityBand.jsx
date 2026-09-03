@@ -1,7 +1,7 @@
 import { identity } from '../../data/identity'
 import AboutCopy from './AboutCopy'
 import IdentityLine from './IdentityLine'
-import Signature, { SocialStrip } from './Signature'
+import Signature from './Signature'
 
 export default function IdentityBand({ arrival }) {
   return (
@@ -13,7 +13,6 @@ export default function IdentityBand({ arrival }) {
           <Signature />
         </div>
       </div>
-      <SocialStrip />
     </header>
   )
 }

@@ -1,26 +1,27 @@
 import { contact } from '../../data/identity'
+import SocialIcon from './SocialIcon'
 
-export function SocialStrip() {
-  return (
-    <nav className="sign-social" aria-label="Social">
-      {contact.socials.map((link) => (
-        <a
-          key={link.id}
-          className="sign-link"
-          href={link.href}
-          {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-        >
-          {link.label}
-        </a>
-      ))}
-    </nav>
-  )
+function linkProps(link) {
+  return link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}
 }
 
 export default function Signature() {
+  const { email, primary, secondary } = contact
+
   return (
     <div className="sign">
-      <a className="sign-email" href={`mailto:${contact.email}`}>{contact.email}</a>
+      <div className="sign-primary">
+        <a className="sign-email" href={`mailto:${email}`}>{email}</a>
+        <span className="sign-sep" aria-hidden>·</span>
+        <a className="sign-link-primary" href={primary.href} {...linkProps(primary)}>{primary.label}</a>
+      </div>
+      <nav className="sign-secondary" aria-label="Elsewhere">
+        {secondary.map((link) => (
+          <a key={link.id} className={`sign-icon-link is-${link.id}`} href={link.href} aria-label={link.label} {...linkProps(link)}>
+            <SocialIcon id={link.id} />
+          </a>
+        ))}
+      </nav>
     </div>
   )
 }

@@ -1,19 +1,19 @@
-/* Reading — a continuous shelf of reaction, not a grid of jackets. */
+/* Reading — accent bars, title + author only */
 
 .book-list {
   display: flex;
   flex-direction: column;
-  gap: 0.08rem;
+  gap: var(--entry-gap);
 }
 
 .book {
   --book-accent: var(--accent-sand);
-  --reveal: 200ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  --reveal: var(--ui);
   display: grid;
   grid-template-columns: 3.5px minmax(0, 1fr);
-  column-gap: 0.95rem;
+  column-gap: var(--space-2);
   align-items: stretch;
-  padding: clamp(0.88rem, 1.7vh, 1.15rem) 0.15rem clamp(0.88rem, 1.7vh, 1.15rem) 0;
+  padding: var(--entry-pad) var(--space-1) var(--entry-pad) 0;
   border-radius: 2px;
   transform: translate3d(0, 0, 0);
   transition: transform var(--reveal), box-shadow var(--reveal);
@@ -39,41 +39,48 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  gap: 0.34rem;
+  gap: var(--space-1);
+  /* Align title baselines with Writings entries (date line offset) */
+  padding-top: calc(var(--text-meta) * var(--text-meta-lh) + var(--space-1));
 }
 
 .book-head {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 0.32rem 0.62rem;
+  gap: var(--space-1) var(--space-2);
 }
 
+/* Entry titles — matched to Writings scale */
 .book-title {
-  font-family: var(--serif);
-  font-size: clamp(1.02rem, 0.32vw + 0.96rem, 1.22rem);
-  font-weight: 500;
-  letter-spacing: -0.016em;
-  line-height: 1.32;
-  font-variation-settings: 'SOFT' 28, 'WONK' 0.18, 'opsz' 32;
+  font-family: var(--sans);
+  font-size: var(--text-title);
+  font-weight: 600;
+  line-height: var(--text-title-lh);
+  letter-spacing: var(--text-title-tracking);
+  color: var(--ink);
 }
 
+/* NOW tag — accent terracotta */
 .book-now {
   font-family: var(--sans);
-  font-size: 0.6rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  font-size: var(--text-now);
+  font-weight: 600;
+  letter-spacing: var(--text-now-tracking);
   text-transform: uppercase;
-  color: var(--book-accent);
   line-height: 1;
+  color: var(--accent-terracotta);
 }
 
+/* Metadata — author */
 .book-author {
-  font-size: 0.72rem;
+  font-family: var(--sans);
+  font-size: var(--text-meta);
   font-weight: 400;
-  letter-spacing: 0.028em;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--text-meta-tracking);
+  line-height: var(--text-meta-lh);
   color: var(--ink-mute);
-  line-height: 1.35;
 }
 
 @media (hover: hover) and (pointer: fine) {

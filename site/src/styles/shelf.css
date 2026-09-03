@@ -1,16 +1,19 @@
 .panel { min-width: 0; }
 
+/* Section labels — distinct from metadata */
 .panel-label {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-2);
   width: 100%;
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
+  font-family: var(--sans);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--text-label-tracking);
   text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-bottom: clamp(1.35rem, 2.8vh, 2rem);
+  line-height: 1;
+  color: var(--ink-soft);
+  margin-bottom: var(--space-4);
 }
 
 .panel-label::after {
@@ -20,26 +23,25 @@
   background: linear-gradient(to right, var(--rule), transparent 88%);
 }
 
-/* Written — image-led, outward. */
 .writing-list {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: var(--entry-gap);
 }
 
 .writing {
   display: grid;
   grid-template-columns: clamp(5.75rem, 9vw, 7.25rem) minmax(0, 1fr);
-  gap: clamp(1.1rem, 2vw, 1.55rem);
+  gap: var(--space-3);
   align-items: start;
   width: 100%;
-  padding: var(--entry-pad) 0 var(--entry-pad) 0.35rem;
+  padding: var(--entry-pad) 0 var(--entry-pad) var(--space-1);
   text-decoration: none;
   border-left: 2px solid transparent;
-  transition: border-color 0.45s var(--ease), padding-left 0.45s var(--ease);
+  transition: border-color var(--ui), padding-left var(--ui);
 }
 
-.writing.is-text-only { grid-template-columns: minmax(0, 1fr); padding-left: 0.75rem; }
+.writing.is-text-only { grid-template-columns: minmax(0, 1fr); padding-left: var(--space-2); }
 
 .writing-thumb {
   display: block;
@@ -55,39 +57,48 @@
   transition: transform 0.7s var(--ease);
 }
 
-.writing-copy { min-width: 0; padding-top: 0.12rem; }
+.writing-copy { min-width: 0; padding-top: 0.125rem; }
 
+/* Metadata — dates */
 .writing-date {
   display: block;
-  font-size: 0.68rem;
+  font-family: var(--sans);
+  font-size: var(--text-meta);
   font-weight: 400;
-  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--text-meta-tracking);
+  line-height: var(--text-meta-lh);
   color: var(--ink-mute);
-  margin-bottom: 0.3rem;
+  margin-bottom: var(--space-1);
 }
 
 .writing-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--space-2);
 }
 
+/* Entry titles — Inter SemiBold */
 .writing-title {
-  font-family: var(--serif);
-  font-size: clamp(1.18rem, 0.55vw + 1.05rem, 1.48rem);
-  font-weight: 500;
-  line-height: 1.22;
-  letter-spacing: -0.02em;
-  font-variation-settings: 'SOFT' 24, 'WONK' 0.3, 'opsz' 40;
-  transition: color 0.4s var(--ease);
+  font-family: var(--sans);
+  font-size: var(--text-title);
+  font-weight: 600;
+  line-height: var(--text-title-lh);
+  letter-spacing: var(--text-title-tracking);
+  color: var(--ink);
+  transition: color var(--ui);
 }
 
+/* Writings body */
 .writing-sub {
   display: block;
-  margin-top: 0.42rem;
-  font-size: clamp(0.84rem, 0.2vw + 0.8rem, 0.94rem);
-  line-height: 1.55;
+  margin-top: var(--space-1);
+  font-family: var(--sans);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: var(--text-body-lh);
+  letter-spacing: 0;
   color: var(--ink-soft);
   max-width: 30ch;
 }
@@ -99,14 +110,14 @@
   line-height: 1;
   color: var(--clay);
   opacity: 0.32;
-  transition: opacity 0.4s var(--ease), transform 0.45s var(--ease);
+  transition: opacity var(--ui), transform var(--ui);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .writing:hover,
   .writing:focus-visible {
     border-left-color: var(--clay);
-    padding-left: 0.9rem;
+    padding-left: var(--space-2);
   }
   .writing:hover .writing-thumb img,
   .writing:focus-visible .writing-thumb img { transform: scale(1.03); }
@@ -122,5 +133,5 @@
 }
 
 @media (max-width: 520px) {
-  .writing { gap: 1rem; }
+  .writing { gap: var(--space-2); }
 }
