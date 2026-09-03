@@ -1,4 +1,6 @@
 @import './tokens.css';
 @import './base.css';
-@import './rooms.css';
+@import './layout.css';
+@import './band.css';
+@import './shelf.css';
 @import './motion.css';

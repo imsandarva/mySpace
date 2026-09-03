@@ -1,42 +1,55 @@
-/* Shelf of titles — each entry exits to Substack. Update urls when posts go live. */
-
-const thumb = (id) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=70`
+/* Shelf of titles — each entry exits to Substack. Thumbs from Substack cover art when available. */
 
 export const writings = [
   {
+    slug: 'emergence-properties',
+    title: 'Emergent Properties',
+    subtitle: 'On emergent properties of Nature and Intelligence.',
+    published: '2026-05-28',
+    date: 'May 28, 2026',
+    url: 'https://sandarva.substack.com/p/emergence-properties',
+    thumb: 'https://substackcdn.com/image/fetch/$s_!55q2!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F88f7506f-6916-4846-83b2-cc321a8c0e2a_3604x2158.jpeg',
+  },
+  {
     slug: 'election-2026-of-nepal',
     title: 'Election 2026 of Nepal',
-    subtitle: 'Views on an upcoming historic election.',
-    url: 'https://imsandarva.substack.com/p/election-2026-of-nepal',
-    thumb: thumb('photo-1605640840605-14ac1855827b'),
+    subtitle: 'views on upcoming historic election of Nepal.',
+    published: '2026-02-23',
+    date: 'Feb 23, 2026',
+    url: 'https://sandarva.substack.com/p/election-2026-of-nepal',
+    thumb: 'https://substackcdn.com/image/fetch/$s_!BN__!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F017204f9-1ba7-4502-a68e-ccfaa75a7d38_1169x780.jpeg',
   },
   {
     slug: 'successful-people',
     title: 'Successful People',
-    subtitle: 'On the scale of what people actually make.',
-    url: 'https://imsandarva.substack.com/p/successful-people',
-    thumb: thumb('photo-1548013146-72479768bada'),
+    subtitle: 'I heard on the internet, probably from sam altman, who seemed to have heard it from qi lu, where he said:',
+    published: '2026-02-11',
+    date: 'Feb 11, 2026',
+    url: 'https://sandarva.substack.com/p/successful-people',
   },
   {
     slug: 'what-we-get-from-reading-a-book',
-    title: 'What we get from reading a book',
-    subtitle: 'Why read, if we will not remember most of it.',
-    url: 'https://imsandarva.substack.com/p/what-we-get-from-reading-a-book',
-    thumb: thumb('photo-1512820790803-83ca734da794'),
+    title: 'What we get from reading a book?',
+    subtitle: "why read it even if we won't remember most things from it.",
+    published: '2026-01-03',
+    date: 'Jan 3, 2026',
+    url: 'https://sandarva.substack.com/p/what-we-get-from-reading-a-book',
   },
   {
     slug: 'life-of-an-idea',
     title: 'Life of an idea',
-    subtitle: 'Willing things into existence.',
-    url: 'https://imsandarva.substack.com/p/life-of-an-idea',
-    thumb: thumb('photo-1449247709967-d4461a6a6103'),
+    subtitle: 'willing things into existence',
+    published: '2025-10-07',
+    date: 'Oct 7, 2025',
+    url: 'https://sandarva.substack.com/p/life-of-an-idea',
   },
   {
     slug: 'by-endurance-we-conquer',
     title: 'By endurance we conquer',
-    subtitle: 'On Ernest Shackleton’s voyage.',
-    url: 'https://imsandarva.substack.com/p/by-endurance-we-conquer',
-    thumb: thumb('photo-1464822759023-fed622ff2c3b'),
+    subtitle: "on Ernest Shackleton's voyage",
+    published: '2025-09-16',
+    date: 'Sep 16, 2025',
+    url: 'https://sandarva.substack.com/p/by-endurance-we-conquer',
+    thumb: 'https://substackcdn.com/image/fetch/$s_!k6PL!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9da5cd1d-4fd3-47e2-9e13-cff5b8946b5b_960x1328.jpeg',
   },
 ]

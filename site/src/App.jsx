@@ -1,6 +1,6 @@
-import Museum from './components/Museum'
+import Page from './components/Page'
 
 /* App is a pure composition layer. */
 export default function App() {
-  return <Museum />
+  return <Page />
 }

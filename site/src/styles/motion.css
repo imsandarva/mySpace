@@ -1,28 +1,72 @@
-/* Rooms settle once — fade and rise, never bounce. */
-.room,
-.room-now {
+/* The identity line performs. Everything else arrives, then stays still. */
+
+.identity-line.is-pending .identity-word { opacity: 0; }
+
+.identity-line.is-scatter .identity-word {
+  animation: converge var(--word-ms, 780ms) var(--ease) both;
+  animation-delay: var(--delay);
+}
+
+.identity-line.is-fade .identity-word {
+  animation: arrive 0.65s var(--ease) both;
+}
+
+.band-rest,
+.sign-social,
+.shelf {
   opacity: 0;
-  transform: translate3d(0, 22px, 0);
-  transition: opacity 0.95s var(--ease), transform 0.95s var(--ease);
 }
 
-.room.is-in,
-.room-now.is-in {
-  opacity: 1;
-  transform: none;
+.page.is-scatter .band-rest,
+.page.is-scatter .sign-social,
+.page.is-scatter .shelf {
+  animation: arrive 0.85s var(--ease) both;
+  animation-delay: var(--settle);
 }
 
-.room-opening { transition-delay: 0.06s; }
+.page.is-fade .band-rest,
+.page.is-fade .sign-social,
+.page.is-fade .shelf {
+  animation: arrive 0.55s var(--ease) both;
+  animation-delay: 0.08s;
+}
+
+@keyframes converge {
+  from {
+    opacity: 0;
+    color: var(--clay);
+    transform: translate3d(var(--dx), var(--dy), 0) rotate(var(--rot)) scale(var(--sc));
+  }
+  to {
+    opacity: 1;
+    color: var(--ink);
+    transform: none;
+  }
+}
+
+@keyframes arrive {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: none; }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .room,
-  .room-now {
+  .identity-line.is-scatter .identity-word,
+  .identity-line.is-fade .identity-word,
+  .page.is-scatter .band-rest,
+  .page.is-scatter .sign-social,
+  .page.is-scatter .shelf,
+  .page.is-fade .band-rest,
+  .page.is-fade .sign-social,
+  .page.is-fade .shelf {
+    animation: none;
     opacity: 1;
     transform: none;
-    transition: none;
+    color: inherit;
   }
-  .identity-line { transform: none !important; }
-  .photo-tile img,
-  .writing-thumb img { transition: none; }
+  .writing-thumb img,
+  .writing-title,
+  .writing-exit,
+  .book-title,
+  .sign-email,
+  .sign-link { transition: none; }
 }

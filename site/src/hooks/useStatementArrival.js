@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
 const FONT_WAIT = 180
-const STAGGER = 52
-const WORD_MS = 820
+const STAGGER = 48
+const WORD_MS = 780
 
 const prefersReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
-const isCompact = () => window.matchMedia('(max-width: 680px)').matches
+const isCompact = () => window.matchMedia('(max-width: 960px)').matches
 
 async function fontsReadySoon() {
   if (!document.fonts?.ready) return true

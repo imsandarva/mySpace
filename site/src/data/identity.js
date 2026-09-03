@@ -1,27 +1,19 @@
-/* Living copy for the museum — edit here, nowhere else. */
+/* Living copy — the whole site reads from here. */
 
 export const identity = {
   line: ['A person is what they', 'cannot stop returning to.'],
-  support: 'A small museum of attention.',
 }
 
-export const about = [
-  'I am drawn to things made with care — products, sentences, photographs, rooms. Depth over display. Attention over announcement.',
-  'I live in Lalitpur. I am building Tura, not as a credential, but as one object of craft still being willed into existence.',
-]
-
-export const now = 'These days: Tura, a few books in rotation, and the question of what Nepal does next.'
+export const about =
+  'I am drawn to things made with care — products, sentences, rooms. Depth over display. Attention over announcement.'
 
 export const contact = {
   email: 'imsandarva@gmail.com',
-  sign: 'Sandarva',
+  socials: [
+    { id: 'substack',  label: 'Substack',  href: 'https://sandarva.substack.com', external: true },
+    { id: 'twitter',   label: 'Twitter',   href: 'https://x.com/sandarvapaudel3', external: true },
+    { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/imsandarva/', external: true },
+    { id: 'linkedin',  label: 'Linkedin',  href: 'https://www.linkedin.com/in/sandarva', external: true },
+    { id: 'github',    label: 'Github',    href: 'https://github.com/imsandarva',   external: true },
+  ],
 }
-
-export const rooms = [
-  { id: 'opening',  numeral: 'I'   },
-  { id: 'about',    numeral: 'II'  },
-  { id: 'books',    numeral: 'III' },
-  { id: 'photos',   numeral: 'IV'  },
-  { id: 'writings', numeral: 'V'   },
-  { id: 'closing',  numeral: 'VI'  },
-]

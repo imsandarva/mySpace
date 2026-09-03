@@ -1,0 +1,27 @@
+/* Composed page — scrolls naturally when content exceeds the viewport. */
+
+.page {
+  max-width: var(--page);
+  margin: 0 auto;
+  min-height: 100svh;
+  padding: var(--pad-y) var(--pad-x) clamp(3rem, 7vh, 5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.75rem, 6.5vh, 4.75rem);
+}
+
+.shelf {
+  width: min(100%, var(--shelf));
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.88fr);
+  gap: clamp(2.75rem, 8vw, 7.5rem);
+  align-items: start;
+}
+
+@media (max-width: 959px) {
+  .shelf {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+}
