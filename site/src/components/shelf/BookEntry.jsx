@@ -3,7 +3,7 @@ import AccentBar from './AccentBar'
 import BookCopy from './BookCopy'
 
 function bookClass(current) {
-  return current ? 'book is-current' : 'book'
+  return current ? 'book is-current shelf-entry' : 'book shelf-entry'
 }
 
 export default function BookEntry({ title, author, accent, current }) {

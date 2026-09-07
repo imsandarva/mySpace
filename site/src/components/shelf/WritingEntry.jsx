@@ -1,7 +1,7 @@
 export default function WritingEntry({ title, subtitle, date, published, url, thumb }) {
   return (
     <a
-      className={`writing${thumb ? '' : ' is-text-only'}`}
+      className={`writing shelf-entry${thumb ? '' : ' is-text-only'}`}
       href={url}
       target="_blank"
       rel="noopener noreferrer"

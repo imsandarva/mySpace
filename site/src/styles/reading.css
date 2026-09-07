@@ -8,15 +8,11 @@
 
 .book {
   --book-accent: var(--accent-sand);
-  --reveal: var(--ui);
   display: grid;
   grid-template-columns: 3.5px minmax(0, 1fr);
   column-gap: var(--space-2);
   align-items: stretch;
   padding: var(--entry-pad) var(--space-1) var(--entry-pad) 0;
-  border-radius: 2px;
-  transform: translate3d(0, 0, 0);
-  transition: transform var(--reveal), box-shadow var(--reveal);
 }
 
 .book-accent {
@@ -26,8 +22,6 @@
   border-radius: 1px;
   background: var(--book-accent);
   opacity: 0.58;
-  transform-origin: center left;
-  transition: width var(--reveal), opacity var(--reveal), filter var(--reveal);
 }
 
 .book.is-current .book-accent {
@@ -36,19 +30,12 @@
 }
 
 .book-copy {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   min-width: 0;
-  gap: var(--space-1);
+  row-gap: var(--space-1);
   /* Align title baselines with Writings entries (date line offset) */
   padding-top: calc(var(--text-meta) * var(--text-meta-lh) + var(--space-1));
-}
-
-.book-head {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: var(--space-1) var(--space-2);
 }
 
 /* Entry titles — matched to Writings scale */
@@ -61,15 +48,66 @@
   color: var(--ink);
 }
 
-/* NOW tag — accent terracotta */
-.book-now {
+/* Currently — rose ink, between title and author, parked center-right */
+.book-currently {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: fit-content;
+  justify-self: end;
+  margin-right: clamp(3rem, 45%, 7rem);
+  margin-top: -0.06rem;
+  padding: 0.48em 0.92em 0.42em;
+  color: var(--accent-rose);
+  transform: rotate(-1.35deg);
+  pointer-events: none;
+}
+
+.book-currently-text {
+  position: relative;
+  z-index: 1;
   font-family: var(--sans);
-  font-size: var(--text-now);
-  font-weight: 600;
-  letter-spacing: var(--text-now-tracking);
-  text-transform: uppercase;
+  font-size: var(--text-currently);
+  font-weight: 500;
+  letter-spacing: var(--text-currently-tracking);
   line-height: 1;
-  color: var(--accent-terracotta);
+  white-space: nowrap;
+  color: var(--accent-rose);
+}
+
+.book-currently-ring {
+  position: absolute;
+  inset: -18% -6%;
+  width: 112%;
+  height: 136%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.book-currently-stroke {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.book-currently-stroke.is-0 { stroke-width: 1.85; opacity: 0.94; }
+.book-currently-stroke.is-1 { stroke-width: 1.5; opacity: 0.78; }
+.book-currently-stroke.is-2 { stroke-width: 1.25; opacity: 0.7; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .book-currently-stroke {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: currently-draw 1.05s var(--ease) both;
+  }
+  .book-currently-stroke.is-0 { animation-delay: calc(var(--settle) + 0.12s); }
+  .book-currently-stroke.is-1 { animation-delay: calc(var(--settle) + 0.24s); }
+  .book-currently-stroke.is-2 { animation-delay: calc(var(--settle) + 0.36s); }
+}
+
+@keyframes currently-draw {
+  to { stroke-dashoffset: 0; }
 }
 
 /* Metadata — author */
@@ -83,28 +121,3 @@
   color: var(--ink-mute);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .book:hover,
-  .book:focus-visible {
-    transform: translate3d(0, -2px, 0);
-    box-shadow: 0 10px 22px -16px rgba(27, 24, 21, 0.16);
-  }
-  .book:hover .book-accent,
-  .book:focus-visible .book-accent {
-    width: 3.25px;
-    opacity: 0.95;
-    filter: saturate(1.18);
-  }
-  .book.is-current:hover .book-accent,
-  .book.is-current:focus-visible .book-accent {
-    width: 3.5px;
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .book,
-  .book-accent { transition: none; }
-  .book:hover,
-  .book:focus-visible { transform: none; box-shadow: none; }
-}

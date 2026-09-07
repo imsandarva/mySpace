@@ -1,0 +1,16 @@
+/* Sibling recede — one entry stays, the rest fall back into the paper. */
+
+.shelf-entry {
+  transition: opacity var(--rest), filter var(--rest);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .shelf-list:has(.shelf-entry:is(:hover, :focus-visible)) .shelf-entry:not(:is(:hover, :focus-visible)) {
+    opacity: var(--rest-dim);
+    filter: saturate(0.72);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shelf-entry { transition: none; }
+}

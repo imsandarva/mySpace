@@ -37,8 +37,6 @@
   width: 100%;
   padding: var(--entry-pad) 0 var(--entry-pad) var(--space-1);
   text-decoration: none;
-  border-left: 2px solid transparent;
-  transition: border-color var(--ui), padding-left var(--ui);
 }
 
 .writing.is-text-only { grid-template-columns: minmax(0, 1fr); padding-left: var(--space-2); }
@@ -54,7 +52,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.7s var(--ease);
 }
 
 .writing-copy { min-width: 0; padding-top: 0.125rem; }
@@ -87,7 +84,6 @@
   line-height: var(--text-title-lh);
   letter-spacing: var(--text-title-tracking);
   color: var(--ink);
-  transition: color var(--ui);
 }
 
 /* Writings body */
@@ -110,21 +106,6 @@
   line-height: 1;
   color: var(--clay);
   opacity: 0.32;
-  transition: opacity var(--ui), transform var(--ui);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .writing:hover,
-  .writing:focus-visible {
-    border-left-color: var(--clay);
-    padding-left: var(--space-2);
-  }
-  .writing:hover .writing-thumb img,
-  .writing:focus-visible .writing-thumb img { transform: scale(1.03); }
-  .writing:hover .writing-title,
-  .writing:focus-visible .writing-title { color: var(--clay); }
-  .writing:hover .writing-exit,
-  .writing:focus-visible .writing-exit { opacity: 1; transform: translate(2px, -2px); }
 }
 
 @media (max-width: 959px) {

@@ -58,12 +58,7 @@
     transform: none;
     color: inherit;
   }
-  .writing-thumb img,
-  .writing-title,
-  .writing-exit,
-  .book-title,
-  .book,
-  .book-accent,
+  .shelf-entry,
   .sign-email,
   .sign-link-primary,
   .sign-icon-link { transition: none; }

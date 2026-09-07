@@ -5,7 +5,7 @@ import Panel from './Panel'
 export default function Reading() {
   return (
     <Panel id="reading" label="Readings">
-      <ul className="book-list">
+      <ul className="book-list shelf-list">
         {books.map((b, i) => <BookEntry key={`${b.title}-${b.author}-${i}`} {...b} />)}
       </ul>
     </Panel>

@@ -5,7 +5,7 @@ import WritingEntry from './WritingEntry'
 export default function Writings() {
   return (
     <Panel id="writings" label="Writings">
-      <ul className="writing-list">
+      <ul className="writing-list shelf-list">
         {writings.map((w) => (
           <li key={w.slug}>
             <WritingEntry {...w} />
