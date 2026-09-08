@@ -1,13 +1,29 @@
-/* Sibling recede — one entry stays, the rest fall back into the paper. */
+/* Sibling recede — hovered entry lifts, the rest settle back into the paper. */
+
+.shelf-list { overflow: visible; }
 
 .shelf-entry {
-  transition: opacity var(--rest), filter var(--rest);
+  position: relative;
+  z-index: 0;
+  transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: left center;
+  backface-visibility: hidden;
+  transition:
+    transform var(--rest-lift),
+    opacity var(--rest),
+    filter var(--rest);
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .shelf-entry:is(:hover, :focus-visible) {
+    z-index: 1;
+    transform: translate3d(0, 0, 0) scale(var(--rest-lift-scale));
+  }
+
   .shelf-list:has(.shelf-entry:is(:hover, :focus-visible)) .shelf-entry:not(:is(:hover, :focus-visible)) {
     opacity: var(--rest-dim);
-    filter: saturate(0.72);
+    filter: saturate(0.68) blur(var(--rest-blur));
+    transform: translate3d(0, 0, 0) scale(var(--rest-recess-scale));
   }
 }
 
