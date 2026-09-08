@@ -64,10 +64,9 @@
   --ui: 175ms cubic-bezier(0.25, 0.1, 0.25, 1);
   --rest: 560ms var(--ease-settle);
   --rest-lift: 420ms var(--ease-settle);
-  --rest-dim: 0.42;
   --rest-lift-scale: 1.014;
   --rest-recess-scale: 0.992;
-  --rest-blur: 0.75px;
+  --rest-blur: 2.75px;
   --settle: 1.08s;
 
   /* Layout */
