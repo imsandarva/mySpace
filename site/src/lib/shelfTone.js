@@ -1,4 +1,4 @@
-/* Shelf hover “top” — synthesized, no samples. */
+/* Shelf hover “top” — synthesized. Context spawns only once activation exists. */
 
 let ctx = null
 let tapBuf = null
@@ -10,16 +10,21 @@ const END = 1480
 const PEAK = 0.065
 const TAP = 0.04
 const DUR = 0.055
+const MOVE_ARM = 10
 
 const prefersQuiet = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const Ctor = () => window.AudioContext || window.webkitAudioContext
 const isLive = (ac) => ac?.state === 'running'
 
-function ensureCtx() {
+function hasActivation() {
+  const ua = navigator.userActivation
+  return !!(ua?.isActive || ua?.hasBeenActive)
+}
+
+function spawnCtx() {
   if (ctx) return ctx
   if (typeof window === 'undefined' || !Ctor()) return null
-  try { ctx = new (Ctor())() }
-  catch { return null }
+  try { ctx = new (Ctor())() } catch { return null }
   return ctx
 }
 
@@ -43,7 +48,7 @@ function prime(ac) {
     src.buffer = ac.createBuffer(1, 1, ac.sampleRate)
     src.connect(ac.destination)
     src.start(0)
-  } catch { /* suspended contexts reject start(); resume() handles that */ }
+  } catch { /* resume() unlocks suspended contexts */ }
 }
 
 function tapBuffer(ac) {
@@ -109,24 +114,42 @@ function wake(ac) {
   return ac.resume().then(after).catch(() => ac)
 }
 
-export function armShelfTone() {
-  if (prefersQuiet()) return
-  wake(ensureCtx())
+/** Unlock audio — fromGesture bypasses the activation gate (trusted browser events). */
+export function armShelfTone(fromGesture = true) {
+  if (prefersQuiet()) return Promise.resolve(false)
+  if (!fromGesture && !hasActivation()) return Promise.resolve(false)
+  const ac = spawnCtx()
+  if (!ac) return Promise.resolve(false)
+  if (isLive(ac)) return Promise.resolve(true)
+  return wake(ac).then((live) => isLive(live))
 }
 
+/** One short top per shelf-entry enter. */
 export function playShelfDop() {
   if (prefersQuiet()) return
-  const ac = ensureCtx()
-  if (!ac) return
-  if (isLive(ac)) { fire(ac); return }
-  wake(ac).then((live) => { if (isLive(live)) fire(live) })
+  if (isLive(ctx)) { fire(ctx); return }
+  armShelfTone(false).then((ok) => { if (ok) fire(ctx) })
 }
 
 export function bindShelfToneUnlock() {
   if (bound || typeof document === 'undefined') return
   bound = true
-  const arm = () => armShelfTone()
   const opts = { capture: true, passive: true }
-  document.addEventListener('pointerdown', arm, opts)
-  document.addEventListener('keydown', arm, opts)
+  const onGesture = () => { armShelfTone(true) }
+
+  // Navigation / refresh may already carry sticky activation — unlock before first hover.
+  armShelfTone(false)
+
+  // Warm on pointer travel (Anirudh pattern): moving toward the shelf unlocks under sticky activation.
+  let ox = -1, oy = -1
+  const onMove = (e) => {
+    if (ox < 0) { ox = e.clientX; oy = e.clientY; return }
+    if (Math.abs(e.clientX - ox) + Math.abs(e.clientY - oy) < MOVE_ARM) return
+    armShelfTone(false)
+  }
+  document.addEventListener('pointermove', onMove, opts)
+
+  for (const name of ['pointerdown', 'mousedown', 'click', 'keydown', 'touchstart', 'touchend', 'pointerup']) {
+    document.addEventListener(name, onGesture, opts)
+  }
 }

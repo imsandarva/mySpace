@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
-import { bindShelfToneUnlock, playShelfDop } from '../lib/shelfTone'
+import { armShelfTone, bindShelfToneUnlock, playShelfDop } from '../lib/shelfTone'
 
 const ENTRY = '.shelf-entry'
+const WARM = { passive: true }
 
 function bindHover() {
   let current = null
@@ -28,10 +29,19 @@ function bindHover() {
   }
 }
 
+function bindShelfWarm() {
+  const warm = () => armShelfTone(false)
+  const shelves = document.querySelectorAll('.shelf')
+  shelves.forEach((el) => el.addEventListener('pointerenter', warm, WARM))
+  return () => shelves.forEach((el) => el.removeEventListener('pointerenter', warm, WARM))
+}
+
 /* Document-level: unlock on gesture, dop on each shelf-entry enter. */
 export function useShelfHoverTone() {
   useEffect(() => {
     bindShelfToneUnlock()
-    return bindHover()
+    const unhover = bindHover()
+    const unwarm = bindShelfWarm()
+    return () => { unhover(); unwarm() }
   }, [])
 }
