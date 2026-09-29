@@ -1,0 +1,133 @@
+/* Pinterest preview — site chrome around official embeds. */
+
+.pin-page {
+  gap: var(--space-5);
+}
+
+.pin-nav {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: min(100%, var(--shelf));
+  margin-inline: auto;
+}
+
+.pin-nav-back {
+  font-family: var(--sans);
+  font-size: var(--text-meta);
+  font-weight: 500;
+  letter-spacing: var(--text-meta-tracking);
+  color: var(--ink-mute);
+  text-decoration: none;
+  transition: color var(--ui);
+}
+
+.pin-nav-tabs {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.pin-nav-tabs a,
+.pin-nav-back:hover {
+  color: var(--ink-soft);
+}
+
+.pin-nav-tabs a {
+  font-family: var(--sans);
+  font-size: var(--text-nav);
+  font-weight: 500;
+  letter-spacing: var(--text-nav-tracking);
+  color: var(--ink-mute);
+  text-decoration: none;
+  padding-bottom: 0.15em;
+  border-bottom: 1px solid transparent;
+  transition: color var(--ui), border-color var(--ui);
+}
+
+.pin-nav-tabs a.is-on {
+  color: var(--ink);
+  border-bottom-color: var(--clay);
+}
+
+.pin-kicker {
+  font-family: var(--sans);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--text-label-tracking);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: var(--space-2);
+}
+
+.pin-title {
+  font-family: var(--display);
+  font-size: clamp(1.75rem, 2vw + 1.1rem, 2.75rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: var(--text-hero-tracking);
+  color: var(--ink);
+  max-width: 18ch;
+}
+
+.pin-stage,
+.pin-pick {
+  width: min(100%, var(--shelf));
+  margin-inline: auto;
+}
+
+.pin-frame {
+  margin-top: var(--space-5);
+  min-height: 28rem;
+}
+
+.pin-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.pin-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: color-mix(in srgb, var(--paper) 62%, var(--bg));
+  text-decoration: none;
+  transition: transform var(--rest-lift), background var(--ui);
+}
+
+.pin-card:hover {
+  transform: translate3d(0, -2px, 0);
+}
+
+.pin-card-kicker {
+  font-family: var(--sans);
+  font-size: var(--text-meta);
+  font-weight: 600;
+  letter-spacing: var(--text-label-tracking);
+  text-transform: uppercase;
+  color: var(--clay);
+}
+
+.pin-card-title {
+  font-family: var(--sans);
+  font-size: var(--text-title);
+  font-weight: 600;
+  line-height: var(--text-title-lh);
+  letter-spacing: var(--text-title-tracking);
+  color: var(--ink);
+}
+
+.pin-card-hint {
+  font-family: var(--sans);
+  font-size: var(--text-meta);
+  letter-spacing: var(--text-meta-tracking);
+  color: var(--ink-mute);
+}
+
+@media (max-width: 720px) {
+  .pin-cards { grid-template-columns: 1fr; }
+  .pin-nav { flex-direction: column; align-items: flex-start; }
+}

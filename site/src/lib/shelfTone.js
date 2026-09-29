@@ -1,155 +1,121 @@
-/* Shelf hover “top” — synthesized. Context spawns only once activation exists. */
+/* Shelf hover tick — prebaked WAV + HTMLAudio pool (no AudioContext on load). */
 
-let ctx = null
-let tapBuf = null
-let hold = null
+const POOL = 4
+const VOL = 0.46
+const GESTURES = ['pointerdown', 'mousedown', 'click', 'keydown', 'touchend', 'pointerup', 'contextmenu']
+
+let src = ''
+let voices = null
+let slot = 0
 let bound = false
+let hovering = false
 
-const START = 1180
-const END = 1480
-const PEAK = 0.065
-const TAP = 0.04
-const DUR = 0.055
-const MOVE_ARM = 10
+const quiet = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-const prefersQuiet = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
-const Ctor = () => window.AudioContext || window.webkitAudioContext
-const isLive = (ac) => ac?.state === 'running'
-
-function hasActivation() {
-  const ua = navigator.userActivation
-  return !!(ua?.isActive || ua?.hasBeenActive)
+function writeStr(view, offset, text) {
+  for (let i = 0; i < text.length; i++) view.setUint8(offset + i, text.charCodeAt(i))
 }
 
-function spawnCtx() {
-  if (ctx) return ctx
-  if (typeof window === 'undefined' || !Ctor()) return null
-  try { ctx = new (Ctor())() } catch { return null }
-  return ctx
+function pcmToWav(samples, rate) {
+  const n = samples.length
+  const bytes = new ArrayBuffer(44 + n * 2)
+  const view = new DataView(bytes)
+  writeStr(view, 0, 'RIFF')
+  view.setUint32(4, 36 + n * 2, true)
+  writeStr(view, 8, 'WAVE')
+  writeStr(view, 12, 'fmt ')
+  view.setUint32(16, 16, true)
+  view.setUint16(20, 1, true)
+  view.setUint16(22, 1, true)
+  view.setUint32(24, rate, true)
+  view.setUint32(28, rate * 2, true)
+  view.setUint16(32, 2, true)
+  view.setUint16(34, 16, true)
+  writeStr(view, 36, 'data')
+  view.setUint32(40, n * 2, true)
+  for (let i = 0; i < n; i++) {
+    const s = Math.max(-1, Math.min(1, samples[i]))
+    view.setInt16(44 + i * 2, s < 0 ? s * 0x8000 : s * 0x7fff, true)
+  }
+  return new Blob([bytes], { type: 'audio/wav' })
 }
 
-function holdOpen(ac) {
-  if (hold || !isLive(ac)) return
-  try {
-    const osc = ac.createOscillator()
-    const gain = ac.createGain()
-    osc.frequency.value = 1
-    gain.gain.value = 0
-    osc.connect(gain)
-    gain.connect(ac.destination)
-    osc.start()
-    hold = osc
-  } catch { hold = null }
-}
-
-function prime(ac) {
-  try {
-    const src = ac.createBufferSource()
-    src.buffer = ac.createBuffer(1, 1, ac.sampleRate)
-    src.connect(ac.destination)
-    src.start(0)
-  } catch { /* resume() unlocks suspended contexts */ }
-}
-
-function tapBuffer(ac) {
-  if (tapBuf && tapBuf.sampleRate === ac.sampleRate) return tapBuf
-  const n = Math.max(1, Math.floor(ac.sampleRate * 0.028))
-  const buf = ac.createBuffer(1, n, ac.sampleRate)
-  const data = buf.getChannelData(0)
+function renderDop() {
+  const sr = 44100
+  const n = Math.floor(sr * 0.058)
+  const out = new Float32Array(n)
+  let phase = 0
   let brown = 0
   for (let i = 0; i < n; i++) {
+    const p = i / n
+    const freq = 1180 + 300 * p
+    phase += (Math.PI * 2 * freq) / sr
+    const env = Math.exp(-p * 8.5) * (p < 0.05 ? p / 0.05 : 1)
     const white = Math.random() * 2 - 1
     brown = 0.97 * brown + 0.03 * white
-    data[i] = (white * 0.5 + brown * 0.5) * Math.exp(-i / (n * 0.26))
+    const tap = Math.exp(-i / (sr * 0.012)) * (white * 0.32 + brown * 0.22)
+    out[i] = Math.sin(phase) * env * 0.74 + tap * 0.26
   }
-  tapBuf = buf
-  return tapBuf
+  return out
 }
 
-function chirp(ac, t0, tilt) {
-  const osc = ac.createOscillator()
-  const gain = ac.createGain()
-  osc.type = 'sine'
-  osc.frequency.setValueAtTime(START + tilt, t0)
-  osc.frequency.exponentialRampToValueAtTime(Math.max(1, END + tilt * 0.6), t0 + DUR)
-  gain.gain.setValueAtTime(0.0001, t0)
-  gain.gain.exponentialRampToValueAtTime(PEAK, t0 + 0.0015)
-  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + DUR)
-  osc.connect(gain)
-  gain.connect(ac.destination)
-  osc.start(t0)
-  osc.stop(t0 + DUR + 0.012)
+function makeVoice() {
+  const el = new Audio(src)
+  el.preload = 'auto'
+  el.volume = VOL
+  return el
 }
 
-function tap(ac, t0) {
-  const src = ac.createBufferSource()
-  const bp = ac.createBiquadFilter()
-  const gain = ac.createGain()
-  src.buffer = tapBuffer(ac)
-  bp.type = 'bandpass'
-  bp.frequency.value = 2100
-  bp.Q.value = 1.15
-  gain.gain.setValueAtTime(0.0001, t0)
-  gain.gain.exponentialRampToValueAtTime(TAP, t0 + 0.001)
-  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.036)
-  src.connect(bp)
-  bp.connect(gain)
-  gain.connect(ac.destination)
-  src.start(t0)
-  src.stop(t0 + 0.04)
+function pool() {
+  if (voices) return voices
+  src = URL.createObjectURL(pcmToWav(renderDop(), 44100))
+  voices = Array.from({ length: POOL }, makeVoice)
+  return voices
 }
 
-function fire(ac) {
-  if (!isLive(ac)) return
-  const t0 = ac.currentTime + 0.004
-  const tilt = (Math.random() - 0.5) * 70
-  chirp(ac, t0, tilt)
-  tap(ac, t0)
+function hit() {
+  if (quiet()) return
+  const el = pool()[slot++ % POOL]
+  el.muted = false
+  el.volume = VOL
+  try { el.currentTime = 0 } catch { /* some engines throw if not ready */ }
+  const play = el.play()
+  if (play) play.catch(() => {})
 }
 
-function wake(ac) {
-  if (!ac) return Promise.resolve(null)
-  const after = () => { prime(ac); holdOpen(ac); return ac }
-  if (isLive(ac)) return Promise.resolve(after())
-  return ac.resume().then(after).catch(() => ac)
+function unlock() {
+  pool().forEach((el) => {
+    el.muted = true
+    const play = el.play()
+    if (play) play.then(() => { el.pause(); el.currentTime = 0; el.muted = false }).catch(() => { el.muted = false })
+    else el.muted = false
+  })
+  if (hovering) hit()
 }
 
-/** Unlock audio — fromGesture bypasses the activation gate (trusted browser events). */
-export function armShelfTone(fromGesture = true) {
-  if (prefersQuiet()) return Promise.resolve(false)
-  if (!fromGesture && !hasActivation()) return Promise.resolve(false)
-  const ac = spawnCtx()
-  if (!ac) return Promise.resolve(false)
-  if (isLive(ac)) return Promise.resolve(true)
-  return wake(ac).then((live) => isLive(live))
+export function setShelfHovering(on) {
+  hovering = on
 }
 
-/** One short top per shelf-entry enter. */
 export function playShelfDop() {
-  if (prefersQuiet()) return
-  if (isLive(ctx)) { fire(ctx); return }
-  armShelfTone(false).then((ok) => { if (ok) fire(ctx) })
+  hit()
 }
 
 export function bindShelfToneUnlock() {
   if (bound || typeof document === 'undefined') return
   bound = true
+  pool()
+  const onGesture = () => unlock()
   const opts = { capture: true, passive: true }
-  const onGesture = () => { armShelfTone(true) }
+  GESTURES.forEach((name) => document.addEventListener(name, onGesture, opts))
+}
 
-  // Navigation / refresh may already carry sticky activation — unlock before first hover.
-  armShelfTone(false)
-
-  // Warm on pointer travel (Anirudh pattern): moving toward the shelf unlocks under sticky activation.
-  let ox = -1, oy = -1
-  const onMove = (e) => {
-    if (ox < 0) { ox = e.clientX; oy = e.clientY; return }
-    if (Math.abs(e.clientX - ox) + Math.abs(e.clientY - oy) < MOVE_ARM) return
-    armShelfTone(false)
-  }
-  document.addEventListener('pointermove', onMove, opts)
-
-  for (const name of ['pointerdown', 'mousedown', 'click', 'keydown', 'touchstart', 'touchend', 'pointerup']) {
-    document.addEventListener(name, onGesture, opts)
-  }
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    voices?.forEach((el) => { el.pause(); el.src = '' })
+    if (src) URL.revokeObjectURL(src)
+    voices = null
+    src = ''
+    bound = false
+  })
 }
