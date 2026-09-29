@@ -15,6 +15,12 @@ export const contact = {
     href: 'https://sandarva.substack.com',
     external: true,
   },
+  pinterest: {
+    id: 'pinterest',
+    label: 'Pinterest',
+    href: 'https://www.pinterest.com/imsandarva/',
+    external: true,
+  },
   secondary: [
     { id: 'twitter', label: 'Twitter', href: 'https://x.com/sandarvapaudel3', external: true },
     { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/imsandarva/', external: true },

@@ -6,14 +6,16 @@ function linkProps(link) {
 }
 
 export default function Signature() {
-  const { email, primary, secondary } = contact
+  const { email, primary, pinterest, secondary } = contact
 
   return (
     <div className="sign">
       <div className="sign-primary">
+        <a className="sign-link-primary" href={primary.href} {...linkProps(primary)}>{primary.label}</a>
+        <span className="sign-sep" aria-hidden>·</span>
         <a className="sign-email" href={`mailto:${email}`}>{email}</a>
         <span className="sign-sep" aria-hidden>·</span>
-        <a className="sign-link-primary" href={primary.href} {...linkProps(primary)}>{primary.label}</a>
+        <a className="sign-link-primary" href={pinterest.href} {...linkProps(pinterest)}>{pinterest.label}</a>
       </div>
       <nav className="sign-secondary" aria-label="Elsewhere">
         {secondary.map((link) => (
