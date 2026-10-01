@@ -6,11 +6,12 @@ const PASSES = [
   'M 19.85 27.27 C 19.47 25.52, 13.35 19.85, 17.54 16.77 C 21.73 13.70, 33.29 10.39, 44.98 8.84 C 56.66 7.30, 75.07 6.57, 87.65 7.49 C 100.22 8.42, 114.82 11.45, 120.43 14.38 C 126.03 17.31, 126.18 22.19, 121.27 25.06 C 116.36 27.94, 103.19 30.39, 90.97 31.63 C 78.76 32.87, 60.04 33.43, 47.97 32.51 C 35.89 31.59, 23.43 27.17, 18.52 26.11',
 ]
 
-export default function CurrentlyRing() {
+/* ringClass / strokeClass let the phone redraw the same mark without the desktop timing. */
+export default function CurrentlyRing({ ringClass = 'book-currently-ring', strokeClass = 'book-currently-stroke' }) {
   return (
-    <svg className="book-currently-ring" viewBox="0 0 140 40" aria-hidden focusable="false">
+    <svg className={ringClass} viewBox="0 0 140 40" aria-hidden focusable="false">
       {PASSES.map((d, i) => (
-        <path key={i} className={`book-currently-stroke is-${i}`} d={d} pathLength="1" />
+        <path key={i} className={`${strokeClass} is-${i}`} d={d} pathLength="1" />
       ))}
     </svg>
   )

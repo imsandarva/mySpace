@@ -30,11 +30,23 @@ const icons = {
       fill="none"
     />
   ),
+  substack: (
+    <path fill="currentColor" d="M3 4.2h18v2.15H3V4.2zm0 3.8h18v2H3V8zm0 3.65h18V21l-9-4.8L3 21v-9.35z" />
+  ),
+  email: (
+    <>
+      <rect x="3.25" y="5.25" width="17.5" height="13.5" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M4 7.25 12 12.35 20 7.25" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    </>
+  ),
+  pinterest: (
+    <path fill="currentColor" d="M12.02 2.1a8.9 8.9 0 0 0-3.22 17.2c-.05-.73-.09-1.85.04-2.64.2-.86 1.28-5.44 1.28-5.44s-.33-.66-.33-1.63c0-1.52.88-2.66 1.98-2.66.93 0 1.39.7 1.39 1.54 0 .94-.6 2.35-.9 3.65-.26 1.09.55 1.98 1.62 1.98 1.95 0 3.44-2.05 3.44-5.02 0-2.62-1.88-4.45-4.58-4.45-3.12 0-4.94 2.34-4.94 4.75 0 .94.36 1.96.81 2.5.09.11.1.21.08.32-.09.34-.27 1.1-.3 1.25-.05.2-.16.25-.37.15-1.37-.63-2.22-2.63-2.22-4.24 0-3.45 2.51-6.63 7.24-6.63 3.8 0 6.75 2.71 6.75 6.33 0 3.78-2.38 6.82-5.7 6.82-1.11 0-2.15-.58-2.52-1.26l-.69 2.6c-.25.95-.92 2.15-1.37 2.88A8.9 8.9 0 1 0 12.02 2.1z" />
+  ),
 }
 
-export default function SocialIcon({ id }) {
+export default function SocialIcon({ id, className = 'sign-icon' }) {
   return (
-    <svg className="sign-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       {id === 'instagram' && (
         <defs>
           <linearGradient id="sign-ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
