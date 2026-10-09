@@ -8,7 +8,7 @@
   --m-rise: cubic-bezier(0.22, 1, 0.36, 1);
   --m-thumb: 72px;
   min-height: 100svh;
-  background: var(--bg);
+  background: transparent;
 }
 
 .m-root {
@@ -315,7 +315,7 @@
   inset: 0;
   z-index: 3;
   overflow: auto;
-  background: var(--bg);
+  background: var(--bg) var(--cloth) 0 0 / var(--cloth-size) repeat;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   transform: translate3d(100%, 0, 0);

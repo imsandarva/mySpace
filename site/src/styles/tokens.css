@@ -1,8 +1,10 @@
 :root {
   color-scheme: light;
 
-  /* Surface */
+  /* Surface — the page is warm cloth; --cloth-size is the tile's real thread scale */
   --bg: #faf7f2;
+  --cloth: url("../assets/cloth.webp");
+  --cloth-size: 420px;
   --paper: #e8e0d6;
   --rule: rgba(27, 24, 21, 0.1);
 
