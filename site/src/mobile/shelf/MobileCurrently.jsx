@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import CurrentlyRing from '../../components/shelf/CurrentlyRing'
 import { currentlyShouldDraw, markCurrentlyDrawn } from '../currentlyDraw'
 
-/* The one accent on the phone: the word sits on the left edge, and the ring draws once. */
+/* The one accent on the phone: between title and author, parked center-right. The ring draws once. */
 export default function MobileCurrently() {
   const [draw] = useState(currentlyShouldDraw)
   const ref = useRef(null)
