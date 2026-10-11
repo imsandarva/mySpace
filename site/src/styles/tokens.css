@@ -19,6 +19,7 @@
   --blue: #2a3db3;
   --blue-deep: #1d2b85;
   --marigold: #e9892a;
+  --accent-rose: #e5397a;
 
   /* Type families */
   --serif: 'Fraunces Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
@@ -45,6 +46,7 @@
   --ease: cubic-bezier(0.22, 0.8, 0.24, 1);
   --fast: 180ms var(--ease);
   --slow: 520ms var(--ease);
+  --settle: 1.08s;
 
   --radius: 3px;
 

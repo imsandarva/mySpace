@@ -4,15 +4,17 @@
 @media (prefers-reduced-motion: no-preference) {
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   @keyframes unveil { from { clip-path: inset(0 0 100% 0); transform: scale(1.05); } to { clip-path: inset(0); transform: none; } }
-  @keyframes breathe { 0% { transform: scale(1); opacity: 0.45; } 70%, 100% { transform: scale(3); opacity: 0; } }
+  @keyframes currently-draw { to { stroke-dashoffset: 0; } }
 
   /* The hero arrives once per visit — name, voice, then the plate unveiled top to bottom. */
   .is-intro .hero-name { animation: rise 900ms var(--ease) both; }
   .is-intro .hero-copy { animation: rise 900ms var(--ease) 140ms both; }
   .is-intro .plate img { animation: unveil 1200ms var(--ease) 80ms both; }
 
-  /* "Currently reading" is quietly alive. */
-  .dot::after { animation: breathe 2.8s ease-out infinite; }
+  .book-currently-stroke { stroke-dasharray: 1; stroke-dashoffset: 1; animation: currently-draw 1.05s var(--ease) both; }
+  .book-currently-stroke.is-0 { animation-delay: calc(var(--settle) + 0.12s); }
+  .book-currently-stroke.is-1 { animation-delay: calc(var(--settle) + 0.24s); }
+  .book-currently-stroke.is-2 { animation-delay: calc(var(--settle) + 0.36s); }
 }
 
 /* Shared-element transitions: a cover or a section title keeps its identity as the page changes around it. */

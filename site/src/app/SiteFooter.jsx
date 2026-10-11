@@ -24,7 +24,6 @@ export default function SiteFooter() {
         </nav>
       </div>
       <div className="wrap footer-base t-meta">
-        <span>© {new Date().getFullYear()} Sandarva Paudel</span>
         <button type="button" className="footer-top" onClick={toTop}>Back to top<Arrow kind="up" /></button>
       </div>
     </footer>

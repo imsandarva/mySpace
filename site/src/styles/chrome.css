@@ -110,7 +110,7 @@
 .footer-base {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: clamp(2.5rem, 2rem + 3vw, 4.5rem);
   padding-block: 1.25rem 1.75rem;
   border-top: 1px solid var(--rule);

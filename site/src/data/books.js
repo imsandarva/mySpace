@@ -2,7 +2,8 @@
    Each entry is title, author, and one hand-picked accent. Sorted by when a book was started, not when it was finished. */
 
 export const books = [
-  { title: 'Shoe Dog: A Memoir by the Creator of Nike', author: 'Phil Knight', current: true, accent: 'clay' },
+  { title: 'The Metamorphosis', author: 'Franz Kafka', current: true, accent: 'ink' },
+  { title: 'Shoe Dog: A Memoir by the Creator of Nike', author: 'Phil Knight', accent: 'clay' },
 
   { title: 'Ikigai: The Japanese Secret to a Long and Happy Life', author: 'Héctor García & Francesc Miralles', accent: 'sage' },
   { title: 'The Thinking Machine: Jensen Huang, Nvidia, and the World’s Most Coveted Microchip', author: 'Stephen Witt', accent: 'slate' },
