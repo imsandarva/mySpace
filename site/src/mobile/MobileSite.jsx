@@ -1,37 +1,24 @@
-import { useEffect, useRef } from 'react'
-import ReadingsArchive from './archive/ReadingsArchive'
-import WritingsArchive from './archive/WritingsArchive'
-import MobileHeader from './header/MobileHeader'
 import ReadingsShelf from './shelf/ReadingsShelf'
 import WritingsShelf from './shelf/WritingsShelf'
+import MobileHeader from './header/MobileHeader'
 import { useArchive } from './useArchive'
 
-const archives = { writings: WritingsArchive, readings: ReadingsArchive }
-
-/* Phone front door: both worlds at once, each able to open into its own list. */
+/* Phone front door. Both shelves stay on one screen; All grows a shelf into its list. */
 export default function MobileSite() {
   const archive = useArchive()
-  const home = useRef(null)
-  const Sheet = archive.name ? archives[archive.name] : null
-
-  useEffect(() => {
-    const node = home.current
-    if (!node) return
-    if (archive.visible) node.setAttribute('inert', '')
-    else node.removeAttribute('inert')
-  }, [archive.visible])
+  const open = archive.name
 
   return (
     <div className="m-stage">
-      <div ref={home} className={`m-home${archive.visible ? ' is-back' : ''}${archive.entered ? ' is-covered' : ''}`} aria-hidden={archive.visible || undefined}>
+      <div className="m-home">
         <div className="m-root">
-          <MobileHeader />
-          <WritingsShelf onOpen={() => archive.open('writings')} />
-          <ReadingsShelf onOpen={() => archive.open('readings')} />
+          <div inert={open ? '' : undefined}>
+            <MobileHeader />
+          </div>
+          <WritingsShelf expanded={open === 'writings'} locked={open === 'readings'} onOpen={() => archive.open('writings')} onClose={archive.close} />
+          <ReadingsShelf expanded={open === 'readings'} locked={open === 'writings'} onOpen={() => archive.open('readings')} onClose={archive.close} />
         </div>
       </div>
-      <div className={`m-dim${archive.entered ? ' is-on' : ''}`} aria-hidden="true" />
-      {Sheet && <Sheet entered={archive.entered} onClose={archive.close} />}
     </div>
   )
 }

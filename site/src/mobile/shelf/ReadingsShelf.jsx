@@ -1,22 +1,45 @@
+import { useEffect, useState } from 'react'
 import { books } from '../../data/books'
-import { READING_PREVIEW, arrangeBooks } from '../arrange'
-import BookLine from './BookLine'
-import CurrentBook from './CurrentBook'
-import ShelfHead from './ShelfHead'
+import { arrangeBooks } from '../arrange'
+import { bookKey } from './bookKey'
+import BookFace from './BookFace'
+import ShelfChrome from './ShelfChrome'
+import SpinePanel from './SpinePanel'
+import { useRail } from './useRail'
 
-/* Quieter than writings: the live book, then two recent ones. The rest lives one tap away. */
-export default function ReadingsShelf({ onOpen }) {
-  const { current, rest, total } = arrangeBooks(books)
-  const recent = rest.slice(0, READING_PREVIEW)
+export default function ReadingsShelf({ expanded, locked, onOpen, onClose }) {
+  const { ordered, total } = arrangeBooks(books)
+  const rail = useRail(!expanded)
+  const [open, setOpen] = useState(null)
+  const [cursor, setCursor] = useState(0)
+  const active = ordered.find((book, index) => bookKey(book.title, index) === open) ?? null
+
+  useEffect(() => { if (expanded) setOpen(null) }, [expanded])
+
+  const toggle = (key) => setOpen((now) => (now === key ? null : key))
+
   return (
-    <section className="m-shelf m-rise d2" aria-labelledby="m-readings">
-      <ShelfHead id="m-readings" label="Readings" count={total} showAll={rest.length > recent.length} onOpen={onOpen} />
-      {current && <CurrentBook title={current.title} author={current.author} ruled={recent.length > 0} />}
-      {recent.length > 0 && (
-        <ul className="m-books">
-          {recent.map((book, index) => <BookLine key={`${book.title}-${index}`} title={book.title} author={book.author} />)}
+    <ShelfChrome id="readings" label="Readings" count={total} expanded={expanded} locked={locked} onOpen={onOpen} onClose={onClose}>
+      <div className={expanded ? undefined : 'm-bleed'}>
+        <ul ref={rail.ref} className={expanded ? 'm-stack' : 'm-rail m-rail-spines'} onKeyDown={rail.onKeyDown}>
+          {ordered.map((book, index) => {
+            const key = bookKey(book.title, index)
+            return (
+              <BookFace
+                key={key}
+                book={book}
+                index={index}
+                expanded={expanded}
+                open={open === key}
+                tab={index === cursor ? 0 : -1}
+                onToggle={(name) => { setCursor(index); toggle(name) }}
+                onFocus={() => setCursor(index)}
+              />
+            )
+          })}
         </ul>
-      )}
-    </section>
+      </div>
+      {!expanded && <SpinePanel book={active} />}
+    </ShelfChrome>
   )
 }

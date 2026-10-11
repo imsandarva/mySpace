@@ -1,10 +1,30 @@
-/* How much of each shelf the front door shows before "All". */
-export const WRITING_PREVIEW = 2
-export const READING_PREVIEW = 2
+/* Resting shelf order. The first screen is hand-picked; everything after it keeps the original shelf order. */
 
-/* Currently-reading stays first. The rest keep shelf order. No dates, so no year groups. */
+const WRITING_LEAD = ['emergence-properties', 'by-endurance-we-conquer']
+const READING_LEAD = ['Mans Search for Meaning', 'Sapiens', 'Zero to One', 'Steve Jobs', 'Surely You', 'The Alchemist', 'Atomic Habits', 'Siddhartha']
+
+function plain(value) {
+  return String(value).replace(/[\u2018\u2019\u02BC']/g, '')
+}
+
+function pull(list, leads, label) {
+  const pool = list.slice()
+  const picked = []
+  leads.forEach((lead) => {
+    const want = plain(lead)
+    const index = pool.findIndex((item) => plain(label(item)).startsWith(want))
+    if (index >= 0) picked.push(pool.splice(index, 1)[0])
+  })
+  return [...picked, ...pool]
+}
+
+export function arrangeWritings(list) {
+  return pull(list, WRITING_LEAD, (piece) => piece.slug)
+}
+
+/* The live book always leads. It is a status, not a pick. */
 export function arrangeBooks(list) {
   const current = list.find((book) => book.current) ?? null
-  const rest = current ? list.filter((book) => book !== current) : list.slice()
-  return { current, rest, total: list.length }
+  const rest = pull(current ? list.filter((book) => book !== current) : list, READING_LEAD, (book) => book.title)
+  return { ordered: current ? [current, ...rest] : rest, total: list.length }
 }

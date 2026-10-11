@@ -1,80 +1,65 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { runMorph } from './morph'
 
 const NAMES = new Set(['writings', 'readings'])
-const LEAVE = 360
-const LEAVE_STILL = 160
 
 export function readArchive() {
   const id = window.location.hash.replace(/^#\/?/, '')
   return NAMES.has(id) ? id : null
 }
 
-function reduced() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-}
-
-/* Hash history so the system back control closes the list and restores the front door. */
+/* Hash history so the system back control closes the list and plays the morph in reverse. */
 export function useArchive() {
   const initial = readArchive()
   const [name, setName] = useState(initial)
-  const [phase, setPhase] = useState(initial ? 'open' : 'idle')
-  const phaseRef = useRef(phase)
+  const nameRef = useRef(name)
   const returnTo = useRef(null)
-  phaseRef.current = phase
+  nameRef.current = name
+
+  const go = useCallback((next) => {
+    runMorph(() => setName(next), next || nameRef.current)
+  }, [])
 
   const close = useCallback(() => {
-    if (phaseRef.current === 'idle' || phaseRef.current === 'closing') return
+    if (!nameRef.current) return
     if (history.state?.archive) history.back()
-    else {
-      history.replaceState(null, '', `${location.pathname}${location.search}`)
-      setPhase('closing')
-    }
-  }, [])
+    else go(null)
+  }, [go])
 
   const open = useCallback((id) => {
-    if (!NAMES.has(id) || phaseRef.current !== 'idle') return
+    if (!NAMES.has(id) || nameRef.current) return
     returnTo.current = document.activeElement
     history.pushState({ archive: id }, '', `#/${id}`)
-    setName(id)
-    setPhase('opening')
-  }, [])
+    go(id)
+  }, [go])
 
   useEffect(() => {
-    if (phase !== 'opening') return
-    let second = 0
-    const first = requestAnimationFrame(() => { second = requestAnimationFrame(() => setPhase((now) => (now === 'opening' ? 'open' : now))) })
-    return () => { cancelAnimationFrame(first); cancelAnimationFrame(second) }
-  }, [phase])
-
-  useEffect(() => {
-    const onPop = () => {
-      const next = readArchive()
-      if (next) { setName(next); setPhase('open'); return }
-      setPhase((now) => (now === 'idle' ? now : 'closing'))
-    }
+    const onPop = () => go(readArchive())
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
-  }, [])
+  }, [go])
 
   useEffect(() => {
-    if (phase !== 'closing') return
-    const timer = setTimeout(() => { setName(null); setPhase('idle') }, reduced() ? LEAVE_STILL : LEAVE)
-    return () => clearTimeout(timer)
-  }, [phase])
-
-  useEffect(() => {
-    if (phase !== 'idle') return
+    if (name) return
     const el = returnTo.current
     returnTo.current = null
-    el?.focus?.()
-  }, [phase])
+    const timer = setTimeout(() => el?.focus?.({ preventScroll: true }), 340)
+    return () => clearTimeout(timer)
+  }, [name])
 
   useEffect(() => {
-    if (phase === 'idle') return
+    if (!name) return
     const onKey = (event) => { if (event.key === 'Escape') close() }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [phase, close])
+  }, [name, close])
 
-  return { name, visible: phase !== 'idle', entered: phase === 'open', open, close }
+  useEffect(() => {
+    if (!name) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = prev }
+  }, [name])
+
+  return { name, open, close }
 }

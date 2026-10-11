@@ -1,16 +1,20 @@
 import { writings } from '../../data/writings'
-import { WRITING_PREVIEW } from '../arrange'
-import ShelfHead from './ShelfHead'
-import WritingRow from './WritingRow'
+import { arrangeWritings } from '../arrange'
+import ShelfChrome from './ShelfChrome'
+import { useRail } from './useRail'
+import WritingFace from './WritingFace'
 
-export default function WritingsShelf({ onOpen }) {
-  const preview = writings.slice(0, WRITING_PREVIEW)
+export default function WritingsShelf({ expanded, locked, onOpen, onClose }) {
+  const pieces = arrangeWritings(writings)
+  const rail = useRail(!expanded)
+
   return (
-    <section className="m-shelf m-rise d1" aria-labelledby="m-writings">
-      <ShelfHead id="m-writings" label="Writings" count={writings.length} showAll={writings.length > preview.length} onOpen={onOpen} />
-      <ul className="m-writes">
-        {preview.map((piece) => <li key={piece.slug}><WritingRow {...piece} /></li>)}
-      </ul>
-    </section>
+    <ShelfChrome id="writings" label="Writings" count={pieces.length} expanded={expanded} locked={locked} onOpen={onOpen} onClose={onClose}>
+      <div className={expanded ? undefined : 'm-bleed'}>
+        <ul ref={rail.ref} className={expanded ? 'm-stack' : 'm-rail m-rail-cards'} onKeyDown={rail.onKeyDown}>
+          {pieces.map((piece, index) => <WritingFace key={piece.slug} piece={piece} index={index} expanded={expanded} />)}
+        </ul>
+      </div>
+    </ShelfChrome>
   )
 }
