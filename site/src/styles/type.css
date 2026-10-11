@@ -7,8 +7,8 @@
 }
 
 .t-display {
-  font: 340 var(--fs-display)/0.92 var(--serif);
-  letter-spacing: -0.03em;
+  font: 380 var(--fs-display)/0.92 var(--serif);
+  letter-spacing: -0.012em;
 }
 
 .t-section {
@@ -25,6 +25,12 @@
 .t-title-s {
   font: 420 var(--fs-title-s)/1.15 var(--serif);
   letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.t-detail {
+  font: 380 var(--fs-detail)/0.98 var(--serif);
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 

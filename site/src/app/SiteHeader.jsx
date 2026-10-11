@@ -17,7 +17,7 @@ export default function SiteHeader({ route }) {
         <a className="wordmark" href="#/" aria-label={`${identity.line.join(' ')}, home`}>{identity.line.join(' ')}</a>
         <nav className="site-nav" aria-label="Sections">
           {NAV.map((item) => (
-            <a key={item.name} href={item.href} aria-current={route.name === item.name ? 'page' : undefined}>
+            <a key={item.name} href={item.href} aria-current={route.section === item.name ? 'page' : undefined}>
               {item.label}<sup>{item.count}</sup>
             </a>
           ))}

@@ -1,32 +1,34 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { transition } from '../lib/viewTransition'
+import { markInside } from './navigation'
 import { matchRoute } from './routes'
+import { applyScroll, shouldSave } from './scroll'
 
 const read = () => matchRoute(window.location.hash.replace(/^#\/?/, ''))
 
-/* Current route, kept in sync with the URL hash. Every change runs inside a view transition, and
-   scroll is handled here: home remembers where you left it, an archive deep link centres its book, the rest start at the top. */
+/* Current route, kept in sync with the URL hash. Every change runs inside a view transition;
+   scroll policy lives in ./scroll.js and is applied in a layout effect so the "after" snapshot is already positioned. */
 export function useRoute() {
   const [route, setRoute] = useState(read)
-  const current = useRef(route)
-  const scrolls = useRef(new Map())
+  const latest = useRef(route)
+  const shown = useRef(null)
+  const saved = useRef(new Map())
 
   useEffect(() => {
     const onChange = () => {
       const next = read()
-      scrolls.current.set(current.current.key, window.scrollY)
-      current.current = next
+      markInside()
+      if (shouldSave(latest.current, next)) saved.current.set(latest.current.key, window.scrollY)
+      latest.current = next
       transition(() => setRoute(next))
     }
     window.addEventListener('hashchange', onChange)
     return () => window.removeEventListener('hashchange', onChange)
   }, [])
 
-  /* Layout effect: runs inside the transition's flushSync, so the "after" snapshot is already scrolled. */
   useLayoutEffect(() => {
-    const anchor = route.params.slug && document.getElementById(`anchor-${route.params.slug}`)
-    if (anchor) anchor.scrollIntoView({ block: 'center' })
-    else window.scrollTo(0, route.name === 'home' ? scrolls.current.get('home') ?? 0 : 0)
+    applyScroll(route, shown.current, saved.current)
+    shown.current = route
   }, [route])
 
   return route

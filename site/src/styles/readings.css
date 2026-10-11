@@ -1,90 +1,29 @@
-/* Readings — visual and collection-oriented: the current book on its own stage, a rail of the rest, then the full grid. */
+/* Readings — the homepage shelf and the archive. The books bring the colour and depth; the page stays typographic.
+   Every object stands on one shared ground line: stages are bottom-aligned, captions hang below it. */
 
 .section-readings { background: var(--paper-deep); }
 
-.shelf { --cap-h: 2.75rem; --rail-foot: calc(var(--cap-h) + 0.8rem + 0.75rem); display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 1.5rem + 4vw, 3.5rem); }
+.shelf {
+  --cap-h: 2.4rem;
+  --cap-gap: 0.3rem;
+  --track-pb: 0.5rem;
+  --rail-foot: calc(var(--cap-h) + var(--cap-gap) + var(--track-pb));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.5rem, 1rem + 3vw, 3rem);
+}
 
 @media (min-width: 1100px) {
-  .shelf { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: calc(var(--gap) * 2.5); align-items: end; }
+  .shelf { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: calc(var(--gap) * 2); align-items: end; }
   .shelf.no-current { grid-template-columns: 1fr; }
+  .now { padding-bottom: var(--rail-foot); }
 }
-
-/* ---------- Cover ---------- */
-
-.cover {
-  position: relative;
-  display: block;
-  width: 100%;
-  aspect-ratio: 2 / 3;
-  container-type: inline-size;
-  overflow: hidden;
-  border-radius: 2px 5px 5px 2px;
-  background: var(--tone, var(--paper-deep));
-  color: var(--tone-on, var(--ink));
-  box-shadow: 0 1px 2px rgb(18 22 43 / 0.2), 0 12px 24px -14px rgb(18 22 43 / 0.5);
-  transition: transform var(--slow), box-shadow var(--slow);
-}
-
-/* The binding: a soft hinge down the left edge, the only physical cue the plate needs. */
-.cover::before {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 6cqw;
-  background: linear-gradient(90deg, rgb(0 0 0 / 0.2), rgb(0 0 0 / 0.05) 55%, rgb(255 255 255 / 0.14) 72%, transparent);
-  pointer-events: none;
-}
-
-/* A short rule opposite the title anchors the plate; its side alternates with the variant. */
-.cover::after {
-  content: '';
-  position: absolute;
-  left: 11cqw;
-  width: 9cqw;
-  bottom: 9cqw;
-  border-top: 1.5px solid currentColor;
-  opacity: 0.5;
-}
-.cover[data-variant='1']::after { bottom: auto; top: 9cqw; }
-.cover.has-art::after { display: none; }
-
-.cover-title {
-  position: absolute;
-  inset: 9cqw 8cqw 9cqw 11cqw;
-  display: flex;
-  align-items: flex-start;
-  font: 480 calc(var(--fit) * 1cqw)/1.02 var(--serif);
-  letter-spacing: -0.03em;
-  hyphens: auto;
-  overflow-wrap: break-word;
-  text-wrap: balance;
-}
-.cover[data-variant='1'] .cover-title { align-items: flex-end; }
-.cover.has-art img { width: 100%; height: 100%; object-fit: cover; }
-
-/* The only colour that isn't a tone: marigold marks the book in my hands. */
-.cover-live {
-  position: absolute;
-  top: 7cqw;
-  right: 7cqw;
-  width: 6cqw;
-  height: 6cqw;
-  border-radius: 50%;
-  background: var(--marigold);
-  box-shadow: 0 0 0 1.4cqw rgb(255 255 255 / 0.28);
-}
-
-/* Covers that lead somewhere lift on hover; press settles them back. Archive covers are inert and do neither. */
-@media (hover: hover) {
-  .is-link:hover .cover, .now-cover:hover .cover { transform: translateY(-5px); box-shadow: 0 2px 3px rgb(18 22 43 / 0.2), 0 22px 30px -14px rgb(18 22 43 / 0.5); }
-}
-.is-link:active .cover, .now-cover:active .cover { transform: translateY(-1px) scale(0.985); transition-duration: 90ms; }
 
 /* ---------- Current book ---------- */
 
-.now { display: grid; grid-template-columns: minmax(0, min(42%, 15rem)) minmax(0, 1fr); gap: clamp(1.25rem, 1rem + 1.5vw, 2rem); align-items: end; }
-.now-cover { display: block; }
-.now-copy { display: flex; flex-direction: column; gap: 0.55rem; }
+.now { display: grid; grid-template-columns: minmax(0, min(54%, 17rem)) minmax(0, 1fr); gap: 0.5rem clamp(0.5rem, 0.25rem + 1.5vw, 1.5rem); align-items: end; }
+.now-book { display: block; }
+.now-copy { display: flex; flex-direction: column; gap: 0.55rem; padding-bottom: var(--ground, 0.85rem); }
 
 .now-flag { display: inline-flex; align-items: center; gap: 0.55rem; font: 500 var(--fs-meta)/1.2 var(--sans); color: var(--ink-2); }
 
@@ -95,13 +34,9 @@
 .now-sub { font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
 .now-author { font: 500 var(--fs-small)/1.35 var(--sans); }
 
-@media (min-width: 1100px) {
-  .now { padding-bottom: var(--rail-foot); }
-}
-
 /* ---------- Rail ---------- */
 
-.rail-bar { display: flex; align-items: center; justify-content: space-between; min-height: 2.5rem; margin-bottom: 0.75rem; }
+.rail-bar { display: flex; align-items: center; justify-content: space-between; min-height: 2.5rem; margin-bottom: 0.25rem; }
 
 .rail-ctl { display: none; gap: 0.5rem; }
 @media (hover: hover) and (pointer: fine) { .rail-ctl { display: flex; } }
@@ -117,14 +52,13 @@
 
 .rail-track {
   display: flex;
-  gap: clamp(0.9rem, 0.6rem + 1.4vw, 1.5rem);
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
-  /* Bleeds to the screen edge on phones so the next cover is visibly cut off — the continuation cue. */
+  /* Bleeds to the screen edge on phones so the next book is visibly cut off — the continuation cue. */
   margin-inline: calc(var(--pad) * -1);
-  padding: 0.5rem var(--pad) 0.75rem;
+  padding: 0.25rem var(--pad) var(--track-pb);
   scroll-padding-inline: var(--pad);
 }
 .rail-track::-webkit-scrollbar { display: none; }
@@ -136,41 +70,33 @@
   .rail[data-start='false'][data-end='false'] .rail-track { mask-image: linear-gradient(90deg, transparent, #000 4.5rem, #000 calc(100% - 4.5rem), transparent); }
 }
 
-/* ---------- Book card ---------- */
+/* ---------- A book on a shelf: object, then author ---------- */
 
-.rail .bk-item { flex: none; width: clamp(8.75rem, 37vw, 10.5rem); scroll-snap-align: start; }
+.rail .bk-item { flex: none; width: clamp(9.25rem, 39vw, 11.5rem); margin-right: -0.9rem; scroll-snap-align: start; }
 
 .bk { display: block; }
-.bk-copy { display: flex; flex-direction: column; gap: 0.2rem; margin-top: 0.8rem; }
-.rail .bk-copy { height: var(--cap-h); overflow: hidden; }
-.rail .bk-author { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.bk-author { font: 500 var(--fs-meta)/1.35 var(--sans); color: var(--ink-2); text-wrap: balance; }
-.bk-sub { font-size: var(--fs-meta); line-height: 1.4; color: var(--ink-3); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-
-/* The rail's last stop: a cover-shaped door to the whole shelf. */
-.all-plate {
-  background: transparent; color: var(--ink);
-  border: 1px solid var(--rule-strong);
-  box-shadow: none;
-  transition: background var(--fast), border-color var(--fast), transform var(--slow);
+.bk-author {
+  display: block;
+  margin: var(--cap-gap, 0.3rem) 0.4rem 0 12%;
+  font: 500 var(--fs-meta)/1.35 var(--sans);
+  color: var(--ink-2);
+  text-wrap: balance;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.all-plate::before, .all-plate::after { display: none; }
-/* Content lives in a child: cqw on the container itself would resolve against the page, not the plate. */
-.all-inner { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 9cqw; }
-.all-count { font: 330 38cqw/0.85 var(--serif); letter-spacing: -0.05em; font-variant-numeric: lining-nums; }
-.all-label { display: inline-flex; align-items: center; font: 500 8.5cqw/1.2 var(--sans); }
-.all-label .arrow { width: 1em; height: 1em; }
-@media (hover: hover) { .bk-all:hover .all-plate { background: var(--paper); border-color: var(--ink); box-shadow: none; } .bk-all:hover .arrow { transform: translateX(3px); } }
+.rail .bk-author { height: var(--cap-h); }
 
-/* ---------- Archive grid ---------- */
+/* The shelf's last stop: a typographic colophon standing on the same ground line. */
+.rail .bk-end { margin-right: 0; width: clamp(8rem, 34vw, 10rem); }
+.bk-all { display: flex; flex-direction: column; justify-content: flex-end; gap: 0.5rem; height: calc(100% - var(--cap-h) - var(--cap-gap)); padding: 0 0 calc(var(--ground, 0.85rem) + 0.35rem) 0.5rem; }
+.all-count { font: 330 clamp(3.5rem, 2.5rem + 4vw, 5rem)/0.85 var(--serif); letter-spacing: -0.05em; font-variant-numeric: lining-nums; }
+.all-label { display: inline-flex; align-items: center; font: 500 var(--fs-small)/1.2 var(--sans); color: var(--ink-2); transition: color var(--fast); }
+@media (hover: hover) { .bk-all:hover .all-label { color: var(--blue); } .bk-all:hover .arrow { transform: translateX(3px); } }
 
-.book-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 1.5rem + 2vw, 3rem) var(--gap); }
+/* ---------- Archive: the same objects, calmer, easy to scan ---------- */
+
+.book-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 1rem + 1.5vw, 2.25rem) 0.25rem; }
 @media (min-width: 620px) { .book-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 900px) { .book-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (min-width: 1180px) { .book-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 
-
-/* A deep link marks its book with a marigold ring that settles away. */
-.is-target .cover { outline: 2px solid transparent; outline-offset: 6px; animation: target 2.8s var(--ease) 0.4s 1 both; }
-.is-target .bk-author { color: var(--ink); }
-@keyframes target { 0%, 60% { outline-color: var(--marigold); } 100% { outline-color: transparent; } }
+.book-grid .bk-author { margin-left: 15%; -webkit-line-clamp: 2; }

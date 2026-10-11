@@ -46,17 +46,22 @@
   --fast: 180ms var(--ease);
   --slow: 520ms var(--ease);
 
-  /* Cover tones — the portrait's colours, one per accent name used in data/books.js */
   --radius: 3px;
+
+  /* Detail-page title */
+  --fs-detail: clamp(2.5rem, 1.5rem + 4.2vw, 5rem);
 }
 
-[data-tone='ink'] { --tone: #161c3d; --tone-on: #f3efe6; }
-[data-tone='slate'] { --tone: #2e47b0; --tone-on: #eef0ff; }
-[data-tone='moss'] { --tone: #2d6a63; --tone-on: #e9f3ee; }
-[data-tone='sage'] { --tone: #a7c4bb; --tone-on: #14263a; }
-[data-tone='sand'] { --tone: #e6d9bd; --tone-on: #1d2140; }
-[data-tone='ochre'] { --tone: #e9b13e; --tone-on: #1b1d3a; }
-[data-tone='terracotta'] { --tone: #e2793a; --tone-on: #1a1630; }
-[data-tone='clay'] { --tone: #a9492a; --tone-on: #fbeee0; }
-[data-tone='burgundy'] { --tone: #7a2a3c; --tone-on: #f9e8e4; }
-[data-tone='plum'] { --tone: #4a3f7c; --tone-on: #ece8fa; }
+/* Book cloth — muted, material colours: oxblood, forest, cobalt, ivory, ochre, rust.
+   --tone is the binding, --tone-on the lettering, --deboss how the lettering sits in the material. */
+[data-tone] { --deboss: 0 -0.5px 0 rgb(0 0 0 / 0.35), 0 0.5px 0 rgb(255 255 255 / 0.1); }
+[data-tone='ink'] { --tone: #20243a; --tone-on: #efe9dc; }
+[data-tone='slate'] { --tone: #3a559c; --tone-on: #eef1fb; }
+[data-tone='moss'] { --tone: #2d5642; --tone-on: #e8f0e6; }
+[data-tone='terracotta'] { --tone: #c4623a; --tone-on: #fff1e4; }
+[data-tone='clay'] { --tone: #94442b; --tone-on: #f8e8da; }
+[data-tone='burgundy'] { --tone: #6a2431; --tone-on: #f4e3df; }
+[data-tone='plum'] { --tone: #4b3a60; --tone-on: #ebe4f1; }
+[data-tone='sage'] { --tone: #a9bca8; --tone-on: #1c2a28; --deboss: 0 0.5px 0 rgb(255 255 255 / 0.5), 0 -0.5px 0 rgb(0 0 0 / 0.08); }
+[data-tone='sand'] { --tone: #e7dec9; --tone-on: #2a2a38; --deboss: 0 0.5px 0 rgb(255 255 255 / 0.5), 0 -0.5px 0 rgb(0 0 0 / 0.08); }
+[data-tone='ochre'] { --tone: #cf9b38; --tone-on: #231f1a; --deboss: 0 0.5px 0 rgb(255 255 255 / 0.4), 0 -0.5px 0 rgb(0 0 0 / 0.1); }

@@ -1,5 +1,6 @@
 import HomePage from '../features/home/HomePage'
 import PinPreview from '../features/pin/PinPreview'
+import BookPage from '../features/readings/BookPage'
 import ReadingsPage from '../features/readings/ReadingsPage'
 import WritingsPage from '../features/writings/WritingsPage'
 
@@ -8,6 +9,7 @@ export const views = {
   home: HomePage,
   writings: WritingsPage,
   readings: ReadingsPage,
+  book: BookPage,
   pin: PinPreview,
 }
 

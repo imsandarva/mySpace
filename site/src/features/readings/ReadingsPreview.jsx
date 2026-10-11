@@ -14,7 +14,7 @@ export default function ReadingsPreview() {
         <div className={`shelf${currentBook ? '' : ' no-current'}`}>
           {currentBook && <CurrentBook book={currentBook} />}
           <Rail label="More from the shelf">
-            {railBooks.map((b) => <BookCard key={b.slug} book={b} linked />)}
+            {railBooks.map((b) => <BookCard key={b.slug} book={b} />)}
             <AllTile count={books.length} />
           </Rail>
         </div>

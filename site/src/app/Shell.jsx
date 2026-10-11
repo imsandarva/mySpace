@@ -5,7 +5,7 @@ import SiteHeader from './SiteHeader'
 
 /* The frame every page lives in: skip link, header, content, footer. */
 export default function Shell({ route, children }) {
-  useEffect(() => { document.title = routeTitle(route.name) }, [route.name])
+  useEffect(() => { document.title = routeTitle(route) }, [route.key])
 
   return (
     <>
