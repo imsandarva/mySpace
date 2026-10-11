@@ -10,7 +10,7 @@ export default function WritingItem({ writing, large = false }) {
   const [head, tail] = splitLast(writing.title)
 
   return (
-    <a className={`wr-item${large ? ' is-large' : ''}`} href={writing.url} {...outbound} aria-label={`${writing.title}, ${writing.date}, on Substack`}>
+    <a className={`wr-item${large ? ' is-large' : ''}`} href={writing.url} {...outbound} aria-label={`${writing.title}, ${writing.date}`}>
       <span className="wr-item-copy">
         <WritingMeta writing={writing} short={large} />
         <span className={`wr-title ${large ? 't-title' : 't-title-s'}`}>{head}<span className="nw">{tail}<Arrow kind="out" /></span></span>

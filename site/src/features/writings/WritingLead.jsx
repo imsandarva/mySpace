@@ -9,7 +9,7 @@ export default function WritingLead({ writing }) {
   const [head, tail] = splitLast(writing.title)
 
   return (
-    <a className="wr-lead" href={writing.url} {...outbound} aria-label={`${writing.title}, ${writing.date}, on Substack`}>
+    <a className="wr-lead" href={writing.url} {...outbound} aria-label={`${writing.title}, ${writing.date}`}>
       {writing.thumb && <Thumb src={writing.thumb} ratio="3 / 2" priority className="wr-lead-img" />}
       <span className="wr-lead-copy">
         <WritingMeta writing={writing} />
