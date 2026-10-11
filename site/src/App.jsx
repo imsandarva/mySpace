@@ -1,13 +1,11 @@
-import Page from './components/Page'
-import PinPreview from './components/pin/PinPreview'
-import { useHashRoute } from './hooks/useHashRoute'
-import MobileSite from './mobile/MobileSite'
-import { usePhone } from './mobile/usePhone'
+import { bare, views } from './app/views'
+import Shell from './app/Shell'
+import { useRoute } from './app/useRoute'
 
-/* Composition only: pins, the phone front door, or the finished desktop page. */
+/* Composition only: pick the page for the route and, unless it brings its own chrome, wrap it in the shell. */
 export default function App() {
-  const route = useHashRoute()
-  const phone = usePhone()
-  if (route.startsWith('pin')) return <PinPreview route={route} />
-  return phone ? <MobileSite /> : <Page />
+  const route = useRoute()
+  const View = views[route.name]
+  const page = <View route={route} />
+  return bare.has(route.name) ? page : <Shell route={route}>{page}</Shell>
 }

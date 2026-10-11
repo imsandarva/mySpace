@@ -1,0 +1,123 @@
+/* Site chrome: header and footer. */
+
+.site-header {
+  position: relative;
+  z-index: 20;
+  height: var(--header-h);
+  background: var(--paper);
+}
+
+/* Archives are long: the header pins and gains a hairline so you can always go home or switch collection. */
+.site-header.is-pinned {
+  position: sticky;
+  top: 0;
+  box-shadow: 0 1px 0 var(--rule);
+}
+
+.site-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.wordmark {
+  padding-block: 0.75rem;
+  font: 430 1.375rem/1 var(--serif);
+  letter-spacing: -0.035em;
+}
+
+.site-nav { display: flex; gap: clamp(1.25rem, 0.5rem + 3vw, 2.25rem); }
+
+.site-nav a {
+  position: relative;
+  padding-block: 1rem;
+  font: 500 var(--fs-small)/1 var(--sans);
+  color: var(--ink-2);
+  transition: color var(--fast);
+}
+
+.site-nav sup {
+  margin-left: 0.2em;
+  font-size: 0.68em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+}
+
+/* The current section carries a short ultramarine rule; others draw it on hover. */
+.site-nav a::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0.75rem;
+  height: 1px;
+  background: var(--blue);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms var(--ease);
+}
+.site-nav a[aria-current='page'] { color: var(--ink); }
+.site-nav a[aria-current='page']::after { transform: scaleX(1); }
+
+@media (hover: hover) {
+  .site-nav a:hover { color: var(--ink); }
+  .site-nav a:hover::after { transform: scaleX(1); }
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding-top: clamp(3rem, 2rem + 4vw, 6rem);
+}
+
+.footer-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 2rem + 3vw, 4rem); }
+
+@media (min-width: 800px) {
+  .footer-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: calc(var(--gap) * 2.5); }
+}
+
+.footer-address {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font: 340 clamp(1.5rem, 0.85rem + 3.1vw, 3.25rem)/1.1 var(--serif);
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+  background: linear-gradient(var(--blue), var(--blue)) 0 100% / 0% 1px no-repeat;
+  padding-bottom: 0.1em;
+  transition: color var(--fast), background-size 420ms var(--ease);
+}
+@media (hover: hover) {
+  .footer-address:hover { color: var(--blue); background-size: 100% 1px; }
+}
+
+.footer-links ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gap); margin-top: 0.5rem; }
+
+.footer-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 0.8rem;
+  border-top: 1px solid var(--rule);
+  font: 500 var(--fs-small)/1.2 var(--sans);
+  color: var(--ink);
+  transition: color var(--fast);
+}
+@media (hover: hover) {
+  .footer-links a:hover { color: var(--blue); }
+  .footer-links a:hover .arrow { transform: translate(2px, -2px); }
+}
+
+.footer-base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  padding-block: 1.25rem 1.75rem;
+  border-top: 1px solid var(--rule);
+}
+
+.footer-top { display: inline-flex; align-items: center; padding-block: 0.5rem; font: inherit; color: var(--ink-3); transition: color var(--fast); }
+@media (hover: hover) {
+  .footer-top:hover { color: var(--blue); }
+  .footer-top:hover .arrow { transform: translateY(-2px); }
+}

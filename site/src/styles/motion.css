@@ -1,65 +1,25 @@
-/* The identity line performs. Everything else arrives, then stays still. */
+/* Motion language: things arrive once, settle gently, and move between pages as the same object.
+   Everything here is opt-in via prefers-reduced-motion: no-preference; without it the site is simply still. */
 
-.identity-line.is-pending .identity-word { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes unveil { from { clip-path: inset(0 0 100% 0); transform: scale(1.05); } to { clip-path: inset(0); transform: none; } }
+  @keyframes breathe { 0% { transform: scale(1); opacity: 0.45; } 70%, 100% { transform: scale(3); opacity: 0; } }
 
-.identity-line.is-scatter .identity-word {
-  animation: converge var(--word-ms, 780ms) var(--ease) both;
-  animation-delay: var(--delay);
+  /* The hero arrives once per visit — name, voice, then the plate unveiled top to bottom. */
+  .is-intro .hero-name { animation: rise 900ms var(--ease) both; }
+  .is-intro .hero-copy { animation: rise 900ms var(--ease) 140ms both; }
+  .is-intro .plate img { animation: unveil 1200ms var(--ease) 80ms both; }
+
+  /* "Currently reading" is quietly alive. */
+  .dot::after { animation: breathe 2.8s ease-out infinite; }
 }
 
-.identity-line.is-fade .identity-word {
-  animation: arrive 0.65s var(--ease) both;
-}
-
-.band-rest,
-.shelf {
-  opacity: 0;
-}
-
-.page.is-scatter .band-rest,
-.page.is-scatter .shelf {
-  animation: arrive 0.85s var(--ease) both;
-  animation-delay: var(--settle);
-}
-
-.page.is-fade .band-rest,
-.page.is-fade .shelf {
-  animation: arrive 0.55s var(--ease) both;
-  animation-delay: 0.08s;
-}
-
-@keyframes converge {
-  from {
-    opacity: 0;
-    color: var(--clay);
-    transform: translate3d(var(--dx), var(--dy), 0) rotate(var(--rot)) scale(var(--sc));
-  }
-  to {
-    opacity: 1;
-    color: var(--ink);
-    transform: none;
-  }
-}
-
-@keyframes arrive {
-  from { opacity: 0; transform: translate3d(0, 10px, 0); }
-  to { opacity: 1; transform: none; }
-}
+/* Shared-element transitions: a cover or a section title keeps its identity as the page changes around it. */
+::view-transition-group(*) { animation-duration: 560ms; animation-timing-function: var(--ease); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 260ms; animation-timing-function: ease; }
 
 @media (prefers-reduced-motion: reduce) {
-  .identity-line.is-scatter .identity-word,
-  .identity-line.is-fade .identity-word,
-  .page.is-scatter .band-rest,
-  .page.is-scatter .shelf,
-  .page.is-fade .band-rest,
-  .page.is-fade .shelf {
-    animation: none;
-    opacity: 1;
-    transform: none;
-    color: inherit;
-  }
-  .shelf-entry,
-  .sign-email,
-  .sign-link-primary,
-  .sign-icon-link { transition: none; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+  .thumb img, .cover, .arrow { transition: none !important; }
 }

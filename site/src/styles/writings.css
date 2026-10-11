@@ -1,0 +1,64 @@
+/* Writings — typographic and editorial. The lead gets an image and the largest title; the rest are quiet rows. */
+
+.thumb { position: relative; display: block; overflow: hidden; aspect-ratio: var(--ratio); background: var(--paper-deep); border-radius: var(--radius); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease); }
+
+.wr-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2rem, 1.25rem + 3vw, 3rem); }
+
+@media (min-width: 900px) {
+  .wr-layout { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: calc(var(--gap) * 2.5); align-items: start; }
+}
+
+/* Lead */
+.wr-lead { display: flex; flex-direction: column; gap: 1.25rem; }
+.wr-lead-copy { display: flex; flex-direction: column; gap: 0.65rem; max-width: 38rem; }
+.wr-lead .t-title { font-size: clamp(2rem, 1.35rem + 2.6vw, 3.5rem); line-height: 1.02; letter-spacing: -0.03em; }
+
+@media (min-width: 900px) { .wr-lead .thumb { aspect-ratio: 16 / 10; } }
+
+/* Shared text parts */
+.wr-meta { display: inline-flex; gap: 0.45em; }
+.wr-title { display: block; color: var(--ink); transition: color var(--fast); }
+.wr-blurb { display: block; max-width: 34rem; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.wr-title .arrow { margin-left: 0.25em; width: 0.62em; height: 0.62em; vertical-align: 0.12em; color: var(--ink-3); transition: transform var(--fast), color var(--fast); }
+
+/* Rows */
+.wr-list > li { border-top: 1px solid var(--rule); }
+.wr-list > li:last-child { border-bottom: 1px solid var(--rule); }
+
+.wr-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.25rem; align-items: start; padding-block: 1.35rem; transition: opacity var(--fast); }
+.wr-item-copy { display: flex; flex-direction: column; gap: 0.45rem; }
+.wr-item-img { width: clamp(4.25rem, 3rem + 5vw, 5.25rem); }
+
+/* Hover is precise and different per part: the lead's image drifts, a row's title takes the accent. */
+@media (hover: hover) {
+  .wr-lead:hover .thumb img { transform: scale(1.035); }
+  .wr-lead:hover .wr-title, .wr-item:hover .wr-title { color: var(--blue); }
+  .wr-lead:hover .arrow, .wr-item:hover .arrow { color: var(--blue); transform: translate(2px, -2px); }
+  .wr-item:hover .thumb img { transform: scale(1.06); }
+}
+.wr-lead:active, .wr-item:active { opacity: 0.7; }
+
+/* Archive */
+.year { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.25rem; padding-top: 1.75rem; border-top: 1px solid var(--rule); }
+.year + .year { margin-top: clamp(2rem, 1rem + 3vw, 3.5rem); }
+
+.year-label {
+  font: 340 clamp(2rem, 1.4rem + 2.4vw, 3.5rem)/1 var(--serif);
+  letter-spacing: -0.04em;
+  font-variant-numeric: lining-nums;
+  color: var(--ink-3);
+}
+
+@media (min-width: 800px) {
+  .year { grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: var(--gap); padding-top: 0; }
+  .year-label { position: sticky; top: calc(var(--header-h) + 1.5rem); align-self: start; padding-top: 1.5rem; }
+}
+
+.year-list > li:first-child .wr-item { padding-top: 1.5rem; }
+.year-list > li + li { border-top: 1px solid var(--rule); }
+
+.wr-item.is-large { padding-block: 1.75rem; gap: clamp(1.25rem, 1rem + 2vw, 2.5rem); }
+.wr-item.is-large .wr-item-copy { gap: 0.6rem; }
+.wr-item.is-large .wr-item-img { width: clamp(5.5rem, 3.5rem + 9vw, 10rem); }
+.wr-item.is-large .wr-blurb { font-size: 1rem; }

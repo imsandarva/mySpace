@@ -1,0 +1,71 @@
+/* Typographic roles. Serif (Fraunces) carries voice and titles; sans (Instrument Sans) carries information.
+   Sizes step unevenly on purpose — the contrast between roles is the hierarchy. */
+
+.t-name {
+  font: 330 var(--fs-name)/0.86 var(--serif);
+  letter-spacing: -0.045em;
+}
+
+.t-display {
+  font: 340 var(--fs-display)/0.92 var(--serif);
+  letter-spacing: -0.03em;
+}
+
+.t-section {
+  font: 360 var(--fs-section)/0.95 var(--serif);
+  letter-spacing: -0.03em;
+}
+
+.t-title {
+  font: 400 var(--fs-title)/1.08 var(--serif);
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.t-title-s {
+  font: 420 var(--fs-title-s)/1.15 var(--serif);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.t-lede {
+  font: 350 var(--fs-lede)/1.22 var(--serif);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.t-meta {
+  font: 500 var(--fs-meta)/1.3 var(--sans);
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+}
+
+/* Counts sit beside titles like a footnote mark — small, tabular, quiet. */
+.count {
+  margin-left: 0.18em;
+  font: 500 max(0.8125rem, 0.2em)/1 var(--sans);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+  vertical-align: top;
+  position: relative;
+  top: 0.7em;
+}
+
+/* The one text-link style: a quiet rule that fills with ultramarine on hover. */
+.link {
+  font: 500 var(--fs-small)/1.4 var(--sans);
+  padding-bottom: 0.15em;
+  background-image: linear-gradient(var(--blue), var(--blue)), linear-gradient(var(--rule-strong), var(--rule-strong));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px, 100% 1px;
+  transition: color var(--fast), background-size 320ms var(--ease);
+}
+
+@media (hover: hover) {
+  .link:hover { color: var(--blue); background-size: 100% 1px, 100% 1px; }
+  .link:hover .arrow.is-out { transform: translate(2px, -2px); }
+}

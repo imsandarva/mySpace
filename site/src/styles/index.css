@@ -1,11 +1,14 @@
+/* Self-hosted variable fonts (latin subset only is fetched, via unicode-range). */
+@import '@fontsource-variable/fraunces/opsz.css';
+@import '@fontsource-variable/instrument-sans/index.css';
+
 @import './tokens.css';
 @import './base.css';
+@import './type.css';
 @import './layout.css';
-@import './band.css';
-@import './shelf.css';
-@import './reading.css';
-@import './rest.css';
+@import './chrome.css';
+@import './hero.css';
+@import './writings.css';
+@import './readings.css';
 @import './motion.css';
 @import './pin.css';
-@import './mobile.css';
-@import './mobile-shelf.css';

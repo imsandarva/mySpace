@@ -1,28 +1,58 @@
-/* Composed page — scrolls naturally when content exceeds the viewport. */
+/* One container, one rhythm. Pages compose from .wrap and .section; nothing else positions the page. */
 
-.page {
-  max-width: var(--page);
-  margin: 0 auto;
-  min-height: 100svh;
-  padding: var(--pad-y) var(--pad-x) clamp(3rem, 7vh, 5rem);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-}
-
-.shelf {
-  width: min(100%, var(--shelf));
+.wrap {
+  width: min(100% - 2 * var(--pad), 76rem);
   margin-inline: auto;
-  margin-top: var(--space-3);
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.88fr);
-  gap: clamp(var(--space-5), 8vw, var(--space-7));
-  align-items: start;
 }
 
-@media (max-width: 959px) {
-  .shelf {
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-  }
+.section { padding-block: var(--section); }
+
+/* Section title row: the title, and the one door into the full collection. */
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(1.75rem, 1rem + 3vw, 3.5rem);
 }
+
+.more {
+  flex: none;
+  padding-bottom: 0.45em;
+  font: 500 var(--fs-small)/1.2 var(--sans);
+  color: var(--ink);
+  transition: color var(--fast);
+}
+.more .arrow { transition: transform var(--fast); }
+
+@media (hover: hover) {
+  .more:hover { color: var(--blue); }
+  .more:hover .arrow:not(.is-out) { transform: translateX(3px); }
+}
+
+@media (max-width: 420px) {
+  .more { font-size: 0.875rem; }
+}
+
+/* Archive pages share one head and one body rhythm. */
+.page-head {
+  padding-top: clamp(1.5rem, 1rem + 2.5vw, 3rem);
+  padding-bottom: clamp(2rem, 1rem + 4vw, 4.5rem);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: clamp(1.25rem, 1rem + 2vw, 2.5rem);
+  padding-block: 0.5rem;
+  font: 500 var(--fs-small)/1 var(--sans);
+  color: var(--ink-2);
+  transition: color var(--fast);
+}
+.back .arrow { transition: transform var(--fast); }
+@media (hover: hover) {
+  .back:hover { color: var(--blue); }
+  .back:hover .arrow { transform: translateX(-3px); }
+}
+
+.archive { padding-bottom: var(--section); }
