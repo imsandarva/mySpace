@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Arrow from '../../../ui/Arrow'
 import BookFlat from '../book/BookFlat'
 import BookView from '../view/BookView'
@@ -8,6 +8,7 @@ import FocusTools from './FocusTools'
 import { glide, inViewport, invert } from './flip'
 import { focusStore } from './focusStore'
 import { useRotate } from './useRotate'
+import { useRotateHint } from './useRotateHint'
 
 const FOCUS_REST = { yaw: 0.42, pitch: 0.19 }
 const FLIGHT = 580
@@ -29,7 +30,8 @@ export default function FocusSheet({ book, focus, inline }) {
   const rotate = useRotate(rig)
   const [gaveUp, setGaveUp] = useState(false)
   const ready = flat || rigReady || gaveUp
-  const flight = (ms = FLIGHT) => api?.getEngine().invalidateFor(ms + 80)
+  const flight = useCallback((ms = FLIGHT) => api?.getEngine().invalidateFor(ms + 80), [api])
+  useRotateHint({ rigRef: rig, active: !focus.closing && !flat, touched: rotate.touched, invalidateFor: flight })
 
   /* If the 3D book isn't ready in a moment, carry on with the flat cover rather than leave the visitor waiting. */
   useEffect(() => { const t = setTimeout(() => setGaveUp(true), 1500); return () => clearTimeout(t) }, [])

@@ -1,4 +1,5 @@
 import { frameDistance, buildStudio } from './studio'
+import { samplePosePath } from './poseScript'
 
 /* One book, posed and animated. A "view" for the engine: it knows its element, its scene and camera, how to settle toward
    a target pose each frame, and when it has stopped moving (so the engine can sleep). Nothing here is idle motion:
@@ -52,12 +53,33 @@ export class BookRig {
   /* Direct manipulation: dragging turns the book about its own vertical axis (yaw) and tilts it toward/away from you (pitch).
      Pitch is capped just short of vertical so the controls never flip; the top and bottom edges are both reachable. */
   rotateBy(dx, dy) {
+    this.cancelPoseScript()
     this.yawTo += dx * DRAG
     this.pitchTo = Math.max(-MAX_PITCH, Math.min(MAX_PITCH, this.pitchTo + dy * DRAG))
     this.wake()
   }
 
   nudge(dyaw, dpitch) { this.rotateBy(dyaw / DRAG, dpitch / DRAG) }
+
+  /* Choreographed targets (opening dance, etc.): smooth path drives yawTo/pitchTo each frame; visitor drag cancels. */
+  beginPoseScript(keyframes, durationMs) {
+    this.cancelPoseScript()
+    this.poseScript = { keyframes, duration: durationMs, t0: performance.now(), baseYaw: this.yawTo, basePitch: this.pitchTo }
+    this.wake()
+  }
+
+  cancelPoseScript() { this.poseScript = null }
+
+  _advancePoseScript() {
+    const s = this.poseScript
+    if (!s) return false
+    const u = Math.min(1, (performance.now() - s.t0) / s.duration)
+    const { dy, dp } = samplePosePath(s.keyframes, u)
+    this.yawTo = s.baseYaw + dy
+    this.pitchTo = Math.max(-MAX_PITCH, Math.min(MAX_PITCH, s.basePitch + dp))
+    if (u >= 1) this.poseScript = null
+    return !!this.poseScript
+  }
 
   /* Back to the three-quarter view, by the shortest way round. */
   reset() {
@@ -75,6 +97,7 @@ export class BookRig {
 
   /* Settle toward the target; returns true while anything is still moving. */
   tick(dt) {
+    const scripting = this._advancePoseScript()
     const k = this.snap ? 999 : 1
     this.yaw = damp(this.yaw, this.yawTo, 16 * k, dt)
     this.pitch = damp(this.pitch, this.pitchTo, 16 * k, dt)
@@ -84,7 +107,7 @@ export class BookRig {
     if (this.fadeTo === 1 && this.fade > 0.98) this.fade = 1
     this.apply()
     this.refresh()
-    return !(settled(this.yaw, this.yawTo) && settled(this.pitch, this.pitchTo) && settled(this.hoverAmt, this.hover ? 1 : 0) && settled(this.fade, this.fadeTo))
+    return scripting || !(settled(this.yaw, this.yawTo) && settled(this.pitch, this.pitchTo) && settled(this.hoverAmt, this.hover ? 1 : 0) && settled(this.fade, this.fadeTo))
   }
 
   /* Hover lifts the book slightly, brings it forward and turns it a touch toward you; its shadow tightens. */

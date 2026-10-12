@@ -8,9 +8,9 @@ features/readings/
   ReadingsPreview.jsx   homepage section: heading + Collection + inline FocusLayer
   ReadingsPage.jsx      archive page: ArchiveGrid + fixed FocusLayer
   collection/           compositions.js (art direction), Collection, ArchiveGrid, BookSlot
-  focus/                focusStore, FocusLayer, FocusSheet, FocusDetails, FocusTools, useRotate, flip
+  focus/                focusStore, FocusLayer, FocusSheet, FocusDetails, FocusTools, useRotate, useRotateHint, rotateHint, flip
   view/                 engineStore (lazy load), BookView (puts a book into a DOM box)
-  three/                the 3D layer: engine, rig, model, studio, covers, materials, tones, capability, index
+  three/                the 3D layer: engine, rig, poseScript, model, studio, covers, materials, tones, capability, index
   book/                 BookFlat — the flat cover shown only on devices without WebGL
 ```
 
@@ -51,7 +51,7 @@ Fading a book raises a **veil in the page's own colour** instead of making mater
 - **Rest:** still. No idle motion.
 - **Hover / keyboard focus:** lifts slightly, comes forward, turns a touch toward you; shadow tightens. Neighbours do not move.
 - **Select (`focus/`):** the book's box *flies* (FLIP) from its place in the collection to its place in the focused view while the 3D book eases between poses; other books fade into the paper; the words arrive after it lands. Nothing navigates — selection is state (`focusStore`), not a route.
-- **Rotate:** drag (mouse, pen, touch) turns it about its own axes; arrow keys nudge it. It holds where you leave it (no inertia, no auto-spin). Pitch stops just short of vertical, so top and bottom edges are reachable but the controls never flip. `touch-action: none` applies only to the book's box — everywhere else the page scrolls normally. **Reset view** (discreet icon) returns to the three-quarter pose by the shortest way.
+- **Rotate:** drag (mouse, pen, touch) turns it about its own axes; arrow keys nudge it. It holds where you leave it (no inertia, no auto-spin). Pitch stops just short of vertical, so top and bottom edges are reachable but the controls never flip. `touch-action: none` applies only to the book's box — everywhere else the page scrolls normally. **Reset view** (discreet icon) returns to the three-quarter pose by the shortest way. On first open, **500 ms after opening** focus, a short **opening dance** (`rotateHint` → `BookRig.beginPoseScript` + `poseScript`) sways the book through a smooth keyframed path and leaves it on a slightly new pose (no snap-back); drag or arrow keys cancel the script — skipped if the visitor already rotated, or under `prefers-reduced-motion`.
 - **Close:** `Back to collection`, or **Escape**. The book flies back to its slot, scroll position and arrangement are untouched, and keyboard focus returns to that book. Leaving the page closes it.
 - Homepage: the focused view is **inline** in the Readings section. Archive: it fills the viewport under the header (scroll locked while open). Same component, `placement` differs.
 
