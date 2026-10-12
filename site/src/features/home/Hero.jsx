@@ -25,7 +25,7 @@ export default function Hero() {
       </div>
 
       <figure className="plate">
-        <img src={PORTRAIT} alt="Painted portrait of Sandarva" width="800" height="1200" fetchPriority="high" decoding="async" />
+        <img src={PORTRAIT} alt="Painted portrait of Sandarva" width="800" height="1200" fetchpriority="high" decoding="async" />
         <figcaption className="t-meta">Sandarva Paudel</figcaption>
       </figure>
     </section>

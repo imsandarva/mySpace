@@ -1,0 +1,22 @@
+/* FLIP: move an element from where it *was* to where it *is*, as one smooth motion.
+   Layout has already changed; we start from the old rectangle's transform and animate to none (or the reverse). */
+
+export const EASE = 'cubic-bezier(0.22, 0.8, 0.24, 1)'
+
+const centre = (r) => [r.left + r.width / 2, r.top + r.height / 2]
+
+/* The transform that makes `el` (laid out at `to`) look like it is sitting at `from`. */
+export function invert(from, to) {
+  const [fx, fy] = centre(from)
+  const [tx, ty] = centre(to)
+  return `translate(${fx - tx}px, ${fy - ty}px) scale(${from.width / to.width}, ${from.height / to.height})`
+}
+
+/* Animate `el` between two transforms; resolves when finished. Skipped (resolves at once) when motion is reduced. */
+export function glide(el, fromT, toT, duration, reduced) {
+  if (reduced) { el.style.transform = toT; return Promise.resolve() }
+  const a = el.animate([{ transform: fromT }, { transform: toT }], { duration, easing: EASE, fill: 'both' })
+  return a.finished.then(() => { el.style.transform = toT; a.cancel() }).catch(() => {})
+}
+
+export const inViewport = (r) => r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth

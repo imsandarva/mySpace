@@ -171,7 +171,7 @@
 /* ---------- Behaviour: a book that leads somewhere is picked up a little — lifted, turned toward you, its shadow loosening ---------- */
 
 @media (hover: hover) {
-  .is-link:hover .bk3-body { --lift: -1.3cqw; --ry: calc(var(--ry0) - 7deg); }
-  .is-link:hover .bk3-shadow { transform: translateX(-47%) scale(0.94); opacity: 0.7; }
+  .slot-btn:hover .bk3-body { --lift: -1.3cqw; --ry: calc(var(--ry0) - 7deg); }
+  .slot-btn:hover .bk3-shadow { transform: translateX(-47%) scale(0.94); opacity: 0.7; }
 }
-.is-link:active .bk3-body { --lift: -0.3cqw; transition-duration: 90ms; }
+.slot-btn:active .bk3-body { --lift: -0.3cqw; transition-duration: 90ms; }

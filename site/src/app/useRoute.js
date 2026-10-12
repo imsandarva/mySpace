@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { transition } from '../lib/viewTransition'
-import { markInside } from './navigation'
 import { matchRoute } from './routes'
 import { applyScroll, shouldSave } from './scroll'
 
@@ -11,14 +10,12 @@ const read = () => matchRoute(window.location.hash.replace(/^#\/?/, ''))
 export function useRoute() {
   const [route, setRoute] = useState(read)
   const latest = useRef(route)
-  const shown = useRef(null)
   const saved = useRef(new Map())
 
   useEffect(() => {
     const onChange = () => {
       const next = read()
-      markInside()
-      if (shouldSave(latest.current, next)) saved.current.set(latest.current.key, window.scrollY)
+      if (shouldSave(latest.current)) saved.current.set(latest.current.key, window.scrollY)
       latest.current = next
       transition(() => setRoute(next))
     }
@@ -27,8 +24,7 @@ export function useRoute() {
   }, [])
 
   useLayoutEffect(() => {
-    applyScroll(route, shown.current, saved.current)
-    shown.current = route
+    applyScroll(route, saved.current)
   }, [route])
 
   return route

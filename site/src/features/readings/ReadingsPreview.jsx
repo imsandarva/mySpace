@@ -1,22 +1,20 @@
-import Rail from '../../ui/Rail'
 import SectionHead from '../../ui/SectionHead'
-import { books, currentBook, railBooks } from '../../lib/books'
-import AllTile from './AllTile'
-import BookCard from './BookCard'
-import CurrentBook from './CurrentBook'
+import { books } from '../../lib/books'
+import Collection from './collection/Collection'
+import FocusLayer from './focus/FocusLayer'
+import { useFocus } from './focus/focusStore'
 
-/* Homepage Readings: the current book on its own stage, a browsable rail of the rest, one clear door to all of them. */
+/* Homepage Readings: a composed handful of real 3D books and the way to the rest. Selecting one opens the focused view right here in the section. */
 export default function ReadingsPreview() {
+  const focused = !!useFocus().slug
+
   return (
     <section className="section section-readings" aria-labelledby="readings-title">
       <div className="wrap">
         <SectionHead id="readings-title" title="Readings" count={books.length} href="#/readings" more={`All ${books.length} books`} vt="readings-title" />
-        <div className={`shelf${currentBook ? '' : ' no-current'}`}>
-          {currentBook && <CurrentBook book={currentBook} />}
-          <Rail label="More from the shelf">
-            {railBooks.map((b) => <BookCard key={b.slug} book={b} />)}
-            <AllTile count={books.length} />
-          </Rail>
+        <div className="rd-stage">
+          <Collection inert={focused} />
+          <FocusLayer inline />
         </div>
       </div>
     </section>

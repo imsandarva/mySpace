@@ -45,8 +45,5 @@ export const books = raw.map((b, index) => {
 export const currentBook = books.find((b) => b.current)
 export const bookBySlug = (slug) => books.find((b) => b.slug === slug)
 
-/* Neighbours in shelf order, for stepping through books without going back to the list. */
-export const neighbours = (book) => ({ prev: books[book.index - 1], next: books[book.index + 1] })
-
 /* Books on the homepage shelf, in shelf order — the current book has its own stage. */
 export const railBooks = books.filter((b) => !b.current).slice(0, home.shelf)

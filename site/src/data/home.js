@@ -6,6 +6,7 @@ export const home = {
   lead: 'emergence-properties',
   support: ['election-2026-of-nepal', 'what-we-get-from-reading-a-book', 'by-endurance-we-conquer'],
 
-  /* Readings: how many books sit on the shelf rail beside the current one. */
-  shelf: 10,
+  /* Readings: how many books sit beside the current one (the composition in features/readings/collection/compositions.js
+     uses the first six on desktop and the first four on phones). */
+  shelf: 6,
 }

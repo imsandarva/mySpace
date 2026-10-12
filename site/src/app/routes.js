@@ -1,12 +1,9 @@
-import { bookBySlug } from '../lib/books'
-
 /* Route table — one place that knows every URL the site answers to. Hash-based, so static hosting just works.
-   `section` is the header item a page belongs to; `title` is a string or a function of the route params. */
+   `section` is the header item a page belongs to. A book is never a route: opening one is a state of the page it is on. */
 
 const table = [
   { name: 'writings', re: /^writings\/?$/, title: 'Writings' },
-  { name: 'book', section: 'readings', re: /^readings\/([a-z0-9-]+)\/?$/, keys: ['slug'], title: ({ slug }) => bookBySlug(slug)?.name ?? 'Readings' },
-  { name: 'readings', re: /^readings\/?$/, title: 'Readings' },
+  { name: 'readings', re: /^readings(?:\/[a-z0-9-]*)?\/?$/, title: 'Readings' },
   { name: 'pin', re: /^pin(?:\/(profile|board))?\/?$/, keys: ['view'] },
 ]
 
@@ -18,7 +15,7 @@ const build = (r, path = '', match = []) => {
   return { name, section: r?.section ?? name, key: path || 'home', params, title: r?.title }
 }
 
-/* '#/readings/shoe-dog' → { name: 'book', section: 'readings', params: { slug: 'shoe-dog' } }. Unknown paths fall back to home. */
+/* '#/readings' → { name: 'readings' }. Unknown paths fall back to home. */
 export function matchRoute(path) {
   for (const r of table) {
     const m = path.match(r.re)
@@ -27,7 +24,4 @@ export function matchRoute(path) {
   return build(null)
 }
 
-export const routeTitle = ({ title, params }) => {
-  const t = typeof title === 'function' ? title(params) : title
-  return t ? `${t} — ${SITE}` : SITE
-}
+export const routeTitle = ({ title }) => (title ? `${title} — ${SITE}` : SITE)

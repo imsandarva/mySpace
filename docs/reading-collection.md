@@ -1,0 +1,76 @@
+# The 3D reading collection
+
+Real-time hardcover books, built from one reusable model (`hardcover.glb`), arranged as a curated composition on the homepage,
+listed compactly in the archive, and opened into a focused view where a book can be turned freely. Everything lives in `site/src/features/readings/`.
+
+```
+features/readings/
+  ReadingsPreview.jsx   homepage section: heading + Collection + inline FocusLayer
+  ReadingsPage.jsx      archive page: ArchiveGrid + fixed FocusLayer
+  collection/           compositions.js (art direction), Collection, ArchiveGrid, BookSlot
+  focus/                focusStore, FocusLayer, FocusSheet, FocusDetails, FocusTools, useRotate, flip
+  view/                 engineStore (lazy load), BookView (puts a book into a DOM box)
+  three/                the 3D layer: engine, rig, model, studio, covers, materials, tones, capability, index
+  book/                 the CSS book (placeholder + fallback): BookObject, BookFront, BookSpine
+```
+
+## How it fits together
+
+1. **One shared canvas** (`three/engine.js`). A single fixed, pointer-transparent `<canvas class="gl-canvas">` sits above page content and below the header.
+   Each book is a *view*: a DOM element plus a scene. Every frame the engine reads each element's rectangle and draws that book into it (scissored viewport).
+   Layout, scrolling and CSS animation therefore drive the 3D for free, and one WebGL context serves the whole site.
+2. **Render on demand.** The engine draws only while something is moving (a pose settling, a drag, a flight) and only for views on screen. Idle page = zero frames.
+3. **Lazy.** `view/engineStore.js` imports the 3D layer after the page is idle and only if WebGL2 exists (and the visitor hasn't asked to save data). Until then — and forever if it fails — every slot shows the **CSS book**, so layout never shifts and nothing is blank.
+4. **Slots are real buttons** (`collection/BookSlot.jsx`): keyboard focus, screen-reader names and the focus ring come from the DOM. Hover or keyboard focus lifts the 3D book; click opens it.
+
+## The model contract (`hardcover.glb`)
+
+One closed hardcover, ≈ 15.7 × 23 × 3 cm, pivot at its centre, front facing +z, spine on the left. Meshes (and material names): `Front`, `Back`, `Spine`, `Pages`.
+Front/Back/Spine start neutral grey; `Pages` is ivory. UVs: Front/Back span 0–1 (the back's spine edge is on the right); the Spine runs back-edge → front-edge.
+All artwork is therefore drawn **upright**, with `flipY = false` (glTF UVs start top-left).
+
+`three/model.js` loads it once and clones per book. A book's thickness is varied by scaling only the model's depth (`shape.d`), so heft varies while cover proportions stay true.
+
+## Surfaces
+
+`three/covers.js` paints each book's surfaces to canvases; `three/materials.js` turns them into per-book materials:
+
+- **Real artwork wins.** If a book has `cover` (a URL) it is centre-cropped to the board's proportions — never stretched — and the spine/back take its average colour.
+- **Otherwise** a typographic cover is set from the book's *true* title and author in Fraunces / Instrument Sans, in one of three layouts (`a` top-left, `b` framed and centred, `c` label) and one of three materials (`cloth`, `matte`, `board`) — chosen stably from the slug so a book never changes character.
+- The **back** is a plain material colour; the **page block** stays ivory (dimmed so the top edge never blows out).
+- Texture size is a tier: `lg` 1024 (focus), `md` 640 (homepage), `sm` 384 (archive).
+
+## Lighting and framing (`three/studio.js`)
+
+Soft image-based light from a procedural room (nothing to download), one gentle key light, no tone mapping (covers keep their true colour),
+and a fixed three-quarter camera (FOV 24°, restrained perspective). The contact shadow is a soft ellipse in its **own pass underneath the book** (transparent objects would otherwise draw over it), sized to stay inside the view so it is never clipped.
+Fading a book raises a **veil in the page's own colour** instead of making materials transparent — the book stays solid and simply dissolves into the paper.
+
+## Interaction
+
+- **Rest:** still. No idle motion.
+- **Hover / keyboard focus:** lifts slightly, comes forward, turns a touch toward you; shadow tightens. Neighbours do not move.
+- **Select (`focus/`):** the book's box *flies* (FLIP) from its place in the collection to its place in the focused view while the 3D book eases between poses; other books fade into the paper; the words arrive after it lands. Nothing navigates — selection is state (`focusStore`), not a route.
+- **Rotate:** drag (mouse, pen, touch) turns it about its own axes; arrow keys nudge it. It holds where you leave it (no inertia, no auto-spin). Pitch stops just short of vertical, so top and bottom edges are reachable but the controls never flip. `touch-action: none` applies only to the book's box — everywhere else the page scrolls normally. **Reset view** (discreet icon) returns to the three-quarter pose by the shortest way.
+- **Close:** `Back to collection`, or **Escape**. The book flies back to its slot, scroll position and arrangement are untouched, and keyboard focus returns to that book. Leaving the page closes it.
+- Homepage: the focused view is **inline** in the Readings section. Archive: it fills the viewport under the header (scroll locked while open). Same component, `placement` differs.
+
+## Performance
+
+- `three` is its own lazy chunk (~157 KB gzipped); the initial bundle is unaffected. The model is 11 KB.
+- One WebGL context, one canvas, DPR capped at 2, render-on-demand, off-screen views skipped.
+- Archive books are built only while within ~300 px of the viewport (`hooks/useNearViewport`) and disposed when far away.
+- Textures are tiered and disposed with their book.
+
+## Accessibility
+
+Each slot is a `<button>` named "Title, Author. Open"; the canvas is `aria-hidden`. The focused view is a labelled region; the title receives focus on landing.
+The book's box is a focusable group ("Drag, or use the arrow keys, to rotate"). Escape closes. Reduced motion removes flights and fades and makes poses snap. If 3D is unavailable the focused view shows the CSS book and all text.
+
+## Extending
+
+- **Re-compose the homepage:** edit `collection/compositions.js` (plain data: x, width, lift, yaw, pitch per slot, one plan per width).
+- **Change which books appear:** `data/home.js` (`shelf` = how many follow the current book).
+- **Change the model:** replace `site/public/assets/hardcover.glb`, keeping mesh names and UV conventions above.
+- **Change materials/typography of generated covers:** `three/covers.js`; colours in `styles/tokens.css`.
+- **Debugging:** in dev, `window.__books` exposes the engine (views, frame state).
