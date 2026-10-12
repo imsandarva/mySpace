@@ -1,5 +1,5 @@
 /* Can this device render the 3D books? Needs WebGL2, and respects the visitor's data-saver choice.
-   When it can't, the page keeps its CSS books — nothing breaks, nothing is blank. */
+   When it can't, slots show a flat cover instead — nothing breaks, nothing is blank. */
 let verdict
 
 export function canRender3D() {

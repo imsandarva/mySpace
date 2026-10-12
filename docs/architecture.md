@@ -36,7 +36,7 @@ features compose `ui/`, `hooks/` and `lib/`.
 ## Styles
 
 Plain CSS, split by responsibility, imported in order from `styles/index.css`:
-`tokens` (all design values) → `base` → `type` (typographic roles) → `layout` → `chrome` (header/footer) → `hero` → `writings` → `book` (the CSS book) → `readings` → `focus` → `motion` → `pin`.
+`tokens` (all design values) → `base` → `type` (typographic roles) → `layout` → `chrome` (header/footer) → `hero` → `writings` → `readings` (collection, slots, archive) → `focus` → `motion` → `pin`.
 Fonts are self-hosted via `@fontsource-variable` (Fraunces, Instrument Sans).
 
 ## Build

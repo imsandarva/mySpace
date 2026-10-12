@@ -23,5 +23,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
-  .thumb img, .bk3-body, .bk3-shadow, .arrow { transition: none !important; }
+  .thumb img, .arrow { transition: none !important; }
 }

@@ -22,7 +22,7 @@
 .fl-stage { position: relative; height: min(26rem, 52svh); aspect-ratio: 1 / 1.04; max-width: 100%; touch-action: none; cursor: grab; border-radius: 10px; user-select: none; -webkit-user-select: none; }
 .fl-stage[data-dragging='true'] { cursor: grabbing; }
 @media (min-width: 860px) { .fl-stage { height: min(36rem, 70svh); } }
-.fl-stage > .stage { position: absolute; inset: 0; margin: auto; width: 62%; height: auto; }
+.fl-stage > .flat { inset: 8% 20%; }
 
 .fl-tools { display: flex; align-items: center; justify-content: center; gap: 0.35rem; opacity: 0; transition: opacity 360ms var(--ease) 200ms; }
 .fl-hint { transition: opacity 400ms var(--ease); }

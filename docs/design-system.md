@@ -13,7 +13,7 @@ All values live in `site/src/styles/tokens.css`. Light mode only.
 | `--rule`, `--rule-strong` | Hairlines |
 
 Book-cloth tones (`[data-tone='…']`: ink, slate, moss, sage, sand, ochre, terracotta, clay, burgundy, plum) are defined **once, in CSS**.
-The 3D layer reads them from there (`three/tones.js`), so one edit recolours the CSS book and the 3D book together.
+The 3D layer reads them from there (`three/tones.js`), as does the flat fallback cover, so one edit recolours both.
 `data/books.js` picks a tone per book via `accent`.
 
 ## Typography

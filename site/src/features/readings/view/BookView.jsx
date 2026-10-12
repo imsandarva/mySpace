@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useBookApi } from './engineStore'
+import { useBookEngine } from './engineStore'
 
 /* First opaque background colour above the element — what the page actually looks like behind the book. */
 function pageColor(el) {
@@ -13,12 +13,13 @@ function pageColor(el) {
 /* Puts one 3D book into a DOM element: while mounted (and `active`), the shared canvas draws a book into `elRef`'s rectangle.
    Renders nothing itself. Props steer the rig; `onRig` hands the rig up (for dragging); `onReady` fires once it is drawing.
    `from` is the pose to be created in when it should then glide to `rest` (a book picked up from the shelf).
-   `away` hides the book instantly (its focused twin has taken over); `faded` fades it out/in (other books while one is open). */
-export default function BookView({ elRef, book, tier = 'md', mode = 'rest', rest, from, fill, hover = false, away = false, faded = false, active = true, onRig, onReady }) {
-  const api = useBookApi()
+   A new book rises out of the page colour (`reveal`), so it never pops in. `away` hides the book instantly (its focused twin has
+   taken over); `faded` fades it out/in (other books while one is open). */
+export default function BookView({ elRef, book, tier = 'md', mode = 'rest', rest, from, fill, hover = false, away = false, faded = false, reveal = true, active = true, onRig, onReady }) {
+  const { api } = useBookEngine()
   const rigRef = useRef(null)
   const latest = useRef({})
-  latest.current = { rest, from, fill, hover, away, faded, onRig, onReady }
+  latest.current = { rest, from, fill, hover, away, faded, reveal, onRig, onReady }
 
   useEffect(() => {
     if (!api || !active || !elRef.current) return undefined
@@ -33,7 +34,8 @@ export default function BookView({ elRef, book, tier = 'md', mode = 'rest', rest
       rig.setHover(L.hover)
       rig.hidden = L.away
       if (L.from) rig.setRest(L.rest)
-      rig.setFade(L.faded ? 0 : 1, true)
+      rig.setFade(0, true)
+      rig.setFade(L.faded ? 0 : 1, !L.reveal)
       rigRef.current = rig
       remove = api.getEngine().add(rig)
       L.onRig?.(rig)

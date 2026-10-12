@@ -11,7 +11,7 @@ features/readings/
   focus/                focusStore, FocusLayer, FocusSheet, FocusDetails, FocusTools, useRotate, flip
   view/                 engineStore (lazy load), BookView (puts a book into a DOM box)
   three/                the 3D layer: engine, rig, model, studio, covers, materials, tones, capability, index
-  book/                 the CSS book (placeholder + fallback): BookObject, BookFront, BookSpine
+  book/                 BookFlat — the flat cover shown only on devices without WebGL
 ```
 
 ## How it fits together
@@ -20,7 +20,7 @@ features/readings/
    Each book is a *view*: a DOM element plus a scene. Every frame the engine reads each element's rectangle and draws that book into it (scissored viewport).
    Layout, scrolling and CSS animation therefore drive the 3D for free, and one WebGL context serves the whole site.
 2. **Render on demand.** The engine draws only while something is moving (a pose settling, a drag, a flight) and only for views on screen. Idle page = zero frames.
-3. **Lazy.** `view/engineStore.js` imports the 3D layer after the page is idle and only if WebGL2 exists (and the visitor hasn't asked to save data). Until then — and forever if it fails — every slot shows the **CSS book**, so layout never shifts and nothing is blank.
+3. **Lazy, with no stand-in.** `view/engineStore.js` imports the 3D layer right after first paint (idle, 250 ms at most) and only if WebGL2 exists (and the visitor hasn't asked to save data). Each slot's box (`.slot-box`, fixed aspect ratio) reserves the book's space from the first paint, so nothing shifts. It stays empty until its book is ready, then the book rises out of the page colour — there is **no placeholder that is later swapped for the real thing**. Slot words (author caption, "Currently reading") appear with their book. Only when WebGL is unavailable (or the load fails) is a flat typographic cover (`book/BookFlat.jsx`) shown — instead of, never alongside, the 3D book.
 4. **Slots are real buttons** (`collection/BookSlot.jsx`): keyboard focus, screen-reader names and the focus ring come from the DOM. Hover or keyboard focus lifts the 3D book; click opens it.
 
 ## The model contract (`hardcover.glb`)
@@ -59,13 +59,13 @@ Fading a book raises a **veil in the page's own colour** instead of making mater
 
 - `three` is its own lazy chunk (~157 KB gzipped); the initial bundle is unaffected. The model is 11 KB.
 - One WebGL context, one canvas, DPR capped at 2, render-on-demand, off-screen views skipped.
-- Archive books are built only while within ~300 px of the viewport (`hooks/useNearViewport`) and disposed when far away.
+- Archive books are built only while within ~600 px of the viewport (`hooks/useNearViewport`) and disposed when far away.
 - Textures are tiered and disposed with their book.
 
 ## Accessibility
 
 Each slot is a `<button>` named "Title, Author. Open"; the canvas is `aria-hidden`. The focused view is a labelled region; the title receives focus on landing.
-The book's box is a focusable group ("Drag, or use the arrow keys, to rotate"). Escape closes. Reduced motion removes flights and fades and makes poses snap. If 3D is unavailable the focused view shows the CSS book and all text.
+The book's box is a focusable group ("Drag, or use the arrow keys, to rotate"). Escape closes. Reduced motion removes flights and fades and makes poses snap. If 3D is unavailable the focused view shows the flat cover and all text.
 
 ## Extending
 
