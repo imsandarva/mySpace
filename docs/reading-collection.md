@@ -15,17 +15,16 @@ features/readings/
   collection/           BookSlot (one 3D book), ArchiveGrid; compositions.js / Collection.jsx are unused by the homepage
   focus/                focusStore, FocusLayer, FocusSheet, FocusScrim, FocusDetails, FocusTools, useRotate, useRotateHint, rotateHint, flip
   view/                 engineStore (lazy load), BookView (puts a book into a DOM box)
-  three/                the 3D layer: engine, rig, poseScript, model, studio, covers, materials, tones, capability, index
+  three/                the 3D layer: engine, clip, residency, rig, poseScript, model, studio, covers, materials, tones, capability, index
   book/                 BookFlat — the flat cover shown only on devices without WebGL
 ```
 
 ## How it fits together
 
 1. **One shared canvas** (`three/engine.js`). A single fixed, pointer-transparent `<canvas class="gl-canvas">` sits above page content and below the header.
-   Each book is a *view*: a DOM element plus a scene. Every frame the engine reads each element's rectangle and draws that book into it (scissored viewport).
-   Layout, scrolling and CSS animation therefore drive the 3D for free, and one WebGL context serves the whole site.
-2. **Render on demand.** The engine draws only while something is moving (a pose settling, a drag, a flight) and only for views on screen. Idle page = zero frames.
-3. **Lazy, with no stand-in.** `view/engineStore.js` imports the 3D layer right after first paint (idle, 250 ms at most) and only if WebGL2 exists (and the visitor hasn't asked to save data). Each slot's box (`.slot-box`, fixed aspect ratio) reserves the book's space from the first paint, so nothing shifts. It stays empty until its book is ready, then the book rises out of the page colour — there is **no placeholder that is later swapped for the real thing**. Slot words (author caption, "Currently reading") appear with their book. Only when WebGL is unavailable (or the load fails) is a flat typographic cover (`book/BookFlat.jsx`) shown — instead of, never alongside, the 3D book.
+   Each book is a *view*: a DOM element plus a scene. The canvas is not in document flow, so CSS `overflow` does not clip it — `three/clip.js` scissors each draw to the intersection of the slot, its overflow ancestors (the shelf rail), and the viewport. The viewport stays the full slot, so a book sliding out of the rail is cut, not squashed, and never paints over the featured title. Scroll is listened for in the capture phase, because a rail's scroll does not bubble to the window.
+2. **Render on demand.** The engine draws only while something is moving (a pose settling, a drag, a flight, a scroll) and only paints views that are actually visible. Poses still settle while off-screen, so a book is already opaque when it enters. Idle page = zero frames.
+3. **Keep what you've built.** The homepage shelf (`persist`) creates its books as soon as the 3D layer is ready and does not tear them down when they leave the rail or the viewport. Archive books (`useShelfPresence`) latch the first time they come near and stay built for the rest of the page, so scrolling back does not reconstruct them. `view/engineStore.js` imports the 3D layer on first use, only if WebGL2 exists (and the visitor hasn't asked to save data). Each slot's box reserves space from the first paint. Only when WebGL is unavailable is a flat cover shown — instead of, never alongside, the 3D book.
 4. **Slots are real buttons** (`collection/BookSlot.jsx`): keyboard focus, screen-reader names and the focus ring come from the DOM. Hover or keyboard focus lifts the 3D book; click opens it.
 
 ## The model contract (`hardcover.glb`)
@@ -63,9 +62,9 @@ Fading a book raises a **veil in the page's own colour** instead of making mater
 ## Performance
 
 - `three` is its own lazy chunk (~157 KB gzipped); the initial bundle is unaffected. The model is 11 KB.
-- One WebGL context, one canvas, DPR capped at 2, render-on-demand, off-screen views skipped.
-- Archive books are built only while within ~600 px of the viewport (`hooks/useNearViewport`) and disposed when far away.
-- Textures are tiered and disposed with their book.
+- One WebGL context, one canvas, DPR capped at 2, render-on-demand. Off-screen books are not painted; they are not destroyed.
+- Homepage shelf books stay mounted. The archive (`persist`) keeps every book mounted too. `three/residency.js` paints those covers ahead of time (`warmCollection`); opening **All books** waits for that cache, then draws the grid before the view-transition snapshot, so the collection does not pop in afterwards.
+- Textures are tiered. A rig's GPU resources go away when its slot unmounts; the painted covers stay cached.
 
 ## Accessibility
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { useBookEngine } from './engineStore'
 
 /* First opaque background colour above the element — what the page actually looks like behind the book. */
@@ -21,11 +21,11 @@ export default function BookView({ elRef, book, tier = 'md', mode = 'rest', rest
   const latest = useRef({})
   latest.current = { rest, from, fill, hover, away, faded, reveal, onRig, onReady }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!api || !active || !elRef.current) return undefined
     let dead = false
     let remove
-    api.createBookRig({ book, tier, mode, rest: latest.current.from ?? latest.current.rest, fill: latest.current.fill }).catch(() => null).then((rig) => {
+    const place = (rig) => {
       if (!rig) return undefined
       if (dead) return rig.dispose()
       const L = latest.current
@@ -40,7 +40,11 @@ export default function BookView({ elRef, book, tier = 'md', mode = 'rest', rest
       remove = api.getEngine().add(rig)
       L.onRig?.(rig)
       L.onReady?.(true)
-    })
+    }
+    const spec = { book, tier, mode, rest: latest.current.from ?? latest.current.rest, fill: latest.current.fill }
+    const now = api.createBookRigNow?.(spec)
+    if (!now) api.createBookRig(spec).catch(() => null).then((rig) => { if (!dead) place(rig) })
+    else place(now)
     return () => {
       dead = true
       remove?.()

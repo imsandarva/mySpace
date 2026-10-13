@@ -82,9 +82,6 @@
 .rail-track::-webkit-scrollbar { display: none; }
 @media (min-width: 900px) {
   .rail-track { margin-inline: 0; padding-inline: 0; scroll-padding-inline: 0; }
-  .rail[data-end='false'] .rail-track { mask-image: linear-gradient(90deg, #000 calc(100% - 4.5rem), transparent); }
-  .rail[data-start='false'] .rail-track { mask-image: linear-gradient(90deg, transparent, #000 4.5rem); }
-  .rail[data-start='false'][data-end='false'] .rail-track { mask-image: linear-gradient(90deg, transparent, #000 4.5rem, #000 calc(100% - 4.5rem), transparent); }
 }
 
 .rail .bk-item { flex: none; width: clamp(9.25rem, 39vw, 11.5rem); margin-right: 0.35rem; scroll-snap-align: start; }

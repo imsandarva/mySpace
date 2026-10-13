@@ -1,4 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
+import { readingsReady } from '../features/readings/view/engineStore'
 import { transition } from '../lib/viewTransition'
 import { matchRoute } from './routes'
 import { applyScroll, shouldSave } from './scroll'
@@ -17,7 +19,11 @@ export function useRoute() {
       const next = read()
       if (shouldSave(latest.current)) saved.current.set(latest.current.key, window.scrollY)
       latest.current = next
-      transition(() => setRoute(next))
+      /* The archive waits until its covers are painted, so the new page arrives with its books — not an empty grid that then fills in. */
+      transition(async () => {
+        if (next.name === 'readings') await readingsReady()
+        flushSync(() => setRoute(next))
+      })
     }
     window.addEventListener('hashchange', onChange)
     return () => window.removeEventListener('hashchange', onChange)

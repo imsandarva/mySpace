@@ -1,4 +1,5 @@
 import { NoToneMapping, SRGBColorSpace, Vector2, WebGLRenderer } from 'three'
+import { bumpClipCache, paintBox } from './clip'
 
 /* One WebGL canvas for the whole site, drawn into many DOM-tracked rectangles ("views").
    Each view is an element on the page plus a scene; the engine renders a view only while its element is on screen,
@@ -24,21 +25,37 @@ class Engine {
     this.renderer.setClearColor(0x000000, 0)
     this.renderer.autoClear = false /* we clear once per frame, so neighbouring views never erase each other */
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_DPR))
-    window.addEventListener('scroll', this.invalidate, { passive: true })
-    window.addEventListener('resize', this.invalidate, { passive: true })
+    /* Capture: scroll does not bubble, so a rail (overflow scroller) would otherwise leave the canvas behind. */
+    document.addEventListener('scroll', this.invalidate, { capture: true, passive: true })
+    window.addEventListener('resize', this.onResize, { passive: true })
     document.addEventListener('visibilitychange', this.invalidate)
     if (import.meta.env.DEV) window.__books = this /* dev-only inspection handle */
   }
 
+  soon = false
+
   /* Register a view: { el, scenes[], camera, visible, tick(dt) → still-moving?, frame(aspect) }. Returns the unregister function. */
   add(view) {
     this.views.add(view)
-    this.invalidate()
-    return () => { this.views.delete(view); this.invalidate() }
+    this.drawSoon()
+    return () => { this.views.delete(view); this.drawSoon() }
+  }
+
+  /* Draw before the browser paints — a view transition would otherwise snapshot an empty canvas, then the books "refresh" in. */
+  drawSoon() {
+    if (this.soon) return
+    this.soon = true
+    queueMicrotask(() => {
+      this.soon = false
+      if (this.raf) { cancelAnimationFrame(this.raf); this.raf = 0 }
+      this.frame(performance.now())
+    })
   }
 
   /* Ask for one more frame (coalesced). */
   invalidate = () => { if (!this.raf && !document.hidden) this.raf = requestAnimationFrame(this.frame) }
+
+  onResize = () => { bumpClipCache(); this.invalidate() }
 
   /* Keep rendering for `ms` — covers DOM animations the engine can't see (FLIP moves, CSS transitions). */
   invalidateFor(ms) { this.until = Math.max(this.until, performance.now() + ms); this.invalidate() }
@@ -58,7 +75,6 @@ class Engine {
     this.last = now
     const { renderer } = this
     const canvasH = this.syncSize()
-    const vw = window.innerWidth
     let busy = now < this.until
 
     renderer.setScissorTest(false)
@@ -67,13 +83,15 @@ class Engine {
 
     for (const view of this.views) {
       if (!view.visible) continue
-      const r = view.el.getBoundingClientRect()
-      if (r.width < 2 || r.height < 2 || r.bottom < 0 || r.top > canvasH || r.right < 0 || r.left > vw) continue
+      /* Settle even while off-screen, so a book is already opaque the moment it scrolls into view. */
       if (view.tick(dt)) busy = true
       if (!view.visible) continue
-      view.frame(r.width / r.height)
-      renderer.setViewport(r.left, canvasH - r.bottom, r.width, r.height)
-      renderer.setScissor(r.left, canvasH - r.bottom, r.width, r.height)
+      const paint = paintBox(view.el)
+      if (!paint) continue
+      const { box } = paint
+      view.frame(box.width / box.height)
+      renderer.setViewport(box.left, canvasH - box.bottom, box.width, box.height)
+      renderer.setScissor(paint.left, canvasH - paint.bottom, paint.width, paint.height)
       for (const scene of view.scenes) { renderer.clearDepth(); renderer.render(scene, view.camera) }
     }
 

@@ -1,12 +1,11 @@
 import { useRef } from 'react'
 import { useNearViewport } from './useNearViewport'
 
-/* Near the viewport, a shelf book stays built. While a focus session is open, a transient observer miss
-   (overlay, scroll lock) must not dispose it — that rebuild is the "collection refreshes" flash on the way home. */
-export function useShelfPresence(ref, session) {
-  const near = useNearViewport(ref)
+/* Once a book has been near the viewport it stays built for the life of the page.
+   Disposing it when it scrolls away, then creating it again on the way back, is the "refresh" flash. */
+export function useShelfPresence(ref) {
+  const near = useNearViewport(ref, '1200px')
   const kept = useRef(false)
   if (near) kept.current = true
-  else if (!session) kept.current = false
-  return near || kept.current
+  return kept.current
 }

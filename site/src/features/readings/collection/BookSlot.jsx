@@ -10,12 +10,12 @@ export const restOf = (book) => ({ yaw: (book.shape.ry * Math.PI) / 180, pitch: 
 
 /* One book wherever it sits — homepage shelf or archive grid. A real button (focus ring, keyboard,
    screen readers all come free) around the box the 3D book is drawn into. Hover/focus lifts it; click opens it in the focused view. */
-export default function BookSlot({ as: Tag = 'li', book, rest = restOf(book), tier = 'md', style, className = '', caption, note }) {
+export default function BookSlot({ as: Tag = 'li', book, rest = restOf(book), tier = 'md', style, className = '', caption, note, persist = false, reveal = true }) {
   const slotRef = useRef(null)
   const boxRef = useRef(null)
   const btnRef = useRef(null)
   const focus = useFocus()
-  const near = useShelfPresence(slotRef, !!focus.slug)
+  const near = useShelfPresence(slotRef)
   const [hover, setHover] = useState(false)
   const flat = useBookEngine().status === 'unsupported'
   const [live, setLive] = useState(false)
@@ -42,7 +42,7 @@ export default function BookSlot({ as: Tag = 'li', book, rest = restOf(book), ti
         onBlur={() => setHover(false)}
       >
         <span ref={boxRef} className="slot-box">{flat && <BookFlat book={book} />}</span>
-        <BookView elRef={boxRef} book={book} tier={tier} rest={rest} fill={fill} hover={hover && !focus.slug} away={away} faded={others} active={near} onReady={setLive} />
+        <BookView elRef={boxRef} book={book} tier={tier} rest={rest} fill={fill} hover={hover && !focus.slug} away={away} faded={others} reveal={reveal} active={persist || near} onReady={setLive} />
         {caption}
         {note}
       </button>

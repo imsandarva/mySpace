@@ -5,7 +5,7 @@ import CurrentlyReading from './CurrentlyReading'
 export default function CurrentBook({ book }) {
   return (
     <article className="now">
-      <BookSlot as="div" book={book} tier="lg" className="now-book" />
+      <BookSlot as="div" book={book} tier="lg" className="now-book" persist reveal={false} />
       <div className="now-copy">
         <CurrentlyReading />
         <h3 className="t-title">{book.name}</h3>

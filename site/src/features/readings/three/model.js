@@ -7,13 +7,12 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 const URL = `${import.meta.env.BASE_URL}assets/hardcover.glb`
 export const BOOK = { width: 0.157, height: 0.23, depth: 0.0304 }
 
-let template
+let pending
+let ready
 
-export const loadModel = () => (template ??= new GLTFLoader().loadAsync(URL).then((gltf) => gltf.scene))
+export const loadModel = () => (pending ??= new GLTFLoader().loadAsync(URL).then((gltf) => { ready = gltf.scene; return ready }))
 
-/* A fresh, unit-height copy of the book. `thick` stretches only the thickness, so books differ in heft, not in cover proportions. */
-export async function cloneBook(thick = 1) {
-  const scene = await loadModel()
+const fromScene = (scene, thick) => {
   const model = scene.clone(true)
   const s = 1 / BOOK.height
   model.scale.set(s, s, s * thick)
@@ -23,3 +22,9 @@ export async function cloneBook(thick = 1) {
   model.traverse((o) => { if (o.isMesh) parts[o.name] = o })
   return { holder, parts }
 }
+
+/* A fresh, unit-height copy of the book. `thick` stretches only the thickness, so books differ in heft, not in cover proportions. */
+export const cloneBook = async (thick = 1) => fromScene(await loadModel(), thick)
+
+/* Synchronous clone once the model has loaded — so a page can show its books in the same frame it opens. */
+export const cloneBookNow = (thick = 1) => (ready ? fromScene(ready, thick) : null)

@@ -10,7 +10,7 @@ export default function Shelf({ inert }) {
     <div className={`shelf${currentBook ? '' : ' no-current'}`} inert={inert ? '' : undefined}>
       {currentBook && <CurrentBook book={currentBook} />}
       <Rail label="More from the shelf">
-        {railBooks.map((b) => <BookSlot key={b.slug} book={b} tier="sm" className="bk-item" caption={<span className="bk-author">{b.author}</span>} />)}
+        {railBooks.map((b) => <BookSlot key={b.slug} book={b} tier="sm" className="bk-item" persist reveal={false} caption={<span className="bk-author">{b.author}</span>} />)}
         <AllTile count={books.length} />
       </Rail>
     </div>
