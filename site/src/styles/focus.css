@@ -1,10 +1,15 @@
 /* The focused book — a state of the page it was opened from. The book flies in (FLIP), the words arrive beside it, and the
    visitor can turn it freely. Homepage: inline inside the Readings section. Archive: fills the viewport under the header. */
 
-.fl { color: var(--ink); }
-.fl.is-inline { position: relative; z-index: 1; }
-.fl.is-fixed { position: fixed; inset: var(--header-h) 0 0 0; z-index: 12; overflow-y: auto; overscroll-behavior: contain; background: var(--paper); animation: fl-in 320ms var(--ease) backwards; }
-.fl.is-fixed.is-closing { opacity: 0; transition: opacity 380ms var(--ease) 140ms; }
+/* Scrim: paper field between shelf and focus UI (canvas books sit at z-index 15). */
+.fl-scrim { position: fixed; inset: var(--header-h) 0 0 0; z-index: 14; background: var(--paper); pointer-events: none; opacity: 0; animation: fl-scrim-in 420ms var(--ease) forwards; }
+.fl-scrim.is-inline { position: absolute; inset: 0; grid-area: 1 / 1; }
+.fl-scrim.is-closing { animation: none; opacity: 0; transition: opacity 340ms var(--ease) 120ms; }
+@keyframes fl-scrim-in { from { opacity: 0; } to { opacity: 1; } }
+
+.fl { position: relative; z-index: 16; color: var(--ink); background: transparent; pointer-events: auto; }
+.fl.is-inline { grid-area: 1 / 1; }
+.fl.is-fixed { position: fixed; inset: var(--header-h) 0 0 0; overflow-y: auto; overscroll-behavior: contain; animation: fl-in 320ms var(--ease) backwards; }
 @keyframes fl-in { from { opacity: 0; } }
 
 .fl-inner { display: flex; flex-direction: column; gap: 0.5rem; min-height: 100%; padding-block: 0.25rem 1.5rem; }
@@ -40,4 +45,4 @@
 
 .is-entered .fl-copy { opacity: 1; transform: none; transition-delay: 60ms; }
 .is-entered .fl-tools { opacity: 1; }
-.is-closing .fl-copy, .is-closing .fl-tools { opacity: 0; transition-duration: 160ms; transition-delay: 0ms; }
+.is-closing .fl-back, .is-closing .fl-copy, .is-closing .fl-tools { opacity: 0; pointer-events: none; transition-duration: 160ms; transition-delay: 0ms; }

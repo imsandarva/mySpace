@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useNearViewport } from '../../../hooks/useNearViewport'
+import { useShelfPresence } from '../../../hooks/useShelfPresence'
 import BookFlat from '../book/BookFlat'
 import { focusStore, useFocus } from '../focus/focusStore'
 import { useBookEngine } from '../view/engineStore'
@@ -14,14 +14,15 @@ export default function BookSlot({ book, rest = restOf(book), tier = 'md', style
   const slotRef = useRef(null)
   const boxRef = useRef(null)
   const btnRef = useRef(null)
-  const near = useNearViewport(slotRef)
-  const [hover, setHover] = useState(false)
   const focus = useFocus()
+  const near = useShelfPresence(slotRef, !!focus.slug)
+  const [hover, setHover] = useState(false)
   const flat = useBookEngine().status === 'unsupported'
   const [live, setLive] = useState(false)
   const open = focus.slug === book.slug
+  const others = !!focus.slug && !open && !focus.closing
+  /* Shelf copy hidden for the whole trip (including flight home); neighbours dissolve on canvas but stay built. */
   const away = open && focus.ready
-  const others = !!focus.slug && !open
   const fill = 0.78 * (book.shape.h / 112)
 
   const pick = () => focusStore.open(book.slug, btnRef.current, rest)

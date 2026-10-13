@@ -5,11 +5,24 @@ export const EASE = 'cubic-bezier(0.22, 0.8, 0.24, 1)'
 
 const centre = (r) => [r.left + r.width / 2, r.top + r.height / 2]
 
+/* Layout size (stable) + viewport position — avoids a bad first-paint rect before the focus stage has settled. */
+export function layoutRect(el) {
+  const r = el.getBoundingClientRect()
+  const w = el.offsetWidth, h = el.offsetHeight
+  return { left: r.left, top: r.top, width: w, height: h, right: r.left + w, bottom: r.top + h }
+}
+
 /* The transform that makes `el` (laid out at `to`) look like it is sitting at `from`. */
 export function invert(from, to) {
   const [fx, fy] = centre(from)
   const [tx, ty] = centre(to)
   return `translate(${fx - tx}px, ${fy - ty}px) scale(${from.width / to.width}, ${from.height / to.height})`
+}
+
+export function homeTransform(shelfEl, focusEl) {
+  const from = shelfEl && layoutRect(shelfEl)
+  const to = focusEl && layoutRect(focusEl)
+  return from && to ? invert(from, to) : null
 }
 
 /* Animate `el` between two transforms; resolves when finished. Skipped (resolves at once) when motion is reduced. */

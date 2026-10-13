@@ -33,7 +33,7 @@
 .slot:not(.is-ready) .slot-note, .slot:not(.is-ready) .bk-author { opacity: 0; }
 .slot-note, .bk-author { transition: opacity 360ms var(--ease); }
 
-.is-others .flat, .is-open .flat, .is-others .bk-author, .is-others .slot-note, .is-open .slot-note, .is-open .bk-author { opacity: 0; transition: opacity 240ms var(--ease); }
+.is-others .flat, .is-open .flat, .is-others .bk-author, .is-others .slot-note, .is-open .slot-note, .is-open .bk-author { opacity: 0; transition: opacity 280ms var(--ease); }
 .is-others { pointer-events: none; }
 
 .slot-note {

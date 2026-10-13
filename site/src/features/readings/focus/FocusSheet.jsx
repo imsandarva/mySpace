@@ -4,8 +4,9 @@ import BookFlat from '../book/BookFlat'
 import BookView from '../view/BookView'
 import { useBookEngine } from '../view/engineStore'
 import FocusDetails from './FocusDetails'
+import FocusScrim from './FocusScrim'
 import FocusTools from './FocusTools'
-import { glide, inViewport, invert } from './flip'
+import { glide, homeTransform, inViewport, invert, layoutRect } from './flip'
 import { focusStore } from './focusStore'
 import { useRotate } from './useRotate'
 import { useRotateHint } from './useRotateHint'
@@ -25,6 +26,11 @@ export default function FocusSheet({ book, focus, inline }) {
   const heading = useRef(null)
   const rig = useRef(null)
   const held = useRef(null)
+  const snapHome = () => {
+    const t = homeTransform(stageOf(focus.source), box.current)
+    if (t) held.current = t
+    return t
+  }
   const [rigReady, setRigReady] = useState(false)
   const [entered, setEntered] = useState(false)
   const rotate = useRotate(rig)
@@ -39,8 +45,8 @@ export default function FocusSheet({ book, focus, inline }) {
   /* Before first paint: bring an inline sheet into view, then hold the box where the book was picked up. */
   useLayoutEffect(() => {
     if (inline) { const r = sheet.current.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) sheet.current.scrollIntoView({ block: 'center' }) }
-    const from = stageOf(focus.source)?.getBoundingClientRect()
-    const to = box.current.getBoundingClientRect()
+    const from = stageOf(focus.source) && layoutRect(stageOf(focus.source))
+    const to = layoutRect(box.current)
     if (from && inViewport(from)) { held.current = invert(from, to); box.current.style.transform = held.current }
   }, [])
 
@@ -49,20 +55,23 @@ export default function FocusSheet({ book, focus, inline }) {
     if (!ready || entered) return
     focusStore.ready()
     flight()
-    const land = () => { setEntered(true); heading.current?.focus({ preventScroll: true }) }
+    const land = () => { snapHome(); setEntered(true); heading.current?.focus({ preventScroll: true }) }
     held.current ? glide(box.current, held.current, 'none', FLIGHT, reduced()).then(land) : land()
   }, [ready])
 
   /* Closing: the same flight, backwards, to wherever the book now sits in the collection; then release. */
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!focus.closing) return
     const done = () => { focusStore.release(); requestAnimationFrame(() => focus.source?.focus({ preventScroll: true })) }
-    const to = stageOf(focus.source)?.getBoundingClientRect()
+    const shelf = stageOf(focus.source)
+    const shelfR = shelf?.getBoundingClientRect()
     rig.current?.setRest(focus.rest)
-    if (!to || !inViewport(to) || !entered) return void setTimeout(done, reduced() ? 0 : 180)
+    box.current.style.transform = 'none'
+    const home = held.current ?? snapHome()
+    if (!home || !shelfR || !inViewport(shelfR) || !entered) return void setTimeout(done, reduced() ? 0 : 180)
     flight()
-    glide(box.current, 'none', invert(to, box.current.getBoundingClientRect()), FLIGHT, reduced()).then(done)
-  }, [focus.closing])
+    glide(box.current, 'none', home, FLIGHT, reduced()).then(done)
+  }, [focus.closing, entered])
 
   useEffect(() => {
     const onKey = (e) => e.key === 'Escape' && focusStore.close()
@@ -70,7 +79,6 @@ export default function FocusSheet({ book, focus, inline }) {
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
-  /* A viewport-filling sheet owns the scroll while it is open. */
   useEffect(() => {
     if (inline) return undefined
     document.documentElement.classList.add('is-locked')
@@ -80,6 +88,8 @@ export default function FocusSheet({ book, focus, inline }) {
   const cls = `fl ${inline ? 'is-inline' : 'is-fixed'}${entered ? ' is-entered' : ''}${focus.closing ? ' is-closing' : ''}`
 
   return (
+    <>
+    <FocusScrim inline={inline} closing={focus.closing} />
     <section ref={sheet} className={cls} aria-labelledby="fl-title">
       <div className="fl-inner">
         <button type="button" className="fl-back" onClick={focusStore.close}><Arrow kind="left" />Back to collection</button>
@@ -95,6 +105,7 @@ export default function FocusSheet({ book, focus, inline }) {
         </div>
       </div>
     </section>
+    </>
   )
 }
 

@@ -11,7 +11,7 @@ export default function ReadingsPage() {
   return (
     <>
       <PageHead title="Readings" count={books.length} vt="readings-title" />
-      <section className="wrap archive" aria-label="All books">
+      <section className={`wrap archive${focused ? ' is-shelf-dimmed' : ''}`} aria-label="All books" aria-hidden={focused || undefined}>
         <ArchiveGrid inert={focused} />
       </section>
       <FocusLayer />
