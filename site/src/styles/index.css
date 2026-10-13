@@ -1,6 +1,6 @@
-/* Self-hosted variable fonts (latin subset only is fetched, via unicode-range). */
-@import '@fontsource-variable/fraunces/opsz.css';
-@import '@fontsource-variable/instrument-sans/index.css';
+/* Inter with an optical-size axis: text sizes stay open, display sizes tighten on their own.
+   Only the unicode-range the page actually uses is fetched. */
+@import '@fontsource-variable/inter/opsz.css';
 
 @import './tokens.css';
 @import './base.css';

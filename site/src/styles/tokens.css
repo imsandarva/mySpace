@@ -21,9 +21,11 @@
   --marigold: #e9892a;
   --accent-rose: #e5397a;
 
-  /* Type families */
-  --serif: 'Fraunces Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-  --sans: 'Instrument Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* One family. Hierarchy comes from size, weight, tracking, and colour — not a second face.
+     --serif / --sans stay as aliases so every role resolves to Inter. */
+  --font: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: var(--font);
+  --sans: var(--font);
 
   /* Type scale — fluid, with deliberately uneven steps */
   --fs-name: clamp(4.25rem, 2.2rem + 9.6vw, 11rem);

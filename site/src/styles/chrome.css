@@ -23,8 +23,8 @@
 
 .wordmark {
   padding-block: 0.75rem;
-  font: 430 1.375rem/1 var(--serif);
-  letter-spacing: -0.035em;
+  font: 560 1.375rem/1 var(--font);
+  letter-spacing: -0.028em;
 }
 
 .site-nav { display: flex; gap: clamp(1.25rem, 0.5rem + 3vw, 2.25rem); }
@@ -79,8 +79,8 @@
 .footer-address {
   display: inline-block;
   margin-top: 0.75rem;
-  font: 340 clamp(1.5rem, 0.85rem + 3.1vw, 3.25rem)/1.1 var(--serif);
-  letter-spacing: -0.035em;
+  font: 500 clamp(1.5rem, 0.85rem + 3.1vw, 3.25rem)/1.15 var(--font);
+  letter-spacing: -0.03em;
   overflow-wrap: anywhere;
   background: linear-gradient(var(--blue), var(--blue)) 0 100% / 0% 1px no-repeat;
   padding-bottom: 0.1em;

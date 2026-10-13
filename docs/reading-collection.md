@@ -41,7 +41,7 @@ All artwork is therefore drawn **upright**, with `flipY = false` (glTF UVs start
 `three/covers.js` paints each book's surfaces to canvases; `three/materials.js` turns them into per-book materials:
 
 - **Real artwork wins.** If a book has `cover` (a URL) it is centre-cropped to the board's proportions — never stretched — and the spine/back take its average colour.
-- **Otherwise** a typographic cover is set from the book's *true* title and author in Fraunces / Instrument Sans, in one of three layouts (`a` top-left, `b` framed and centred, `c` label) and one of three materials (`cloth`, `matte`, `board`) — chosen stably from the slug so a book never changes character.
+- **Otherwise** a typographic cover is set from the book's *true* title and author in Inter, in one of three layouts (`a` top-left, `b` framed and centred, `c` label) and one of three materials (`cloth`, `matte`, `board`) — chosen stably from the slug so a book never changes character.
 - The **back** is a plain material colour; the **page block** stays ivory (dimmed so the top edge never blows out).
 - Texture size is a tier: `sm` 384 (archive and the opened book — the open view reuses this cache so it is 3D on the first frame), `md` 640, `lg` 1024. A flat cover is shown only when WebGL is unavailable, never as a stand-in on top of the canvas.
 

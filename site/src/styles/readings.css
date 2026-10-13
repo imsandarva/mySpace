@@ -57,10 +57,10 @@
 .book-currently-stroke.is-2 { stroke-width: 1.25; opacity: 0.7; }
 
 .now .t-title {
-  min-width: 0; max-width: 100%; font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3.25rem); line-height: 1.06;
-  letter-spacing: -0.035em; text-wrap: pretty; overflow-wrap: break-word; hyphens: auto;
+  min-width: 0; max-width: 100%; font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3.25rem); line-height: 1.12;
+  letter-spacing: -0.032em; text-wrap: pretty; overflow-wrap: break-word; hyphens: auto;
 }
-@container (max-width: 15rem) { .now .t-title { font-size: clamp(1.5rem, 1.15rem + 2cqi, 2.35rem); line-height: 1.08; } }
+@container (max-width: 15rem) { .now .t-title { font-size: clamp(1.5rem, 1.15rem + 2cqi, 2.35rem); line-height: 1.14; } }
 .now-sub { font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
 .now-author { font: 500 var(--fs-small)/1.35 var(--sans); }
 
@@ -88,7 +88,7 @@
 .rail .bk-author { height: var(--cap-h); margin: var(--cap-gap) 0.4rem 0 12%; }
 .rail .bk-end { margin-right: 0; width: clamp(8rem, 34vw, 10rem); }
 .bk-all { display: flex; flex-direction: column; justify-content: flex-end; gap: 0.5rem; height: calc(100% - var(--cap-h) - var(--cap-gap)); padding: 0 0 1.2rem 0.5rem; }
-.all-count { font: 330 clamp(3.5rem, 2.5rem + 4vw, 5rem)/0.85 var(--serif); letter-spacing: -0.05em; font-variant-numeric: lining-nums; }
+.all-count { font: 520 clamp(3.5rem, 2.5rem + 4vw, 5rem)/0.95 var(--font); letter-spacing: -0.045em; font-variant-numeric: lining-nums; }
 .all-label { display: inline-flex; align-items: center; font: 500 var(--fs-small)/1.2 var(--sans); color: var(--ink-2); transition: color var(--fast); }
 @media (hover: hover) { .bk-all:hover .all-label { color: var(--blue); } .bk-all:hover .arrow { transform: translateX(3px); } }
 
@@ -107,7 +107,7 @@
   position: absolute; inset: 7% 12% 9% 12%; container-type: inline-size; display: flex; flex-direction: column; justify-content: space-between; padding: 9% 8%;
   background: var(--tone); color: var(--tone-on); border-radius: 2px 4px 4px 2px; box-shadow: 0 1px 2px rgb(18 22 43 / 0.2), 0 12px 24px -14px rgb(18 22 43 / 0.5);
 }
-.flat-title { font: 480 calc(var(--fit) * 1cqw)/1.04 var(--serif); letter-spacing: -0.03em; hyphens: auto; overflow-wrap: break-word; text-wrap: balance; }
+.flat-title { font: 560 calc(var(--fit) * 1cqw)/1.08 var(--font); letter-spacing: -0.028em; hyphens: auto; overflow-wrap: break-word; text-wrap: balance; }
 .flat-author { font: 600 4.4cqw/1.25 var(--sans); letter-spacing: 0.07em; text-transform: uppercase; opacity: 0.85; }
 
 /* Words belong to their book: they appear with it, not before it. */

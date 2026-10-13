@@ -37,7 +37,7 @@ features compose `ui/`, `hooks/` and `lib/`.
 
 Plain CSS, split by responsibility, imported in order from `styles/index.css`:
 `tokens` (all design values) → `base` → `type` (typographic roles) → `layout` → `chrome` (header/footer) → `hero` → `writings` → `readings` (collection, slots, archive) → `focus` → `motion` → `pin`.
-Fonts are self-hosted via `@fontsource-variable` (Fraunces, Instrument Sans).
+Fonts are self-hosted via `@fontsource-variable/inter` (optical-size axis). One family for the page and for generated book covers.
 
 ## Build
 

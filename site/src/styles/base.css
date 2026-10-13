@@ -7,6 +7,8 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
+  font-feature-settings: 'liga' 1, 'calt' 1;
   scroll-padding-top: calc(var(--header-h) + 1rem);
 }
 
@@ -14,7 +16,8 @@ body {
   min-height: 100svh;
   background: var(--paper);
   color: var(--ink);
-  font: 400 var(--fs-body)/1.6 var(--sans);
+  font: 400 var(--fs-body)/1.6 var(--font);
+  letter-spacing: -0.011em;
   overflow-x: clip;
 }
 
