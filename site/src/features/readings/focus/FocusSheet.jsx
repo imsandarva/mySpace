@@ -5,7 +5,6 @@ import BookView from '../view/BookView'
 import { useBookEngine } from '../view/engineStore'
 import FocusDetails from './FocusDetails'
 import FocusScrim from './FocusScrim'
-import FocusTools from './FocusTools'
 import { glide, homeTransform, inViewport, invert, layoutRect } from './flip'
 import { focusStore } from './focusStore'
 import { useRotate } from './useRotate'
@@ -102,7 +101,6 @@ export default function FocusSheet({ book, focus, inline }) {
               {(flat || (gaveUp && !rigReady)) && <BookFlat book={book} />}
             </div>
             <FocusView book={book} box={box} rig={rig} onReady={setRigReady} from={focus.rest} />
-            <FocusTools touched={rotate.touched} onReset={() => rig.current?.reset()} />
           </div>
           <FocusDetails book={book} headingRef={heading} />
         </div>

@@ -23,18 +23,11 @@
 @media (min-width: 860px) { .fl-grid { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: calc(var(--gap) * 3); } }
 
 /* The book's box: big enough to turn comfortably, with room around it so no angle clips. A drag here rotates; elsewhere the page scrolls. */
-.fl-book { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+.fl-book { display: flex; flex-direction: column; align-items: center; }
 .fl-stage { position: relative; height: min(26rem, 52svh); aspect-ratio: 1 / 1.04; max-width: 100%; touch-action: none; cursor: grab; border-radius: 10px; user-select: none; -webkit-user-select: none; }
 .fl-stage[data-dragging='true'] { cursor: grabbing; }
 @media (min-width: 860px) { .fl-stage { height: min(36rem, 70svh); } }
 .fl-stage > .flat { inset: 8% 20%; }
-
-.fl-tools { display: flex; align-items: center; justify-content: center; gap: 0.35rem; opacity: 0; transition: opacity 360ms var(--ease) 200ms; }
-.fl-hint { transition: opacity 400ms var(--ease); }
-.fl-hint.is-done { opacity: 0.45; }
-.fl-reset { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; color: var(--ink-3); transition: color var(--fast), background var(--fast); }
-.fl-reset svg { width: 1rem; height: 1rem; }
-@media (hover: hover) { .fl-reset:hover { color: var(--blue); background: rgb(18 22 43 / 0.06); } }
 
 /* The words: title strongest, subtitle and author quieter. They arrive after the book lands. */
 .fl-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 0.9rem; max-width: 32rem; opacity: 0; transform: translateY(10px); transition: opacity 320ms var(--ease), transform 480ms var(--ease); }
@@ -44,5 +37,4 @@
 .detail-author { font: 500 var(--fs-body)/1.4 var(--sans); }
 
 .is-entered .fl-copy { opacity: 1; transform: none; transition-delay: 60ms; }
-.is-entered .fl-tools { opacity: 1; }
-.is-closing .fl-back, .is-closing .fl-copy, .is-closing .fl-tools { opacity: 0; pointer-events: none; transition-duration: 160ms; transition-delay: 0ms; }
+.is-closing .fl-back, .is-closing .fl-copy { opacity: 0; pointer-events: none; transition-duration: 160ms; transition-delay: 0ms; }
