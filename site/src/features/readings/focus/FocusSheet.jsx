@@ -95,10 +95,13 @@ export default function FocusSheet({ book, focus, inline }) {
         <button type="button" className="fl-back" onClick={focusStore.close}><Arrow kind="left" />Back to collection</button>
         <div className="fl-grid">
           <div className="fl-book">
+            {/* The stage is the previous sibling of the 3D view, not its parent. A child's layout effect runs
+                before React assigns the parent's ref, so reading that ref there misses once — dev Strict Mode
+                runs the effect again and hides it; production keeps an empty stage. The shelf already uses this order. */}
             <div ref={box} className="fl-stage" role="group" tabIndex={0} aria-label={`3D view of ${book.title}. Drag, or use the arrow keys, to rotate.`} data-dragging={rotate.dragging} {...rotate.handlers}>
-              {flat && <BookFlat book={book} />}
-              <FocusView book={book} box={box} rig={rig} onReady={setRigReady} from={focus.rest} />
+              {(flat || (gaveUp && !rigReady)) && <BookFlat book={book} />}
             </div>
+            <FocusView book={book} box={box} rig={rig} onReady={setRigReady} from={focus.rest} />
             <FocusTools touched={rotate.touched} onReset={() => rig.current?.reset()} />
           </div>
           <FocusDetails book={book} headingRef={heading} />

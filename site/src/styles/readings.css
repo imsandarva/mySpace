@@ -8,7 +8,7 @@
 .is-locked { overflow: hidden; }
 
 /* The stage holds the shelf and, stacked on top of it in the same cell, the inline focused view. */
-.rd-stage { display: grid; }
+.rd-stage { position: relative; display: grid; }
 .rd-stage > * { grid-area: 1 / 1; min-width: 0; }
 
 /* ---------- Homepage shelf: current book + rail (same arrangement as the pre-3D shelf) ---------- */
