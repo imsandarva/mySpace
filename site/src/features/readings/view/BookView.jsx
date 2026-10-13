@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef } from 'react'
+import { claimRig, parkRig, restoreRig } from './rigHost'
 import { useBookEngine } from './engineStore'
 
 /* First opaque background colour above the element — what the page actually looks like behind the book. */
@@ -38,15 +39,27 @@ export default function BookView({ elRef, book, tier = 'md', mode = 'rest', rest
       rig.setFade(L.faded ? 0 : 1, !L.reveal)
       rigRef.current = rig
       remove = api.getEngine().add(rig)
+      if (mode === 'rest') parkRig(book.slug, rig, elRef.current)
       L.onRig?.(rig)
       L.onReady?.(true)
+    }
+    /* The open view reuses the shelf book already on the canvas. A second rig never showed up in production, so the stage was empty. */
+    if (mode === 'focus') {
+      const hosted = claimRig(book.slug, elRef.current, { mode, rest: latest.current.rest })
+      if (hosted) {
+        rigRef.current = hosted
+        latest.current.onRig?.(hosted)
+        latest.current.onReady?.(true)
+        return () => { restoreRig(book.slug); rigRef.current = null; latest.current.onRig?.(null); latest.current.onReady?.(false) }
+      }
     }
     const spec = { book, tier, mode, rest: latest.current.from ?? latest.current.rest, fill: latest.current.fill }
     const cached = api.createBookRigNow?.(spec)
     if (cached) place(cached)
-    else api.createBookRig(spec).catch(() => null).then((rig) => { if (dead) return rig?.dispose(); if (rig) place(rig); else if (tier !== 'sm') api.createBookRig({ ...spec, tier: 'sm' }).catch(() => null).then((fallback) => { if (!dead) place(fallback) }) })
+    else api.createBookRig(spec).catch(() => null).then((rig) => { if (dead) return rig?.dispose(); if (rig) place(rig) })
     return () => {
       dead = true
+      if (rigRef.current?.el && rigRef.current.el !== elRef.current) { rigRef.current = null; return }
       remove?.()
       rigRef.current?.dispose()
       rigRef.current = null
@@ -55,9 +68,9 @@ export default function BookView({ elRef, book, tier = 'md', mode = 'rest', rest
     }
   }, [api, active, book.slug, tier, mode, elRef])
 
-  useEffect(() => { rest && rigRef.current?.setRest(rest) }, [rest?.yaw, rest?.pitch])
-  useEffect(() => { rigRef.current?.setHover(hover) }, [hover])
-  useEffect(() => { const r = rigRef.current; if (r) { r.hidden = away; r.refresh(); r.wake() } }, [away])
-  useEffect(() => { rigRef.current?.setFade(faded ? 0 : 1) }, [faded])
+  useEffect(() => { const r = rigRef.current; if (r && r.el === elRef.current) r.setRest(rest) }, [rest?.yaw, rest?.pitch])
+  useEffect(() => { const r = rigRef.current; if (r && r.el === elRef.current) r.setHover(hover) }, [hover])
+  useEffect(() => { const r = rigRef.current; if (r && r.el === elRef.current) { r.hidden = away; r.refresh(); r.wake() } }, [away])
+  useEffect(() => { const r = rigRef.current; if (r && r.el === elRef.current) r.setFade(faded ? 0 : 1) }, [faded])
   return null
 }
