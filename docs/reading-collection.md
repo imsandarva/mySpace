@@ -1,13 +1,18 @@
 # The 3D reading collection
 
-Real-time hardcover books, built from one reusable model (`hardcover.glb`), arranged as a curated composition on the homepage,
-listed compactly in the archive, and opened into a focused view where a book can be turned freely. Everything lives in `site/src/features/readings/`.
+Real-time hardcover books, built from one reusable model (`hardcover.glb`). On the homepage they sit in the earlier shelf:
+the current book large beside its title and the hand-drawn **Currently** ring, then a scrollable rail (“More from the shelf”).
+The archive lists every book in a grid. Opening one still flies into the focused view, which is the only place a book can be turned.
+Everything lives in `site/src/features/readings/`.
 
 ```
 features/readings/
-  ReadingsPreview.jsx   homepage section: heading + Collection + inline FocusLayer
+  ReadingsPreview.jsx   homepage section: heading + Shelf + inline FocusLayer
+  Shelf.jsx             current book + rail (ui/Rail)
+  CurrentBook.jsx       featured 3D book, Currently ring, title, author
+  AllTile.jsx           last rail stop — link to the archive
   ReadingsPage.jsx      archive page: ArchiveGrid + fixed FocusLayer
-  collection/           compositions.js (art direction), Collection, ArchiveGrid, BookSlot
+  collection/           BookSlot (one 3D book), ArchiveGrid; compositions.js / Collection.jsx are unused by the homepage
   focus/                focusStore, FocusLayer, FocusSheet, FocusScrim, FocusDetails, FocusTools, useRotate, useRotateHint, rotateHint, flip
   view/                 engineStore (lazy load), BookView (puts a book into a DOM box)
   three/                the 3D layer: engine, rig, poseScript, model, studio, covers, materials, tones, capability, index
@@ -69,8 +74,7 @@ The book's box is a focusable group ("Drag, or use the arrow keys, to rotate"). 
 
 ## Extending
 
-- **Re-compose the homepage:** edit `collection/compositions.js` (plain data: x, width, lift, yaw, pitch per slot, one plan per width).
-- **Change which books appear:** `data/home.js` (`shelf` = how many follow the current book).
+- **Change which books appear on the homepage rail:** `data/home.js` (`shelf` = how many follow the current book). The current book is whichever entry has `current: true`.
 - **Change the model:** replace `site/public/assets/hardcover.glb`, keeping mesh names and UV conventions above.
 - **Change materials/typography of generated covers:** `three/covers.js`; colours in `styles/tokens.css`.
 - **Debugging:** in dev, `window.__books` exposes the engine (views, frame state).
