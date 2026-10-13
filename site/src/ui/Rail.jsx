@@ -15,7 +15,7 @@ export default function Rail({ label, children }) {
           <button type="button" onClick={() => step(1)} disabled={edge.end} aria-label="More books"><Arrow /></button>
         </div>
       </div>
-      <ul className="rail-track" ref={scroller} role="list" aria-label={label}>{children}</ul>
+      <ul className="rail-track" ref={scroller} data-gl-clip="" role="list" aria-label={label}>{children}</ul>
     </div>
   )
 }

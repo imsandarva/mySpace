@@ -33,7 +33,7 @@ export default function FocusSheet({ book, focus, inline }) {
   }
   const [rigReady, setRigReady] = useState(false)
   const [entered, setEntered] = useState(false)
-  const rotate = useRotate(rig)
+  const rotate = useRotate(rig, box)
   const [gaveUp, setGaveUp] = useState(false)
   const ready = flat || rigReady || gaveUp
   const flight = useCallback((ms = FLIGHT) => api?.getEngine().invalidateFor(ms + 80), [api])

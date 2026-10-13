@@ -29,6 +29,8 @@ class Engine {
     document.addEventListener('scroll', this.invalidate, { capture: true, passive: true })
     window.addEventListener('resize', this.onResize, { passive: true })
     document.addEventListener('visibilitychange', this.invalidate)
+    window.visualViewport?.addEventListener('resize', this.invalidate, { passive: true })
+    window.visualViewport?.addEventListener('scroll', this.invalidate, { passive: true })
     if (import.meta.env.DEV) window.__books = this /* dev-only inspection handle */
   }
 
@@ -86,7 +88,7 @@ class Engine {
       /* Settle even while off-screen, so a book is already opaque the moment it scrolls into view. */
       if (view.tick(dt)) busy = true
       if (!view.visible) continue
-      const paint = paintBox(view.el)
+      const paint = paintBox(view.el, renderer.domElement)
       if (!paint) continue
       const { box } = paint
       view.frame(box.width / box.height)
