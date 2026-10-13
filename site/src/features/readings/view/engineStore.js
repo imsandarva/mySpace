@@ -20,7 +20,7 @@ function start() {
   started = true
   warm = import('../three')
     .then((api) => { set({ status: 'ready', api }); return api.warmCollection(books) })
-    .catch(() => { set({ status: 'unsupported', api: null }) })
+    .catch((err) => { if (!state.api) set({ status: 'unsupported', api: null }); else console.error(err) })
 }
 
 const subscribe = (cb) => { listeners.add(cb); start(); return () => listeners.delete(cb) }

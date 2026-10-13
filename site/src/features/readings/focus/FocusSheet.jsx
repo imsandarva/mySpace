@@ -96,7 +96,7 @@ export default function FocusSheet({ book, focus, inline }) {
         <div className="fl-grid">
           <div className="fl-book">
             <div ref={box} className="fl-stage" role="group" tabIndex={0} aria-label={`3D view of ${book.title}. Drag, or use the arrow keys, to rotate.`} data-dragging={rotate.dragging} {...rotate.handlers}>
-              {(flat || (gaveUp && !rigReady)) && <BookFlat book={book} />}
+              {flat && <BookFlat book={book} />}
               <FocusView book={book} box={box} rig={rig} onReady={setRigReady} from={focus.rest} />
             </div>
             <FocusTools touched={rotate.touched} onReset={() => rig.current?.reset()} />
@@ -110,5 +110,7 @@ export default function FocusSheet({ book, focus, inline }) {
 }
 
 function FocusView({ book, box, rig, onReady, from }) {
-  return <BookView elRef={box} book={book} tier="lg" mode="focus" rest={FOCUS_REST} from={from} reveal={false} onRig={(r) => { rig.current = r }} onReady={onReady} />
+  /* `sm` is the cover already painted for the shelf, so the open book is 3D on the first frame.
+     A fresh `lg` paint is slower in production and used to lose the race to the flat fallback, which then sat on top of the canvas. */
+  return <BookView elRef={box} book={book} tier="sm" mode="focus" rest={FOCUS_REST} from={from} reveal={false} onRig={(r) => { rig.current = r }} onReady={onReady} />
 }

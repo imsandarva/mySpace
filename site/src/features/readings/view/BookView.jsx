@@ -42,9 +42,9 @@ export default function BookView({ elRef, book, tier = 'md', mode = 'rest', rest
       L.onReady?.(true)
     }
     const spec = { book, tier, mode, rest: latest.current.from ?? latest.current.rest, fill: latest.current.fill }
-    const now = api.createBookRigNow?.(spec)
-    if (!now) api.createBookRig(spec).catch(() => null).then((rig) => { if (!dead) place(rig) })
-    else place(now)
+    const cached = api.createBookRigNow?.(spec)
+    if (cached) place(cached)
+    else api.createBookRig(spec).catch(() => null).then((rig) => { if (dead) return rig?.dispose(); if (rig) place(rig); else if (tier !== 'sm') api.createBookRig({ ...spec, tier: 'sm' }).catch(() => null).then((fallback) => { if (!dead) place(fallback) }) })
     return () => {
       dead = true
       remove?.()
