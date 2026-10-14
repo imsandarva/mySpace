@@ -10,6 +10,8 @@ const PORTRAIT = `${import.meta.env.BASE_URL}assets/my_painting.webp`
    On a phone the plate sits beside the text, on desktop it hangs from the right margin. */
 export default function Hero() {
   const intro = useIntro()
+  const twitter = contact.secondary.find((c) => c.id === 'twitter')
+  const instagram = contact.secondary.find((c) => c.id === 'instagram')
 
   return (
     <section className={`hero wrap${intro ? ' is-intro' : ''}`} aria-labelledby="name">
@@ -18,9 +20,9 @@ export default function Hero() {
       <div className="hero-copy">
         <p className="t-lede">{curly(about)}</p>
         <ul className="hero-links" role="list">
-          <li><a className="link" href={contact.primary.href} {...outbound}>{contact.primary.label}<Arrow kind="out" /></a></li>
+          <li><a className="link" href={twitter.href} {...outbound}>{twitter.label}<Arrow kind="out" /></a></li>
+          <li><a className="link" href={instagram.href} {...outbound}>{instagram.label}<Arrow kind="out" /></a></li>
           <li><a className="link" href={mailto}>Email</a></li>
-          <li><a className="link" href={contact.pinterest.href} {...outbound}>{contact.pinterest.label}<Arrow kind="out" /></a></li>
         </ul>
       </div>
 
