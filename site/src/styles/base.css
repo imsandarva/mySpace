@@ -7,7 +7,8 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-optical-sizing: auto;
+  font-optical-sizing: auto; /* Fraunces redraws itself for its own size: sturdy small, high-contrast large */
+  font-kerning: normal;
   font-feature-settings: 'liga' 1, 'calt' 1;
   scroll-padding-top: calc(var(--header-h) + 1rem);
 }
@@ -16,8 +17,8 @@ body {
   min-height: 100svh;
   background: var(--paper);
   color: var(--ink);
-  font: 400 var(--fs-body)/1.6 var(--font);
-  letter-spacing: -0.011em;
+  font: var(--w-regular) var(--fs-body)/var(--lh-body) var(--font-text);
+  letter-spacing: var(--ls-text);
   overflow-x: clip;
 }
 
@@ -36,7 +37,7 @@ main:focus { outline: none; }
 .skip {
   position: fixed; top: 0.75rem; left: 0.75rem; z-index: 100;
   padding: 0.6rem 0.9rem; background: var(--ink); color: var(--paper);
-  font-size: var(--fs-small); border-radius: var(--radius);
+  font: var(--text-ui); border-radius: var(--radius);
   transform: translateY(-200%);
 }
 .skip:focus-visible { transform: none; }

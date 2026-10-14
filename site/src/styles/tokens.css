@@ -1,4 +1,4 @@
-/* Design tokens — the whole visual language in one place.
+/* Design tokens — colour, space and motion (typography lives in type-tokens.css).
    Palette is taken from the portrait: warm paper, blue-black ink, ultramarine, and one spark of marigold. */
 
 :root {
@@ -21,23 +21,6 @@
   --marigold: #e9892a;
   --accent-rose: #e5397a;
 
-  /* One family. Hierarchy comes from size, weight, tracking, and colour — not a second face.
-     --serif / --sans stay as aliases so every role resolves to Inter. */
-  --font: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --serif: var(--font);
-  --sans: var(--font);
-
-  /* Type scale — fluid, with deliberately uneven steps */
-  --fs-name: clamp(4.25rem, 2.2rem + 9.6vw, 11rem);
-  --fs-display: clamp(3.25rem, 2rem + 6vw, 7rem);
-  --fs-section: clamp(2.5rem, 1.75rem + 3.4vw, 4.5rem);
-  --fs-title: clamp(1.75rem, 1.35rem + 1.7vw, 2.75rem);
-  --fs-title-s: clamp(1.3125rem, 1.2rem + 0.5vw, 1.5rem);
-  --fs-lede: clamp(1.3125rem, 1.05rem + 1.05vw, 1.875rem);
-  --fs-body: 1rem;
-  --fs-small: 0.9375rem;
-  --fs-meta: 0.8125rem;
-
   /* Space */
   --pad: clamp(1.25rem, 0.6rem + 2.8vw, 3rem);
   --gap: clamp(1rem, 0.6rem + 1.6vw, 2rem);
@@ -51,9 +34,6 @@
   --settle: 1.08s;
 
   --radius: 3px;
-
-  /* Detail-page title */
-  --fs-detail: clamp(2.5rem, 1.5rem + 4.2vw, 5rem);
 }
 
 /* Book cloth — muted, material colours: oxblood, forest, cobalt, ivory, ochre, rust.

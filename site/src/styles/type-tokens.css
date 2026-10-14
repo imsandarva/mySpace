@@ -1,0 +1,63 @@
+/* Typography tokens — every typographic value on the site lives here; roles (type.css) and components only reference them.
+
+   Two voices:
+   · Display — Fraunces. The site's personality: name, titles, ledes, big numerals. Used at 400 (large) and 500 (titles).
+   · Text    — Hanken Grotesk. Everything functional: navigation, links, metadata, descriptions. Used at 400 / 500 / 600.
+   Hierarchy is built from size, weight, tracking and colour; the serif/sans contrast does the rest. */
+
+:root {
+  /* Families — the fallback face is metric-matched (see fonts.css) */
+  --font-display: 'Fraunces Variable', 'Fraunces Fallback', Georgia, 'Times New Roman', serif;
+  --font-text: 'Hanken Grotesk Variable', 'Hanken Fallback', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+
+  /* Weights — a short, fixed ladder. Large display is light and graceful; titles need a touch more body. */
+  --w-regular: 400;
+  --w-medium: 500;
+  --w-semibold: 600;
+  --w-display: var(--w-regular);
+  --w-title: var(--w-medium);
+
+  /* Size scale — fluid, deliberately uneven; each role is art-directed, not derived from one formula */
+  --fs-name: clamp(5.5rem, 3rem + 10.2vw, 12.5rem);
+  --fs-display: clamp(3.25rem, 2rem + 6vw, 7rem);
+  --fs-detail: clamp(2.5rem, 1.5rem + 4.2vw, 5rem);
+  --fs-section: clamp(2.5rem, 1.75rem + 3.4vw, 4.5rem);
+  --fs-feature: clamp(2rem, 1.35rem + 2.6vw, 3.5rem);
+  --fs-title: clamp(1.75rem, 1.35rem + 1.7vw, 2.75rem);
+  --fs-title-s: clamp(1.3125rem, 1.2rem + 0.5vw, 1.5rem);
+  --fs-lede: clamp(1.3125rem, 1.05rem + 1.05vw, 1.875rem);
+  --fs-body: 1rem;
+  --fs-small: 0.9375rem;
+  --fs-meta: 0.8125rem;
+
+  /* Leading — opens as size drops */
+  --lh-name: 0.92;
+  --lh-display: 1;
+  --lh-section: 1.05;
+  --lh-feature: 1.06;
+  --lh-title: 1.12;
+  --lh-title-s: 1.2;
+  --lh-lede: 1.36;
+  --lh-body: 1.6;
+  --lh-small: 1.5;
+  --lh-meta: 1.35;
+
+  /* Tracking — serif tightens as it grows (its hairlines need less air); the sans stays natural, meta opens a hair */
+  --ls-name: -0.035em;
+  --ls-display: -0.03em;
+  --ls-section: -0.026em;
+  --ls-feature: -0.024em;
+  --ls-title: -0.016em;
+  --ls-title-s: -0.01em;
+  --ls-lede: -0.006em;
+  --ls-text: 0;
+  --ls-meta: 0.012em;
+
+  /* Measure — how wide a run of text may get */
+  --measure: 34rem;
+  --measure-title: 38rem;
+
+  /* Composite roles for the sans, shared by every control, link and caption so they cannot drift apart */
+  --text-ui: var(--w-medium) var(--fs-small) / 1.2 var(--font-text);
+  --text-meta: var(--w-medium) var(--fs-meta) / var(--lh-meta) var(--font-text);
+}

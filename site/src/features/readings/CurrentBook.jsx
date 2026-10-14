@@ -8,8 +8,8 @@ export default function CurrentBook({ book }) {
       <BookSlot as="div" book={book} tier="lg" className="now-book" persist reveal={false} />
       <div className="now-copy">
         <CurrentlyReading />
-        <h3 className="t-title">{book.name}</h3>
-        {book.sub && <p className="now-sub">{book.sub}</p>}
+        <h3 className="t-feature">{book.name}</h3>
+        {book.sub && <p className="t-small">{book.sub}</p>}
         <p className="now-author">{book.author}</p>
       </div>
     </article>

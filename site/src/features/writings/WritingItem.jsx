@@ -14,7 +14,7 @@ export default function WritingItem({ writing, large = false }) {
       <span className="wr-item-copy">
         <WritingMeta writing={writing} short={large} />
         <span className={`wr-title ${large ? 't-title' : 't-title-s'}`}>{head}<span className="nw">{tail}<Arrow kind="out" /></span></span>
-        <span className="wr-blurb">{writing.blurb}</span>
+        <span className="t-small wr-blurb">{writing.blurb}</span>
       </span>
       {writing.thumb && <Thumb src={writing.thumb} ratio="4 / 5" className="wr-item-img" />}
     </a>

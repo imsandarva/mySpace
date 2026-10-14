@@ -36,8 +36,8 @@ features compose `ui/`, `hooks/` and `lib/`.
 ## Styles
 
 Plain CSS, split by responsibility, imported in order from `styles/index.css`:
-`tokens` (all design values) → `base` → `type` (typographic roles) → `layout` → `chrome` (header/footer) → `hero` → `writings` → `readings` (collection, slots, archive) → `focus` → `motion` → `pin`.
-Fonts are self-hosted via `@fontsource-variable/inter` (optical-size axis). One family for the page and for generated book covers.
+`fonts` (faces + metric fallbacks) → `tokens` (colour, space, motion) → `type-tokens` (every typographic value) → `base` → `type` (typographic roles) → `layout` → `chrome` (header/footer) → `hero` → `writings` → `readings` (collection, slots, archive) → `focus` → `motion` → `pin`.
+Fonts are self-hosted via `@fontsource-variable/fraunces` (display serif, optical-size axis) and `@fontsource-variable/hanken-grotesk` (text sans). The same two families letter the generated book covers. See [design-system.md](design-system.md#typography).
 
 ## Build
 

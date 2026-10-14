@@ -11,15 +11,14 @@
 
 /* Lead */
 .wr-lead { display: flex; flex-direction: column; gap: 1.25rem; }
-.wr-lead-copy { display: flex; flex-direction: column; gap: 0.65rem; max-width: 38rem; }
-.wr-lead .t-title { font-size: clamp(2rem, 1.35rem + 2.6vw, 3.5rem); line-height: 1.02; letter-spacing: -0.03em; }
+.wr-lead-copy { display: flex; flex-direction: column; gap: 0.65rem; max-width: var(--measure-title); }
 
 @media (min-width: 900px) { .wr-lead .thumb { aspect-ratio: 16 / 10; } }
 
 /* Shared text parts */
 .wr-meta { display: inline-flex; gap: 0.45em; }
 .wr-title { display: block; color: var(--ink); transition: color var(--fast); }
-.wr-blurb { display: block; max-width: 34rem; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.wr-blurb { display: block; max-width: var(--measure); }
 .wr-title .arrow { margin-left: 0.25em; width: 0.62em; height: 0.62em; vertical-align: 0.12em; color: var(--ink-3); transition: transform var(--fast), color var(--fast); }
 
 /* Rows */
@@ -44,8 +43,8 @@
 .year + .year { margin-top: clamp(2rem, 1rem + 3vw, 3.5rem); }
 
 .year-label {
-  font: 500 clamp(2rem, 1.4rem + 2.4vw, 3.5rem)/1 var(--font);
-  letter-spacing: -0.036em;
+  font: var(--w-display) clamp(2rem, 1.4rem + 2.4vw, 3.5rem)/1 var(--font-display);
+  letter-spacing: var(--ls-display);
   font-variant-numeric: lining-nums;
   color: var(--ink-3);
 }
@@ -61,4 +60,4 @@
 .wr-item.is-large { padding-block: 1.75rem; gap: clamp(1.25rem, 1rem + 2vw, 2.5rem); }
 .wr-item.is-large .wr-item-copy { gap: 0.6rem; }
 .wr-item.is-large .wr-item-img { width: clamp(5.5rem, 3.5rem + 9vw, 10rem); }
-.wr-item.is-large .wr-blurb { font-size: 1rem; }
+.wr-item.is-large .wr-blurb { font-size: var(--fs-body); }

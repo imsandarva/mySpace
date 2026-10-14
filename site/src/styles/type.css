@@ -1,69 +1,52 @@
-/* Typographic roles, all Inter. Size, weight, and tracking do the work a second face used to do:
-   display tightens and gains weight; body stays regular and slightly open; meta is smaller, medium, and tracked out. */
+/* Typographic roles — the only place a role's face, weight, size, leading and tracking are combined.
+   Values come from type-tokens.css. Components choose a role; they do not re-describe one.
 
-.t-name {
-  font: 520 var(--fs-name)/0.92 var(--font);
-  letter-spacing: -0.045em;
-}
+   Display roles (Fraunces) carry identity; text roles (Hanken Grotesk) carry function. */
 
-.t-display {
-  font: 560 var(--fs-display)/1.02 var(--font);
-  letter-spacing: -0.034em;
-}
+/* ---------- Display ---------- */
 
-.t-section {
-  font: 580 var(--fs-section)/1.05 var(--font);
-  letter-spacing: -0.032em;
-}
+.t-name { font: var(--w-display) var(--fs-name)/var(--lh-name) var(--font-display); letter-spacing: var(--ls-name); }
 
-.t-title {
-  font: 560 var(--fs-title)/1.14 var(--font);
-  letter-spacing: -0.026em;
-  text-wrap: balance;
-}
+.t-display { font: var(--w-display) var(--fs-display)/var(--lh-display) var(--font-display); letter-spacing: var(--ls-display); text-wrap: balance; }
 
-.t-title-s {
-  font: 560 var(--fs-title-s)/1.22 var(--font);
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-}
+.t-detail { font: var(--w-display) var(--fs-detail)/var(--lh-display) var(--font-display); letter-spacing: var(--ls-display); text-wrap: balance; }
 
-.t-detail {
-  font: 560 var(--fs-detail)/1.08 var(--font);
-  letter-spacing: -0.034em;
-  text-wrap: balance;
-}
+.t-section { font: var(--w-display) var(--fs-section)/var(--lh-section) var(--font-display); letter-spacing: var(--ls-section); }
 
-.t-lede {
-  font: 450 var(--fs-lede)/1.4 var(--font);
-  letter-spacing: -0.016em;
-  color: var(--ink);
-  text-wrap: pretty;
-}
+/* The featured piece of a list: the lead writing, the book in hand. */
+.t-feature { font: var(--w-title) var(--fs-feature)/var(--lh-feature) var(--font-display); letter-spacing: var(--ls-feature); text-wrap: balance; }
 
-.t-meta {
-  font: 500 var(--fs-meta)/1.35 var(--font);
-  letter-spacing: 0.012em;
-  font-variant-numeric: tabular-nums;
-  color: var(--ink-3);
-}
+.t-title { font: var(--w-title) var(--fs-title)/var(--lh-title) var(--font-display); letter-spacing: var(--ls-title); text-wrap: balance; }
+
+.t-title-s { font: var(--w-title) var(--fs-title-s)/var(--lh-title-s) var(--font-display); letter-spacing: var(--ls-title-s); text-wrap: balance; }
+
+/* The voice of a page: one sentence set in the serif, at a size that reads as speech rather than a heading. */
+.t-lede { font: var(--w-regular) var(--fs-lede)/var(--lh-lede) var(--font-display); letter-spacing: var(--ls-lede); color: var(--ink); text-wrap: pretty; }
+
+/* ---------- Text ---------- */
+
+/* Descriptions and blurbs: quieter than the title they belong to, still comfortably legible. */
+.t-small { font: var(--w-regular) var(--fs-small)/var(--lh-small) var(--font-text); color: var(--ink-2); text-wrap: pretty; }
+
+/* Dates, captions, labels — one treatment, never uppercase by default. */
+.t-meta { font: var(--text-meta); letter-spacing: var(--ls-meta); font-variant-numeric: tabular-nums; color: var(--ink-3); }
 
 /* Counts sit beside titles like a footnote mark — small, tabular, quiet. */
 .count {
+  position: relative;
+  top: 0.55em;
   margin-left: 0.2em;
-  font: 500 max(0.8125rem, 0.22em)/1 var(--font);
+  font: var(--w-medium) max(0.8125rem, 0.22em)/1 var(--font-text);
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
   color: var(--ink-3);
   vertical-align: top;
-  position: relative;
-  top: 0.55em;
 }
 
 /* The one text-link style: a quiet rule that fills with ultramarine on hover. */
 .link {
-  font: 500 var(--fs-small)/1.45 var(--font);
-  letter-spacing: -0.006em;
+  font: var(--text-ui);
+  line-height: 1.45;
   padding-bottom: 0.15em;
   background-image: linear-gradient(var(--blue), var(--blue)), linear-gradient(var(--rule-strong), var(--rule-strong));
   background-repeat: no-repeat;

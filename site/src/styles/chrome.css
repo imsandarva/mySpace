@@ -23,8 +23,8 @@
 
 .wordmark {
   padding-block: 0.75rem;
-  font: 560 1.375rem/1 var(--font);
-  letter-spacing: -0.028em;
+  font: var(--w-title) 1.375rem/1 var(--font-display);
+  letter-spacing: var(--ls-title);
 }
 
 .site-nav { display: flex; gap: clamp(1.25rem, 0.5rem + 3vw, 2.25rem); }
@@ -32,7 +32,7 @@
 .site-nav a {
   position: relative;
   padding-block: 1rem;
-  font: 500 var(--fs-small)/1 var(--sans);
+  font: var(--text-ui); line-height: 1;
   color: var(--ink-2);
   transition: color var(--fast);
 }
@@ -79,8 +79,8 @@
 .footer-address {
   display: inline-block;
   margin-top: 0.75rem;
-  font: 500 clamp(1.5rem, 0.85rem + 3.1vw, 3.25rem)/1.15 var(--font);
-  letter-spacing: -0.03em;
+  font: var(--w-display) clamp(1.5rem, 0.85rem + 3.1vw, 3.25rem)/1.15 var(--font-display);
+  letter-spacing: var(--ls-section);
   overflow-wrap: anywhere;
   background: linear-gradient(var(--blue), var(--blue)) 0 100% / 0% 1px no-repeat;
   padding-bottom: 0.1em;
@@ -98,7 +98,7 @@
   justify-content: space-between;
   padding-block: 0.8rem;
   border-top: 1px solid var(--rule);
-  font: 500 var(--fs-small)/1.2 var(--sans);
+  font: var(--text-ui);
   color: var(--ink);
   transition: color var(--fast);
 }

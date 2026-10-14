@@ -5,12 +5,19 @@ import { luminance, toneOf } from './tones'
    Real artwork is used whenever the data has `cover`; otherwise a considered typographic cover from the book's
    true title and author, in the site's own typefaces. Orientation matches the GLB's UVs: everything is drawn upright. */
 
-const FONT = '"Inter Variable", Inter, system-ui, sans-serif'
+/* Cover lettering uses the site's two voices: the display serif for the title, the text sans for the author (as on a printed jacket).
+   Weights mirror --w-title / --w-semibold in styles/type-tokens.css. */
+const TITLE_FONT = '"Fraunces Variable", Georgia, serif'
+const AUTHOR_FONT = '"Hanken Grotesk Variable", system-ui, sans-serif'
+const TITLE_WEIGHT = 520
+const AUTHOR_WEIGHT = 600
+const titleFont = (px) => `${TITLE_WEIGHT} ${px}px ${TITLE_FONT}`
+const authorFont = (px) => `${AUTHOR_WEIGHT} ${px}px ${AUTHOR_FONT}`
 const TIER_WIDTH = { lg: 1024, md: 640, sm: 384 }
 export const ASPECT = BOOK.width / BOOK.height
 const SPINE_RATIO = BOOK.depth / BOOK.height
 
-export const ensureFonts = () => Promise.all([document.fonts.load(`560 64px ${FONT}`), document.fonts.load(`600 24px ${FONT}`)]).catch(() => {})
+export const ensureFonts = () => Promise.all([document.fonts.load(titleFont(64)), document.fonts.load(authorFont(24))]).catch(() => {})
 
 const canvasOf = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return [c, c.getContext('2d')] }
 
@@ -75,15 +82,14 @@ function stamp(ctx, text, x, y, color, dark, s) {
 
 /* Title block: balanced lines at the best size. Returns the lines, size and total height. */
 function setTitle(ctx, book, w, maxW, k) {
-  const font = (px) => `560 ${px}px ${FONT}`
-  const size = fitSize(ctx, book.name, (book.fit / 100) * w * k, maxW, font)
-  ctx.font = font(size)
-  return { lines: balanced(ctx, book.name, maxW), size, lh: size * 1.04, font: font(size) }
+  const size = fitSize(ctx, book.name, (book.fit / 100) * w * k, maxW, titleFont)
+  ctx.font = titleFont(size)
+  return { lines: balanced(ctx, book.name, maxW), size, lh: size * 1.06, font: titleFont(size) }
 }
 
 function setAuthor(ctx, book, w, maxW) {
   const size = w * 0.034
-  ctx.font = `600 ${size}px ${FONT}`
+  ctx.font = authorFont(size)
   ctx.letterSpacing = `${size * 0.07}px`
   return { lines: wrap(ctx, book.author.toUpperCase(), maxW), size, lh: size * 1.3 }
 }
@@ -103,7 +109,7 @@ const LAYOUT = {
     const a = setAuthor(ctx, book, w, w - L - R)
     const top = h - B - blockH(a)
     ctx.fillStyle = c.on; ctx.globalAlpha = 0.5; ctx.fillRect(L, top - w * 0.05, w * 0.12, Math.max(1.5, w / 700)); ctx.globalAlpha = 1
-    ctx.font = `600 ${a.size}px ${FONT}`; ctx.letterSpacing = `${a.size * 0.07}px`
+    ctx.font = authorFont(a.size); ctx.letterSpacing = `${a.size * 0.07}px`
     a.lines.forEach((ln, i) => stamp(ctx, ln, L, top + i * a.lh, c.on, c.dark, c.s))
   },
   /* b — a blind-stamped frame, title and author centred inside it */
@@ -119,7 +125,7 @@ const LAYOUT = {
     ctx.font = t.font
     t.lines.forEach((ln, i) => stamp(ctx, ln, x + fw / 2, cy + i * t.lh, c.on, c.dark, c.s))
     cy += blockH(t) + 0.07 * w
-    ctx.font = `600 ${a.size}px ${FONT}`; ctx.letterSpacing = `${a.size * 0.07}px`
+    ctx.font = authorFont(a.size); ctx.letterSpacing = `${a.size * 0.07}px`
     a.lines.forEach((ln, i) => stamp(ctx, ln, x + fw / 2, cy + i * a.lh, c.on, c.dark, c.s))
   },
   /* c — a title label set onto the cloth, author beneath */
@@ -132,7 +138,7 @@ const LAYOUT = {
     t.lines.forEach((ln, i) => ctx.fillText(ln, L + (w - L - R) / 2, T + pad + i * t.lh))
     const a = setAuthor(ctx, book, w, w - L - R)
     ctx.textAlign = 'left'
-    ctx.font = `600 ${a.size}px ${FONT}`; ctx.letterSpacing = `${a.size * 0.07}px`
+    ctx.font = authorFont(a.size); ctx.letterSpacing = `${a.size * 0.07}px`
     const top = h - B - blockH(a)
     a.lines.forEach((ln, i) => stamp(ctx, ln, L, top + i * a.lh, c.on, c.dark, c.s))
   },
@@ -185,19 +191,18 @@ function paintSpine(book, h, thick, art, c) {
   ctx.textBaseline = 'middle'
   ctx.save(); ctx.translate(w / 2, T); ctx.rotate(Math.PI / 2); ctx.textAlign = 'left'
   let size = w * 0.34
-  const font = (px) => `560 ${px}px ${FONT}`
-  ctx.font = font(size)
+  ctx.font = titleFont(size)
   const room = h * 0.6
   const width = ctx.measureText(book.name).width
-  if (width > room) { size *= room / width; ctx.font = font(size) }
+  if (width > room) { size *= room / width; ctx.font = titleFont(size) }
   stamp(ctx, book.name, 0, 0, c.on, c.dark, c.s)
   ctx.restore()
   ctx.save(); ctx.translate(w / 2, h - B); ctx.rotate(Math.PI / 2); ctx.textAlign = 'right'
   const asize = w * 0.19
-  ctx.font = `600 ${asize}px ${FONT}`; ctx.letterSpacing = `${asize * 0.07}px`
+  ctx.font = authorFont(asize); ctx.letterSpacing = `${asize * 0.07}px`
   let author = book.author.toUpperCase()
   const aroom = h * 0.28
-  if (ctx.measureText(author).width > aroom) { const ratio = aroom / ctx.measureText(author).width; ctx.font = `600 ${asize * ratio}px ${FONT}` }
+  if (ctx.measureText(author).width > aroom) { const ratio = aroom / ctx.measureText(author).width; ctx.font = authorFont(asize * ratio) }
   ctx.globalAlpha = 0.85; stamp(ctx, author, 0, 0, c.on, c.dark, c.s); ctx.restore()
   ctx.strokeStyle = c.on; ctx.globalAlpha = 0.35; ctx.lineWidth = Math.max(1, w / 90)
   for (const y of [h * 0.032, h * 0.968]) { ctx.beginPath(); ctx.moveTo(w * 0.22, y); ctx.lineTo(w * 0.78, y); ctx.stroke() }

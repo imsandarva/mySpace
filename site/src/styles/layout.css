@@ -19,7 +19,7 @@
 .more {
   flex: none;
   padding-bottom: 0.45em;
-  font: 500 var(--fs-small)/1.2 var(--sans);
+  font: var(--text-ui);
   color: var(--ink);
   transition: color var(--fast);
 }
@@ -45,7 +45,7 @@
   align-items: center;
   margin-bottom: clamp(1.25rem, 1rem + 2vw, 2.5rem);
   padding-block: 0.5rem;
-  font: 500 var(--fs-small)/1 var(--sans);
+  font: var(--text-ui); line-height: 1;
   color: var(--ink-2);
   transition: color var(--fast);
 }

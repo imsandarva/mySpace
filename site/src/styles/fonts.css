@@ -1,0 +1,25 @@
+/* Font delivery — two self-hosted variable families, nothing fetched from a third party.
+   Fraunces (display serif) carries an optical-size axis: large sizes draw a high-contrast cut, text sizes a sturdier one.
+   Hanken Grotesk (text sans) is one weight axis. Both come split by unicode-range, so only the Latin subset a page uses is fetched. */
+@import '@fontsource-variable/fraunces/opsz.css';
+@import '@fontsource-variable/hanken-grotesk/wght.css';
+
+/* Metric-matched fallbacks: until the real face arrives, a system face is stretched to the same width and line box,
+   so the swap changes the letterforms but never reflows the page (near-zero CLS). Values derived from the fonts' own metrics. */
+@font-face {
+  font-family: 'Fraunces Fallback';
+  src: local('Georgia'), local('Times New Roman');
+  size-adjust: 105.2%;
+  ascent-override: 93%;
+  descent-override: 24.2%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Hanken Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Liberation Sans');
+  size-adjust: 100.9%;
+  ascent-override: 99%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}

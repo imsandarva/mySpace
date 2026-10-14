@@ -6,7 +6,7 @@ React 18 + Vite, hash-routed, deployed as static files.
 | Doc | What it covers |
 | --- | --- |
 | [architecture.md](architecture.md) | Folder map, layering rules, routing, scroll and transitions |
-| [design-system.md](design-system.md) | Tokens, type roles, colour, motion language, shared UI |
+| [design-system.md](design-system.md) | Typography system (fonts, scale, roles), colour, motion language, shared UI |
 | [reading-collection.md](reading-collection.md) | The 3D books: engine, GLB contract, covers, focus view, performance, accessibility |
 | [content-guide.md](content-guide.md) | How to add writings, books and cover art; how to re-compose the homepage |
 

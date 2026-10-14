@@ -13,8 +13,8 @@ export default function WritingLead({ writing }) {
       {writing.thumb && <Thumb src={writing.thumb} ratio="3 / 2" priority className="wr-lead-img" />}
       <span className="wr-lead-copy">
         <WritingMeta writing={writing} />
-        <span className="t-title wr-title">{head}<span className="nw">{tail}<Arrow kind="out" /></span></span>
-        <span className="wr-blurb">{writing.blurb}</span>
+        <span className="t-feature wr-title">{head}<span className="nw">{tail}<Arrow kind="out" /></span></span>
+        <span className="t-small wr-blurb">{writing.blurb}</span>
       </span>
     </a>
   )
