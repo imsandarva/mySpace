@@ -25,7 +25,7 @@ export class BookRig {
     this.scene = scene; this.camera = camera; this.shadow = shadow; this.veil = veil
     this.scenes = [ground, scene] /* drawn in order, sharing one camera */
     this.holder = holder; this.materials = materials; this.book = book
-    this.mode = mode; this.fill = fill; this.snap = snap
+    this.mode = mode; this.fill = fill; this.snap = snap; this.front = mode === 'focus'
     this.yaw = this.yawTo = rest.yaw
     this.pitch = this.pitchTo = rest.pitch
     this.rest = rest

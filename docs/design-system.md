@@ -27,7 +27,7 @@ The 3D layer reads them from there (`three/tones.js`), as does the flat fallback
 
 ## Motion language
 
-- One easing (`--ease`), three speeds: `--fast` (180 ms), `--slow` (520 ms), and the 580 ms focus flight.
+- One easing (`--ease`), three speeds: `--fast` (180 ms), `--slow` (520 ms), and the 580 ms focus flight. The flight itself uses a gentler curve (`cubic-bezier(0.22, 0.5, 0.2, 1)`) so a large scale reads as the same gesture as the move.
 - Things **arrive once** (hero intro), **settle gently** (hover lifts), and **move between pages as the same object** (View Transitions, the focus flight).
 - No idle animation anywhere. Under `prefers-reduced-motion` all motion is removed; the site is simply still.
 

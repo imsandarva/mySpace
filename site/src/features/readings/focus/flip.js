@@ -1,7 +1,9 @@
 /* FLIP: move an element from where it *was* to where it *is*, as one smooth motion.
    Layout has already changed; we start from the old rectangle's transform and animate to none (or the reverse). */
 
-export const EASE = 'cubic-bezier(0.22, 0.8, 0.24, 1)'
+/* Spatial flight, not the snappy UI ease. That curve is ~90% done by 40% of the time, so a book
+   that mostly scales (the first one, already on the left) appears to pop to full size. */
+export const EASE = 'cubic-bezier(0.22, 0.5, 0.2, 1)'
 
 const centre = (r) => [r.left + r.width / 2, r.top + r.height / 2]
 

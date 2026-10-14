@@ -13,7 +13,7 @@ export function claimRig(slug, el, pose = {}) {
   const { rig } = host
   rig.el = el
   rig.hidden = false
-  if (pose.mode) rig.mode = pose.mode
+  if (pose.mode) { rig.mode = pose.mode; rig.front = pose.mode === 'focus' }
   if (pose.rest) rig.setRest(pose.rest)
   rig.setFade(1, true)
   rig.refresh()
@@ -26,7 +26,7 @@ export function restoreRig(slug) {
   if (!host) return
   const { rig } = host
   rig.el = host.el
-  rig.mode = host.mode
+  rig.mode = host.mode; rig.front = host.mode === 'focus'
   rig.hidden = false
   rig.setRest(host.rest)
   rig.setFade(1, true)

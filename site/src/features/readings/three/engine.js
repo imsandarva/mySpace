@@ -62,6 +62,20 @@ class Engine {
   /* Keep rendering for `ms` — covers DOM animations the engine can't see (FLIP moves, CSS transitions). */
   invalidateFor(ms) { this.until = Math.max(this.until, performance.now() + ms); this.invalidate() }
 
+  /* `front` is the book in flight. Everything else is painted first, so the shelf can never cover it. */
+  paintPass(renderer, canvasH, front) {
+    for (const view of this.views) {
+      if (!view.visible || !!view.front !== front) continue
+      const paint = paintBox(view.el, renderer.domElement)
+      if (!paint) continue
+      const { box } = paint
+      view.frame(box.width / box.height)
+      renderer.setViewport(box.left, canvasH - box.bottom, box.width, box.height)
+      renderer.setScissor(paint.left, canvasH - paint.bottom, paint.width, paint.height)
+      for (const scene of view.scenes) { renderer.clearDepth(); renderer.render(scene, view.camera) }
+    }
+  }
+
   syncSize() {
     const { clientWidth: w, clientHeight: h } = this.renderer.domElement
     const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR)
@@ -87,15 +101,11 @@ class Engine {
       if (!view.visible) continue
       /* Settle even while off-screen, so a book is already opaque the moment it scrolls into view. */
       if (view.tick(dt)) busy = true
-      if (!view.visible) continue
-      const paint = paintBox(view.el, renderer.domElement)
-      if (!paint) continue
-      const { box } = paint
-      view.frame(box.width / box.height)
-      renderer.setViewport(box.left, canvasH - box.bottom, box.width, box.height)
-      renderer.setScissor(paint.left, canvasH - paint.bottom, paint.width, paint.height)
-      for (const scene of view.scenes) { renderer.clearDepth(); renderer.render(scene, view.camera) }
     }
+    /* Shelf order is mount order. The open book was usually mounted first, so the books after it
+       used to paint over whatever part of it overlapped the grid — the lower half, until they faded out. */
+    this.paintPass(renderer, canvasH, false)
+    this.paintPass(renderer, canvasH, true)
 
     if (busy) this.invalidate()
     else this.last = 0
