@@ -10,6 +10,9 @@
 /* The stage holds the shelf and, stacked on top of it in the same cell, the inline focused view. */
 .rd-stage { position: relative; display: grid; }
 .rd-stage > * { grid-area: 1 / 1; min-width: 0; }
+/* The open view is taller than the shelf and shares its cell. Without this the shelf stretches to that height
+   and, aligned to the bottom, drops — so the flight aims low and the whole shelf jumps back up when the view closes. */
+.rd-stage > .shelf { align-self: start; }
 
 /* ---------- Homepage shelf: current book + rail (same arrangement as the pre-3D shelf) ---------- */
 

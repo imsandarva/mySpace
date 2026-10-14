@@ -1,3 +1,4 @@
+import { CAM_Y, frameWindow } from './framing'
 import { frameDistance, buildStudio } from './studio'
 import { samplePosePath } from './poseScript'
 
@@ -131,12 +132,12 @@ export class BookRig {
   /* The page colour behind this view (a CSS colour), so a fade dissolves into it. */
   setVeilColor(css) { this.veil.material.uniforms.uColor.value.set(css) }
 
-  /* Camera framing: rest views fit the book itself; the focus view leaves room for the whole turning sphere. */
+  /* Camera framing: rest views fit the book itself; the focus view leaves room for the whole turning sphere.
+     The window comes from framing.js, which the flight uses too — a book can only land true if both agree. */
   frame(aspect) {
-    const [halfH, halfW] = this.mode === 'focus' ? [0.63, 0.63] : [0.5 / this.fill, 0.42]
+    const [halfH, halfW] = frameWindow(this.mode, this.fill)
     this.camera.aspect = aspect
-    /* Camera sits a touch low, so the book rides high in its box and its shadow has room beneath — never clipped by the view's edge. */
-    this.camera.position.set(0, -0.07, frameDistance(halfH, halfW, aspect))
+    this.camera.position.set(0, CAM_Y, frameDistance(halfH, halfW, aspect))
     this.camera.updateProjectionMatrix()
   }
 

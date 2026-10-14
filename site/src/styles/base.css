@@ -2,6 +2,9 @@
 
 html {
   background: var(--paper);
+  /* Keep the scrollbar's space while a book is open (the page locks scroll), so the shelf does not
+     reflow — and look like it reloaded — when the lock lifts. */
+  scrollbar-gutter: stable;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;

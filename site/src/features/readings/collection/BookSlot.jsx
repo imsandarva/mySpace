@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { useShelfPresence } from '../../../hooks/useShelfPresence'
+import { slotFill } from '../book/fit'
 import BookFlat from '../book/BookFlat'
 import { focusStore, useFocus } from '../focus/focusStore'
 import { useBookEngine } from '../view/engineStore'
@@ -23,7 +24,7 @@ export default function BookSlot({ as: Tag = 'li', book, rest = restOf(book), ti
   const others = !!focus.slug && !open && !focus.closing
   /* Shelf copy hidden for the whole trip (including flight home); neighbours dissolve on canvas but stay built. */
   const away = open && focus.ready
-  const fill = 0.78 * (book.shape.h / 112)
+  const fill = slotFill(book)
 
   const pick = () => focusStore.open(book.slug, btnRef.current, rest)
   const mouseOnly = (on) => (e) => e.pointerType === 'mouse' && setHover(on)

@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Arrow from '../../../ui/Arrow'
+import { slotFill } from '../book/fit'
 import BookFlat from '../book/BookFlat'
 import BookView from '../view/BookView'
 import { useBookEngine } from '../view/engineStore'
 import FocusDetails from './FocusDetails'
 import FocusScrim from './FocusScrim'
-import { glide, homeTransform, inViewport, invert, layoutRect } from './flip'
+import { flightTransform, glide, inViewport, layoutRect } from './flip'
 import { focusStore } from './focusStore'
 import { useRotate } from './useRotate'
 import { useRotateHint } from './useRotateHint'
@@ -25,8 +26,9 @@ export default function FocusSheet({ book, focus, inline }) {
   const heading = useRef(null)
   const rig = useRef(null)
   const held = useRef(null)
+  /* Where this book sits on the shelf, as a transform of the open stage. Remeasured, never reused stale. */
   const snapHome = () => {
-    const t = homeTransform(stageOf(focus.source), box.current)
+    const t = flightTransform(box.current, stageOf(focus.source), slotFill(book))
     if (t) held.current = t
     return t
   }
@@ -44,9 +46,10 @@ export default function FocusSheet({ book, focus, inline }) {
   /* Before first paint: bring an inline sheet into view, then hold the box where the book was picked up. */
   useLayoutEffect(() => {
     if (inline) { const r = sheet.current.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) sheet.current.scrollIntoView({ block: 'center' }) }
-    const from = stageOf(focus.source) && layoutRect(stageOf(focus.source))
-    const to = layoutRect(box.current)
-    if (from && inViewport(from)) { held.current = invert(from, to); box.current.style.transform = held.current }
+    box.current.style.transform = 'none' /* measure the stage at its real size; a leftover transform would aim the flight wrong */
+    const from = stageOf(focus.source)
+    const home = snapHome()
+    if (home && from && inViewport(layoutRect(from))) box.current.style.transform = home
   }, [])
 
   /* Once the 3D twin is ready (or there is none to wait for), the shelf copy steps aside and the book flies in. */
@@ -66,7 +69,7 @@ export default function FocusSheet({ book, focus, inline }) {
     const shelfR = shelf?.getBoundingClientRect()
     rig.current?.setRest(focus.rest)
     box.current.style.transform = 'none'
-    const home = held.current ?? snapHome()
+    const home = snapHome() ?? held.current
     if (!home || !shelfR || !inViewport(shelfR) || !entered) return void setTimeout(done, reduced() ? 0 : 180)
     flight()
     glide(box.current, 'none', home, FLIGHT, reduced()).then(done)
