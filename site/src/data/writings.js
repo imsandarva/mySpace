@@ -2,6 +2,15 @@
 
 export const writings = [
   {
+    slug: 'antifragile',
+    title: 'Antifragile',
+    subtitle: 'on things that gain from stress and chaos, not merely endure it.',
+    published: '2026-10-15',
+    date: 'Oct 15, 2026',
+    url: 'https://sandarva.substack.com/p/antifragile',
+    thumb: 'https://substackcdn.com/image/fetch/$s_!YIR4!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F484c3fc7-c152-4c43-8e31-24a18f54b18f_768x1024.jpeg',
+  },
+  {
     slug: 'emergence-properties',
     title: 'Emergent Properties',
     subtitle: 'On emergent properties of Nature and Intelligence.',

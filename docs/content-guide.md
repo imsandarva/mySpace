@@ -17,6 +17,7 @@ Everything the site shows comes from `site/src/data/`. Edit these files; no comp
 ## Writings — `data/writings.js`
 
 Each entry: `slug`, `title`, `subtitle`, `published` (ISO), `date` (display), `url` (Substack), optional `thumb`.
+Keep the array **newest first** by `published` (the archive still lists everything). Optional `thumb` is usually the Substack cover URL from the post’s `og:image`, using the same `substackcdn.com/image/fetch/…,f_auto,q_auto:good,fl_progressive:steep/…` pattern as existing entries.
 Subtitles are tidied for display (sentence case, curly apostrophes, no trailing full stop) in `lib/writings.js`; the data stays as typed.
 
 ## Homepage curation — `data/home.js`
