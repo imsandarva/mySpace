@@ -16,13 +16,15 @@ Everything the site shows comes from `site/src/data/`. Edit these files; no comp
 
 ## Writings — `data/writings.js`
 
-Each entry: `slug`, `title`, `subtitle`, `published` (ISO), `date` (display), `url` (Substack), optional `thumb`.
-Keep the array **newest first** by `published` (the archive still lists everything). Optional `thumb` is usually the Substack cover URL from the post’s `og:image`, using the same `substackcdn.com/image/fetch/…,f_auto,q_auto:good,fl_progressive:steep/…` pattern as existing entries.
+Each entry: `slug`, `title`, `subtitle`, `published` (ISO `YYYY-MM-DD`), `date` (display), `url` (Substack), optional `thumb`.
+Array order does not matter. `lib/writings.js` sorts by `published`, newest first, for the archive and the homepage.
+Optional `thumb` is usually the Substack cover URL from the post’s `og:image`, using the same `substackcdn.com/image/fetch/…,f_auto,q_auto:good,fl_progressive:steep/…` pattern as existing entries.
 Subtitles are tidied for display (sentence case, curly apostrophes, no trailing full stop) in `lib/writings.js`; the data stays as typed.
+
+**Homepage (automatic).** The newest piece is the large lead on the left. The next three, still newest first, are the rows on the right (`HOME_ROWS` in `lib/writings.js`). Adding an entry with a later `published` date moves it into that layout on its own; nothing in `data/home.js` names a writing. The archive still lists every piece.
 
 ## Homepage curation — `data/home.js`
 
-- `lead` — slug of the featured writing; `support` — slugs of the quieter rows (in display order).
 - `shelf` — how many books appear beside the current one (the composition uses up to six on desktop, four on phones).
 - The archives always list everything.
 
