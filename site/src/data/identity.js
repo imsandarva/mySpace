@@ -22,7 +22,7 @@ export const contact = {
     external: true,
   },
   secondary: [
-    { id: 'twitter', label: 'Twitter', href: 'https://x.com/sandarvapaudel3', external: true },
+    { id: 'twitter', label: 'Twitter', href: 'https://x.com/imsandarva', external: true },
     { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/imsandarva/', external: true },
     { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/sandarva', external: true },
     { id: 'github', label: 'GitHub', href: 'https://github.com/imsandarva', external: true },
