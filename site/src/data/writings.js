@@ -4,7 +4,7 @@ export const writings = [
   {
     slug: 'antifragile',
     title: 'Antifragile',
-    subtitle: 'on things that gain from stress and chaos, not merely endure it.',
+    subtitle: 'things that thrive in chaos',
     published: '2026-10-15',
     date: 'Oct 15, 2026',
     url: 'https://sandarva.substack.com/p/antifragile',
