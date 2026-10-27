@@ -1,5 +1,6 @@
 /* Shelf of titles — each entry exits to Substack. Thumbs from Substack cover art when available. */
 
+
 export const writings = [
   {
     slug: 'antifragile',
