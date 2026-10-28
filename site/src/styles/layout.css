@@ -1,7 +1,7 @@
 /* One container, one rhythm. Pages compose from .wrap and .section; nothing else positions the page. */
 
 .wrap {
-  width: min(100% - 2 * var(--pad), 76rem);
+  width: min(100% - 2 * var(--pad), var(--measure-page));
   margin-inline: auto;
 }
 

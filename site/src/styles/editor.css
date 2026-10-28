@@ -50,9 +50,11 @@
 .write-publish:disabled { opacity: 0.55; cursor: progress; }
 
 /* ── The sheet ───────────────────────────────────────────────────────────── */
-.write-sheet { padding-top: clamp(1.75rem, 1rem + 3svh, 3.25rem); padding-bottom: 38svh; }
+/* Full page, so the sheet can be the measuring box for a wide figure. The column is the fields and the prose, not this box. */
+.write-sheet { width: 100%; padding-top: clamp(1.75rem, 1rem + 3svh, 3.25rem); padding-bottom: 38svh; }
+.write-sheet > .piece-meta { width: min(100% - 2 * var(--pad), var(--measure-essay)); margin-left: auto; margin-right: auto; }
 
-.write-title, .write-dek { display: block; width: 100%; border: 0; border-radius: 0; padding: 0; background: transparent; resize: none; overflow: hidden; caret-color: var(--blue); }
+.write-title, .write-dek { display: block; width: min(100% - 2 * var(--pad), var(--measure-essay)); margin-inline: auto; border: 0; border-radius: 0; padding: 0; background: transparent; resize: none; overflow: hidden; caret-color: var(--blue); }
 .write-title::placeholder, .write-dek::placeholder { color: rgb(18 22 43 / 0.3); }
 .write-title:focus-visible, .write-dek:focus-visible { outline: none; }
 
@@ -62,6 +64,7 @@
 
 /* The document. No outline, no frame: the page is the field. */
 .ProseMirror { min-height: 46svh; outline: none; caret-color: var(--blue); }
+.write .prose { width: min(100% - 2 * var(--pad), var(--measure-essay)); margin-inline: auto; }
 .ProseMirror:focus, .ProseMirror:focus-visible { outline: none; }
 .ProseMirror-selectednode { outline: none; }
 .ProseMirror p.is-editor-empty:first-child::before { content: attr(data-placeholder); float: left; height: 0; pointer-events: none; color: rgb(18 22 43 / 0.3); }

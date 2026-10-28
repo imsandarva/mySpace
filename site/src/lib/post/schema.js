@@ -6,7 +6,7 @@ import { isISODate, todayISO } from './dates.js'
 export const SCHEMA_VERSION = 1
 export const emptyDoc = () => ({ type: 'doc', content: [{ type: 'paragraph' }] })
 
-const IMAGE = /^images\/(?:[a-f0-9]{16}-(?:800|1600)|preview)\.webp$/
+const IMAGE = /^images\/(?:[a-f0-9]{16}-(?:800|1600|2400)|preview)\.webp$/
 const OG = /^og-[a-f0-9]{10}\.webp$/
 const BLOCKS = new Set(['paragraph', 'heading', 'blockquote', 'bulletList', 'orderedList', 'listItem'])
 
@@ -36,6 +36,9 @@ const mark = (m) => {
 
 const media = (src) => (IMAGE.test(String(src || '').trim()) ? String(src).trim() : '')
 
+/* Column sits on the text. Wide breaks out on desktop with a tight inset; unknown values become column. */
+const figureLayout = (value) => (value === 'wide' ? 'wide' : 'column')
+
 const figure = (node) => {
   const src = media(node.attrs?.src)
   if (!src) return null
@@ -44,7 +47,7 @@ const figure = (node) => {
     const safe = media(url)
     return safe ? `${safe}${/^(\d+)w$/.test(desc || '') ? ` ${desc}` : ''}` : ''
   }).filter(Boolean).join(', ')
-  return { type: 'figure', attrs: { src, srcset, width: num(node.attrs?.width), height: num(node.attrs?.height), alt: clip(node.attrs?.alt, 300), caption: clip(node.attrs?.caption, 500) } }
+  return { type: 'figure', attrs: { src, srcset, width: num(node.attrs?.width), height: num(node.attrs?.height), alt: clip(node.attrs?.alt, 300), caption: clip(node.attrs?.caption, 500), layout: figureLayout(node.attrs?.layout) } }
 }
 
 /* `budget` caps a hostile or accidental document before it is written to disk. */

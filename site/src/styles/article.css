@@ -10,10 +10,14 @@
   --rhythm-body: clamp(1.65rem, 1.15rem + 1.6vw, 2.5rem);
 }
 
-.piece-wrap, .write-sheet {
+/* The reading column. The writing sheet is the full page instead, so a wide figure can measure it; its fields stay on this column. */
+.piece-wrap {
   width: min(100% - 2 * var(--pad), var(--measure-essay));
   margin-inline: auto;
 }
+
+/* Full-width measuring boxes. A wide figure reads 100cqi from here — the page, not the text — so it never uses 100vw (which includes the scrollbar). */
+.piece, .write-sheet { container-type: inline-size; }
 
 .piece-wrap { padding-top: clamp(1.75rem, 1rem + 2vw, 3rem); }
 
@@ -99,8 +103,19 @@
 .prose li::marker { color: var(--ink-3); }
 .prose li p { margin: 0; }
 
-/* A figure is one object: the picture on the column, its caption close beneath. An empty caption takes no room. */
-.prose .fig { position: relative; margin: 2.25rem 0 2.5rem; }
+/* A figure is one object: the picture on the column, its caption close beneath. An empty caption takes no room.
+   Wide breaks out of the text with a small, fixed-feeling inset — not edge-to-edge, wider than the header frame. */
+.prose .fig { position: relative; width: 100%; margin: 2.25rem 0 2.5rem; }
+.prose .fig.is-wide {
+  --fig-wide: calc(100cqi - 2 * var(--fig-inset));
+  width: var(--fig-wide);
+  max-width: none;
+  margin-left: calc((100% - var(--fig-wide)) / 2);
+  margin-right: calc((100% - var(--fig-wide)) / 2);
+}
+@media (max-width: 47.999rem) {
+  .prose .fig.is-wide { width: 100%; margin-inline: 0; }
+}
 .prose .fig img { width: 100%; height: auto; border-radius: 4px; background: var(--paper-deep); }
 .prose .fig figcaption {
   margin: 0.6rem auto 0;

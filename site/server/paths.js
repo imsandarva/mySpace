@@ -12,7 +12,7 @@ export const draftsDir = path.join(repoRoot, 'drafts')
 
 export const ID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 export const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
-export const IMAGE_RE = /^(?:[a-f0-9]{16}-(?:800|1600)|preview)\.webp$/
+export const IMAGE_RE = /^(?:[a-f0-9]{16}-(?:800|1600|2400)|preview)\.webp$/
 export const OG_RE = /^og-[a-f0-9]{10}\.webp$/
 
 export const assertId = (id) => { if (!ID_RE.test(id || '')) throw fail(400, 'That piece could not be found.') }

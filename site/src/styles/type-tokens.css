@@ -88,6 +88,7 @@
   --ls-essay-title: -0.012em;
   --ls-essay-h: -0.008em;
 
-  /* ~68 characters of Newsreader at 20px. Wider than this and the eye loses the next line. */
+  /* ~68 characters of Newsreader at 20px. Wider than this and the eye loses the next line.
+     A wide figure does not use this measure; it uses --measure-page. */
   --measure-essay: 35rem;
 }

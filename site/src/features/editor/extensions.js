@@ -19,12 +19,18 @@ const Figure = Node.create({
       height: { default: null },
       alt: { default: '' },
       caption: { default: '' },
+      layout: {
+        default: 'column',
+        parseHTML: (el) => (el.getAttribute('data-layout') === 'wide' || el.classList.contains('is-wide') ? 'wide' : null),
+      },
     }
   },
   parseHTML() { return [{ tag: 'figure' }] },
   renderHTML({ HTMLAttributes: a }) {
+    const wide = a.layout === 'wide'
     const img = ['img', { src: a.src, alt: a.alt || '' }]
-    return ['figure', { class: 'fig' }, ...(a.caption ? [img, ['figcaption', {}, a.caption]] : [img])]
+    const attrs = { class: wide ? 'fig is-wide' : 'fig', ...(wide ? { 'data-layout': 'wide' } : {}) }
+    return ['figure', attrs, ...(a.caption ? [img, ['figcaption', {}, a.caption]] : [img])]
   },
   addNodeView() { return ReactNodeViewRenderer(FigureView) },
 })

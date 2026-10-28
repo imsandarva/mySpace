@@ -3,7 +3,13 @@ import { safeHref } from './schema.js'
 /* The reader. The editor's document becomes this HTML, and the reading page styles it.
    Text is always escaped. A mark or a path that isn't one of ours is left out, not rendered raw. */
 
-const IMAGE = /^images\/(?:[a-f0-9]{16}-(?:800|1600)|preview)\.webp$/
+const IMAGE = /^images\/(?:[a-f0-9]{16}-(?:800|1600|2400)|preview)\.webp$/
+
+/* Match article.css: column on the essay measure; wide on the viewport minus --fig-inset (≈17–28px per side). */
+export const FIGURE_SIZES = {
+  column: '(min-width: 48rem) 35rem, calc(100vw - 2.5rem)',
+  wide: '(min-width: 64rem) calc(100vw - 3.5rem), calc(100vw - 2.25rem)',
+}
 
 export const esc = (s = '') => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
@@ -37,8 +43,9 @@ const figure = (node, resolve, eager) => {
   }).filter(Boolean).join(', ')
   const size = `${num(a.width) ? ` width="${num(a.width)}"` : ''}${num(a.height) ? ` height="${num(a.height)}"` : ''}`
   const cap = (a.caption || '').trim()
-  /* 35rem matches --measure-essay, so the browser fetches the size the column actually shows. */
-  return `<figure class="fig"><img src="${esc(src)}"${srcset ? ` srcset="${esc(srcset)}" sizes="(min-width: 48rem) 35rem, calc(100vw - 2.5rem)"` : ''} alt="${esc(a.alt || '')}"${size} loading="${eager.used ? 'lazy' : 'eager'}" decoding="async">${cap ? `<figcaption>${esc(cap)}</figcaption>` : ''}</figure>`
+  const wide = a.layout === 'wide'
+  const sizes = FIGURE_SIZES[wide ? 'wide' : 'column']
+  return `<figure class="${wide ? 'fig is-wide' : 'fig'}"><img src="${esc(src)}"${srcset ? ` srcset="${esc(srcset)}" sizes="${sizes}"` : ''} alt="${esc(a.alt || '')}"${size} loading="${eager.used ? 'lazy' : 'eager'}" decoding="async">${cap ? `<figcaption>${esc(cap)}</figcaption>` : ''}</figure>`
 }
 
 /* The editor keeps one empty line after a trailing figure so you can keep writing; a reader should not get it as blank space. */

@@ -23,12 +23,28 @@ const pipeline = (buffer) => sharp(buffer, { failOn: 'none', animated: false, li
 
 const sized = (buffer, width) => pipeline(buffer).resize({ width, withoutEnlargement: true }).webp({ quality: 82 }).toBuffer({ resolveWithObject: true })
 
+/* Largest first. 2400 covers a wide figure on a retina screen (the page frame is 76rem). Stop once a step would not be smaller. */
+const LADDER = [2400, 1600, 800]
+
+const renditions = async (buffer) => {
+  const made = []
+  let cap = Infinity
+  for (const target of LADDER) {
+    if (cap <= target) break
+    const out = await sized(buffer, target)
+    if (out.info.width >= cap) break
+    made.push({ target, data: out.data, width: out.info.width, height: out.info.height })
+    cap = out.info.width
+  }
+  return made
+}
+
 export const makeOg = async (input) => {
   const run = (position) => sharp(input, { failOn: 'none', animated: false, limitInputPixels: MAX_PIXELS }).rotate().resize(1200, 630, { fit: 'cover', position }).webp({ quality: 82 }).toBuffer()
   try { return await run('attention') } catch { return run('centre') }
 }
 
-/* `role` is `figure` (two widths, for the essay) or `preview` (the image used when the link is shared). */
+/* `role` is `figure` (the essay ladder) or `preview` (the image used when the link is shared). */
 export const storeImage = async (id, buffer, role) => {
   if (!Buffer.isBuffer(buffer) || !buffer.length) throw fail(400, 'That image was empty.')
   if (!sniff(buffer)) throw fail(400, 'Use a JPEG, PNG, WebP, or GIF.')
@@ -40,17 +56,18 @@ export const storeImage = async (id, buffer, role) => {
       await writeFile(path.join(dir, 'preview.webp'), out.data)
       return { src: 'images/preview.webp', width: out.info.width, height: out.info.height }
     }
+    const made = await renditions(buffer)
+    if (!made.length) throw fail(400, 'That image could not be read.')
     const stamp = randomBytes(8).toString('hex')
-    const large = await sized(buffer, 1600)
-    if (!IMAGE_RE.test(`${stamp}-1600.webp`)) throw fail(500, 'Could not name that image.')
-    await writeFile(path.join(dir, `${stamp}-1600.webp`), large.data)
-    let srcset = `images/${stamp}-1600.webp ${large.info.width}w`
-    if (large.info.width > 800) {
-      const small = await sized(buffer, 800)
-      await writeFile(path.join(dir, `${stamp}-800.webp`), small.data)
-      srcset = `images/${stamp}-800.webp ${small.info.width}w, ${srcset}`
+    const parts = []
+    for (const file of made) {
+      const name = `${stamp}-${file.target}.webp`
+      if (!IMAGE_RE.test(name)) throw fail(500, 'Could not name that image.')
+      await writeFile(path.join(dir, name), file.data)
+      parts.push(`images/${name} ${file.width}w`)
     }
-    return { src: `images/${stamp}-1600.webp`, srcset, width: large.info.width, height: large.info.height }
+    const largest = made[0]
+    return { src: `images/${stamp}-${largest.target}.webp`, srcset: parts.reverse().join(', '), width: largest.width, height: largest.height }
   } catch (err) {
     if (err.status) throw err
     throw fail(400, 'That image could not be read.')

@@ -1,5 +1,7 @@
 import { NodeViewWrapper } from '@tiptap/react'
 import { useContext, useRef, useState } from 'react'
+import { FIGURE_SIZES } from '../../lib/post/markup'
+import FigureWidth from './FigureWidth'
 import { MediaBase } from './media'
 import { useAutosize } from './useAutosize'
 
@@ -14,7 +16,8 @@ const stop = (e) => e.stopPropagation() // typing in a field must not reach the 
    while it is selected, hovered or has focus, and float over the image, so nothing around it ever moves. */
 export default function FigureView({ node, updateAttributes, selected, deleteNode, editor, getPos }) {
   const base = useContext(MediaBase)
-  const { src, srcset, width, height, alt, caption } = node.attrs
+  const { src, srcset, width, height, alt, caption, layout } = node.attrs
+  const wide = layout === 'wide'
   const [altOpen, setAltOpen] = useState(false)
   const cap = useRef(null)
   useAutosize(cap, caption)
@@ -28,10 +31,12 @@ export default function FigureView({ node, updateAttributes, selected, deleteNod
   const onAltKey = (e) => { stop(e); if (e.key === 'Enter' || e.key === 'Escape') { e.preventDefault(); setAltOpen(false) } }
 
   return (
-    <NodeViewWrapper as="figure" className={`fig${selected ? ' is-selected' : ''}${caption ? ' has-caption' : ''}`}>
+    <NodeViewWrapper as="figure" className={`fig${wide ? ' is-wide' : ''}${selected ? ' is-selected' : ''}${caption ? ' has-caption' : ''}`}>
       <div className="fig-frame" data-drag-handle>
-        <img src={`${base}${src}`} srcSet={withBase(base, srcset) || undefined} alt={alt || ''} width={width || undefined} height={height || undefined} draggable="false" />
+        <img src={`${base}${src}`} srcSet={withBase(base, srcset) || undefined} sizes={FIGURE_SIZES[wide ? 'wide' : 'column']} alt={alt || ''} width={width || undefined} height={height || undefined} draggable="false" />
         <div className="fig-tools" onMouseDown={stop}>
+          <FigureWidth wide={wide} onToggle={() => updateAttributes({ layout: wide ? 'column' : 'wide' })} />
+          <span className="fig-sep" aria-hidden="true" />
           <button type="button" className={alt ? 'has-alt' : ''} aria-expanded={altOpen} title="Describe the image for someone who can’t see it" onClick={() => setAltOpen((v) => !v)}>{alt ? 'Alt ✓' : 'Alt'}</button>
           <button type="button" onClick={deleteNode}>Remove</button>
         </div>

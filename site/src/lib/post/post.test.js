@@ -52,6 +52,26 @@ test('the empty line kept after a last figure is not shown to readers', () => {
   assert.equal(html, '<p>a</p>')
 })
 
+test('a wide figure gets wide sizes, and anything else stays in the column', () => {
+  const src = 'images/0123456789abcdef-2400.webp'
+  const post = normalize({ doc: { type: 'doc', content: [
+    { type: 'figure', attrs: { src, layout: 'wide', alt: 'Dunes', caption: 'Morning', width: 2400, height: 1400, srcset: 'images/0123456789abcdef-800.webp 800w, images/0123456789abcdef-1600.webp 1600w, images/evil.webp 999w, images/0123456789abcdef-2400.webp 2400w' } },
+    { type: 'figure', attrs: { src: 'images/0123456789abcdef-1600.webp', layout: 'full-bleed', srcset: 'images/0123456789abcdef-800.webp 800w, images/0123456789abcdef-1600.webp 1600w' } },
+    { type: 'figure', attrs: { src: 'images/0123456789abcdef-1600.webp', layout: 'wide"><img' } },
+  ] } }, id)
+  assert.equal(post.doc.content[0].attrs.layout, 'wide')
+  assert.equal(post.doc.content[1].attrs.layout, 'column')
+  assert.equal(post.doc.content[2].attrs.layout, 'column')
+  assert.match(post.doc.content[0].attrs.srcset, /2400\.webp 2400w/)
+  assert.doesNotMatch(post.doc.content[0].attrs.srcset, /evil/)
+  const html = renderDoc(post.doc, (s) => s)
+  assert.equal(html.match(/is-wide/g).length, 1)
+  assert.match(html, /sizes="\(min-width: 64rem\) calc\(100vw - 3\.5rem\), calc\(100vw - 2\.25rem\)"/)
+  assert.match(html, /sizes="\(min-width: 48rem\) 35rem, calc\(100vw - 2.5rem\)"/)
+  assert.match(html, /<figcaption>Morning<\/figcaption>/)
+  assert.doesNotMatch(html, /full-bleed|onload/)
+})
+
 test('an empty piece is blank, a titled one is not', () => {
   assert.equal(isBlank(normalize({ title: '  ' }, id)), true)
   assert.equal(isBlank(normalize({ title: 'A note' }, id)), false)

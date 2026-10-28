@@ -33,6 +33,12 @@ features compose `ui/`, `hooks/` and `lib/`.
 | `features/readings` | The 3D collection — see [reading-collection.md](reading-collection.md) |
 | `features/pin` | Hidden Pinterest widget comparison (`#/pin`), outside the shell |
 
+## Writing desk
+
+Dev only (`#/write`, `#/drafts`) — these routes are not in the production bundle. A piece is JSON (`lib/post/schema.js`); `lib/post/markup.js` renders it to the reading page, and the editor wears that same CSS.
+
+A figure is one block (image, alt, caption, layout). `layout` is `column` (the text measure) or `wide`. Wide breaks out of the column on desktop with a modest `--fig-inset` (about 17–28px per side), a touch narrower than edge-to-edge; on viewports under 48rem wide stays column-width. The writer toggles **Full width** on the figure toolbar (press again for column). Upload keeps three WebP widths — 800, 1600, 2400 — and the browser fetches the one the layout actually shows.
+
 ## Styles
 
 Plain CSS, split by responsibility, imported in order from `styles/index.css`:
