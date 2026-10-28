@@ -1,6 +1,6 @@
 import Arrow from '../../ui/Arrow'
 import Thumb from '../../ui/Thumb'
-import { outbound } from '../../lib/links'
+import { pieceLink } from '../../lib/links'
 import { splitLast } from '../../lib/text'
 import WritingMeta from './WritingMeta'
 
@@ -10,11 +10,11 @@ export default function WritingItem({ writing, large = false }) {
   const [head, tail] = splitLast(writing.title)
 
   return (
-    <a className={`wr-item${large ? ' is-large' : ''}`} href={writing.url} {...outbound} aria-label={`${writing.title}, ${writing.date}`}>
+    <a className={`wr-item${large ? ' is-large' : ''}`} {...pieceLink(writing)} aria-label={`${writing.title}, ${writing.date}`}>
       <span className="wr-item-copy">
         <WritingMeta writing={writing} short={large} />
-        <span className={`wr-title ${large ? 't-title' : 't-title-s'}`}>{head}<span className="nw">{tail}<Arrow kind="out" /></span></span>
-        <span className="t-small wr-blurb">{writing.blurb}</span>
+        <span className={`wr-title ${large ? 't-title' : 't-title-s'}`}>{head}<span className="nw">{tail}<Arrow kind={writing.local ? 'right' : 'out'} /></span></span>
+        {writing.blurb && <span className="t-small wr-blurb">{writing.blurb}</span>}
       </span>
       {writing.thumb && <Thumb src={writing.thumb} ratio="4 / 5" className="wr-item-img" />}
     </a>

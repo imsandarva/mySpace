@@ -1,0 +1,111 @@
+/* The writing desk, dev only. The type of the piece itself lives in article.css and is shared with the reading page,
+   so what you write is what is read. This file is only the chrome around it: the bar, the sheet's fields, notices.
+   Menus are in editor-menus.css; the figure in editor-figure.css. */
+
+/* The desk's chrome is Inter. The piece itself (title, subtitle, body) keeps the reader's Newsreader, from article.css. */
+.write {
+  min-height: 100svh;
+  --font-text: var(--font-essay-ui);
+  --text-ui: var(--w-medium) var(--fs-essay-ui) / 1.2 var(--font-essay-ui);
+  --text-meta: var(--w-regular) var(--fs-essay-meta) / var(--lh-meta) var(--font-essay-ui);
+}
+
+/* ── The bar ─────────────────────────────────────────────────────────────── */
+.write-bar {
+  position: sticky; top: 0; z-index: 30;
+  display: flex; align-items: center; gap: 0.9rem;
+  height: var(--header-h); padding-inline: var(--pad);
+  background: var(--paper);
+  box-shadow: 0 1px 0 transparent;
+  transition: box-shadow var(--fast);
+}
+.write-bar.is-scrolled { box-shadow: 0 1px 0 var(--rule); }
+
+.write-back {
+  display: inline-flex; align-items: center;
+  margin-left: -0.6rem; padding: 0.55rem 0.6rem; border-radius: 6px;
+  font: var(--text-ui); line-height: 1; color: var(--ink-2);
+  transition: color var(--fast), background var(--fast);
+}
+.write-back .arrow { transition: transform var(--fast); }
+
+/* Save state: words first, a dot second. Saved goes quiet on its own; trouble does not. */
+.write-status { display: inline-flex; align-items: center; gap: 0.45rem; min-width: 0; font: var(--text-meta); color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.write-status:not(:empty)::before { content: ''; flex: none; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.write-status[data-state='saved']::before { content: none; }
+.write-status[data-state='dirty']::before { background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; }
+.write-status[data-state='saving']::before { background: var(--marigold); }
+.write-status[data-state='error'] { color: var(--accent-rose); font-weight: var(--w-semibold); }
+
+.write-tools { display: flex; align-items: center; gap: 0.3rem; margin-left: auto; }
+.write-icon { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 8px; color: var(--ink-2); transition: color var(--fast), background var(--fast); }
+.write-icon[aria-expanded='true'] { color: var(--ink); background: rgb(18 22 43 / 0.07); }
+
+.write-publish {
+  height: 2.25rem; padding-inline: 1rem; border-radius: 6px;
+  background: var(--ink); color: var(--paper); font: var(--text-ui); line-height: 1;
+  transition: background var(--fast), opacity var(--fast);
+}
+.write-publish:active:not(:disabled) { background: #000; }
+.write-publish:disabled { opacity: 0.55; cursor: progress; }
+
+/* ── The sheet ───────────────────────────────────────────────────────────── */
+.write-sheet { padding-top: clamp(1.75rem, 1rem + 3svh, 3.25rem); padding-bottom: 38svh; }
+
+.write-title, .write-dek { display: block; width: 100%; border: 0; border-radius: 0; padding: 0; background: transparent; resize: none; overflow: hidden; caret-color: var(--blue); }
+.write-title::placeholder, .write-dek::placeholder { color: rgb(18 22 43 / 0.3); }
+.write-title:focus-visible, .write-dek:focus-visible { outline: none; }
+
+.write-date { position: relative; display: inline-block; }
+.write-date button { margin: -0.15rem -0.4rem; padding: 0.15rem 0.4rem; border-radius: 4px; font: inherit; letter-spacing: inherit; color: inherit; transition: color var(--fast), background var(--fast); }
+.write-date input { position: absolute; left: 0; bottom: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+/* The document. No outline, no frame: the page is the field. */
+.ProseMirror { min-height: 46svh; outline: none; caret-color: var(--blue); }
+.ProseMirror:focus, .ProseMirror:focus-visible { outline: none; }
+.ProseMirror-selectednode { outline: none; }
+.ProseMirror p.is-editor-empty:first-child::before { content: attr(data-placeholder); float: left; height: 0; pointer-events: none; color: rgb(18 22 43 / 0.3); }
+.ProseMirror-gapcursor::after { border-top-color: var(--blue); }
+
+.write-sheet.is-dropping .ProseMirror { border-radius: 6px; background: rgb(42 61 179 / 0.04); box-shadow: 0 0 0 14px rgb(42 61 179 / 0.04); transition: background var(--fast), box-shadow var(--fast); }
+
+/* ── Notices ─────────────────────────────────────────────────────────────── */
+.notice {
+  position: fixed; left: 50%; bottom: max(1.25rem, env(safe-area-inset-bottom)); z-index: 60; translate: -50% 0;
+  display: flex; align-items: center; gap: 0.5rem;
+  width: max-content; max-width: min(34rem, calc(100vw - 2rem)); padding: 0.55rem 0.55rem 0.55rem 1rem;
+  background: var(--ink); color: var(--paper); border-radius: 10px;
+  font: var(--text-ui); line-height: 1.35;
+  box-shadow: 0 14px 36px -10px rgb(18 22 43 / 0.45);
+}
+.notice p { flex: 1; padding-block: 0.25rem; }
+.notice button { flex: none; padding: 0.4rem 0.65rem; border-radius: 6px; font: var(--text-meta); color: var(--paper); transition: background var(--fast), opacity var(--fast); }
+.notice button.is-quiet { opacity: 0.7; }
+
+.write-opening { padding: calc(var(--header-h) + 1rem) var(--pad) 0; font: var(--text-meta); color: var(--ink-3); }
+.write-opening-back { margin: 1rem var(--pad) 0; }
+
+/* ── Arrivals: short, quiet, and only where the user allows motion ───────── */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pop-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  @keyframes rest { to { opacity: 0.5; } }
+  @keyframes toast-in { from { opacity: 0; translate: -50% 8px; } }
+  .notice { animation: toast-in 180ms var(--ease) backwards; }
+  .write-status[data-state='saved'] { animation: rest 500ms var(--ease) 2.4s forwards; }
+}
+
+/* ── Interaction ─────────────────────────────────────────────────────────── */
+@media (hover: hover) {
+  .write-back:hover { color: var(--blue); }
+  .write-back:hover .arrow { transform: translateX(-3px); }
+  .write-icon:hover { color: var(--ink); background: rgb(18 22 43 / 0.06); }
+  .write-publish:hover:not(:disabled) { background: var(--blue-deep); }
+  .write-date button:hover { color: var(--ink); background: rgb(18 22 43 / 0.05); }
+  .notice button:hover { background: rgb(255 255 255 / 0.14); }
+}
+
+@media (max-width: 560px) {
+  .write-back span { display: none; }
+  .write-back { margin-left: -0.55rem; padding-inline: 0.55rem; }
+  .write-bar { gap: 0.5rem; }
+}

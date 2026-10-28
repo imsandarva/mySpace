@@ -7,6 +7,14 @@ const table = [
   { name: 'pin', re: /^pin(?:\/(profile|board))?\/?$/, keys: ['view'] },
 ]
 
+/* The writer and the drafts list exist only in `vite dev`. The production bundle never registers them. */
+if (import.meta.env.DEV) {
+  table.push(
+    { name: 'write', re: /^write(?:\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))?\/?$/, keys: ['id'], title: 'Write' },
+    { name: 'drafts', re: /^drafts\/?$/, title: 'Drafts' },
+  )
+}
+
 export const SITE = 'Sandarva'
 
 const build = (r, path = '', match = []) => {

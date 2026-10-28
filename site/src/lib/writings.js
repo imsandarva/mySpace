@@ -1,8 +1,9 @@
+import published from 'virtual:published-posts'
 import { writings as raw } from '../data/writings'
 import { tidy } from './text'
 
-/* Newest first, with the casually typed subtitles polished once. Order in data/writings.js does not matter. */
-export const writings = [...raw]
+/* Newest first. Pieces written on this site join the Substack entries; order in either source does not matter. */
+export const writings = [...published, ...raw]
   .sort((a, b) => b.published.localeCompare(a.published))
   .map((w) => ({ ...w, year: w.published.slice(0, 4), blurb: tidy(w.subtitle) }))
 

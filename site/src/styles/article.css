@@ -1,0 +1,159 @@
+/* A piece of writing. The editor wears these same rules, so the page you write is the page someone reads.
+   Newsreader is the essay. Inter is everything that isn't the essay: the date, the caption, the way back. */
+
+.piece { padding-bottom: clamp(3rem, 2rem + 4vw, 6rem); }
+
+/* Related things sit close (title with its subtitle). The body stands a step apart. */
+.piece, .write-sheet {
+  --rhythm-dek: 0.55rem;
+  --rhythm-meta: 1.1rem;
+  --rhythm-body: clamp(1.65rem, 1.15rem + 1.6vw, 2.5rem);
+}
+
+.piece-wrap, .write-sheet {
+  width: min(100% - 2 * var(--pad), var(--measure-essay));
+  margin-inline: auto;
+}
+
+.piece-wrap { padding-top: clamp(1.75rem, 1rem + 2vw, 3rem); }
+
+/* Reading page only: the date leads, then the title, then the subtitle. The editor sets the date beneath, where it can be changed. */
+.piece-head > .piece-meta { margin: 0 0 clamp(0.8rem, 0.65rem + 0.45vw, 1.15rem); }
+
+.piece-title, .write-title {
+  margin: 0;
+  font: var(--w-display) var(--fs-essay-title)/var(--lh-essay-title) var(--font-essay);
+  letter-spacing: var(--ls-essay-title);
+  font-optical-sizing: auto;
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+.piece-dek, .write-dek {
+  margin: var(--rhythm-dek) 0 0;
+  font: var(--w-regular) var(--fs-essay-dek)/var(--lh-essay-dek) var(--font-essay);
+  font-optical-sizing: auto;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+/* Date, and Edit while developing. Inter, regular, no tracking — quiet enough to lead without competing. */
+.piece-meta {
+  display: flex; align-items: baseline; gap: 0.9rem;
+  margin: var(--rhythm-meta) 0 0;
+  font: var(--w-regular) var(--fs-essay-meta)/var(--lh-meta) var(--font-essay-ui);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+}
+.piece-edit { color: var(--blue); }
+
+.piece .back { font-family: var(--font-essay-ui); }
+
+/* The masthead stays the site's. Only the links beside it, on an essay, switch to Inter. */
+.essay .site-nav a, .essay .colophon-mail, .essay .skip { font-family: var(--font-essay-ui); }
+
+.prose {
+  margin-top: var(--rhythm-body);
+  font: var(--w-regular) var(--fs-essay-body)/var(--lh-essay-body) var(--font-essay);
+  letter-spacing: 0;
+  font-optical-sizing: auto;
+  text-align: start;
+  hanging-punctuation: first allow-end last;
+  overflow-wrap: break-word;
+  color: var(--ink);
+}
+
+.prose p { margin: 0 0 1em; text-wrap: pretty; }
+.prose > :last-child { margin-bottom: 0; }
+.prose > :first-child { margin-top: 0; }
+.prose h2, .prose h3 { font-optical-sizing: auto; text-wrap: balance; letter-spacing: var(--ls-essay-h); color: var(--ink); }
+.prose h2 { margin: 1.65em 0 0.4em; font: var(--w-medium) var(--fs-essay-h2)/var(--lh-essay-h2) var(--font-essay); }
+.prose h3 { margin: 1.4em 0 0.35em; font: var(--w-medium) var(--fs-essay-h3)/var(--lh-essay-h3) var(--font-essay); }
+.prose strong { font-weight: 600; }
+.prose em { font-style: italic; }
+.prose a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgb(42 61 179 / 0.45);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-skip-ink: auto;
+  overflow-wrap: anywhere;
+  transition: color var(--fast), text-decoration-color var(--fast);
+}
+.prose blockquote {
+  margin: 1.65em 0;
+  padding-left: 1.15rem;
+  border-left: 2px solid rgb(42 61 179 / 0.32);
+  font: italic var(--w-regular) var(--fs-essay-quote)/var(--lh-essay-quote) var(--font-essay);
+  font-optical-sizing: auto;
+  color: var(--ink);
+}
+.prose blockquote em { font-style: normal; }
+.prose blockquote p:last-child { margin-bottom: 0; }
+.prose ul, .prose ol { margin: 0 0 1em; padding-left: 1.25em; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li { margin: 0.35em 0; padding-left: 0.25em; }
+.prose li::marker { color: var(--ink-3); }
+.prose li p { margin: 0; }
+
+/* A figure is one object: the picture on the column, its caption close beneath. An empty caption takes no room. */
+.prose .fig { position: relative; margin: 2.25rem 0 2.5rem; }
+.prose .fig img { width: 100%; height: auto; border-radius: 4px; background: var(--paper-deep); }
+.prose .fig figcaption {
+  margin: 0.6rem auto 0;
+  max-width: 32rem;
+  text-align: center;
+  font: var(--w-regular) var(--fs-essay-caption)/1.45 var(--font-essay-ui);
+  letter-spacing: 0;
+  color: var(--ink-3);
+  text-wrap: pretty;
+}
+
+@media (hover: hover) {
+  .prose a:hover { color: var(--blue); text-decoration-color: var(--blue); }
+  .piece-edit:hover { color: var(--blue-deep); }
+  .more-list a:hover .more-title, .end-all:hover, .end-share:hover { color: var(--blue); }
+  .end-all:hover .arrow { transform: translateX(-3px); }
+}
+
+/* The ending — a hairline the width of the column, a few next pieces as plain type, the way back. */
+.piece-end { margin-top: clamp(3.25rem, 2.25rem + 4vw, 5.5rem); padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+.end-label { margin-bottom: 0.35rem; font: var(--w-regular) var(--fs-essay-meta)/var(--lh-meta) var(--font-essay-ui); letter-spacing: 0; color: var(--ink-3); }
+.more-list { display: grid; }
+.more-list a { display: block; padding-block: 0.95rem; }
+.more-title {
+  display: block;
+  font: var(--w-medium) clamp(1.25rem, 1.12rem + 0.35vw, 1.4rem)/1.25 var(--font-essay);
+  letter-spacing: var(--ls-essay-h);
+  font-optical-sizing: auto;
+  text-wrap: balance;
+  transition: color var(--fast);
+}
+.more-title .arrow { margin-left: 0.3em; width: 0.7em; height: 0.7em; color: var(--ink-3); }
+.more-blurb {
+  display: -webkit-box;
+  margin-top: 0.3rem;
+  font: var(--w-regular) var(--fs-essay-ui)/1.45 var(--font-essay-ui);
+  color: var(--ink-2);
+  text-wrap: pretty;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.end-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.25rem 1.5rem; margin-top: 1.15rem; }
+.end-all, .end-share { padding-block: 0.8rem; font: var(--w-medium) var(--fs-essay-ui)/1 var(--font-essay-ui); color: var(--ink-2); transition: color var(--fast); }
+.end-all { display: inline-flex; align-items: center; }
+.end-all .arrow { transition: transform var(--fast); }
+.end-share-group { display: inline-flex; align-items: center; gap: 0.9rem; }
+.end-note { font: var(--w-regular) var(--fs-essay-meta)/var(--lh-meta) var(--font-essay-ui); color: var(--ink-3); }
+
+.colophon { border-top: 1px solid var(--rule); }
+.colophon-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.8rem 1.5rem; padding-block: 1.35rem 1.85rem; }
+.colophon-mail { font: var(--text-ui); color: var(--ink-2); transition: color var(--fast); }
+@media (hover: hover) {
+  .colophon-mail:hover { color: var(--blue); }
+}

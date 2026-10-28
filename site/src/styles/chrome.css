@@ -14,6 +14,9 @@
   box-shadow: 0 1px 0 var(--rule);
 }
 
+/* A reading page: the header stays where it is — it never follows the reader down the essay — with a hairline to set the article apart. */
+.site-header.is-static { box-shadow: 0 1px 0 var(--rule); }
+
 .site-header-row {
   display: flex;
   align-items: center;

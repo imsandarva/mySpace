@@ -1,0 +1,46 @@
+/* A figure while writing. Its look is the reader's (article.css); this adds only what an editor needs, as overlays,
+   so selecting, captioning and describing an image never moves the words around it. */
+
+.write .prose .fig { cursor: default; }
+.fig-frame { position: relative; border-radius: 4px; outline: 1.5px solid transparent; outline-offset: 5px; transition: outline-color var(--fast); }
+.fig.is-selected .fig-frame { outline-color: rgb(18 22 43 / 0.6); }
+.fig-frame img { user-select: none; -webkit-user-drag: none; }
+
+/* Tools float over the picture's corner: shown when the figure is selected, hovered, or holds focus. */
+.fig-tools {
+  position: absolute; top: 0.65rem; right: 0.65rem; z-index: 1;
+  display: flex; gap: 2px; padding: 3px;
+  background: rgb(255 253 249 / 0.96); border: 1px solid var(--rule); border-radius: 8px;
+  box-shadow: 0 6px 18px -6px rgb(18 22 43 / 0.28);
+  opacity: 0; pointer-events: none; transition: opacity var(--fast);
+}
+.fig.is-selected .fig-tools, .fig:focus-within .fig-tools { opacity: 1; pointer-events: auto; }
+.fig-tools button { padding: 0.32rem 0.6rem; border-radius: 5px; font: var(--text-meta); color: var(--ink-2); transition: background var(--fast), color var(--fast); }
+.fig-tools button.has-alt { color: var(--blue); }
+
+.fig-alt {
+  position: absolute; left: 0.65rem; right: 0.65rem; bottom: 0.65rem; z-index: 1;
+  display: flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.35rem 0.3rem 0.85rem;
+  background: rgb(255 253 249 / 0.97); border: 1px solid var(--rule); border-radius: 10px;
+  box-shadow: 0 8px 22px -8px rgb(18 22 43 / 0.32);
+}
+.fig-alt input { flex: 1; min-width: 0; height: 2rem; border: 0; background: transparent; font: var(--text-ui); color: var(--ink); caret-color: var(--blue); }
+.fig-alt input::placeholder { color: var(--ink-3); }
+.fig-alt input:focus-visible { outline: none; }
+.fig-alt button { padding: 0.35rem 0.65rem; border-radius: 6px; font: var(--text-meta); color: var(--blue); transition: background var(--fast); }
+
+/* Caption: an empty one takes no room until the figure is selected or the caption has focus — then it opens, in 160 ms. */
+.write .prose .fig figcaption { display: grid; grid-template-rows: 0fr; margin-top: 0; transition: grid-template-rows 160ms var(--ease), margin-top 160ms var(--ease); }
+.write .prose .fig figcaption > div { min-height: 0; overflow: hidden; }
+.write .prose .fig.has-caption figcaption, .write .prose .fig.is-selected figcaption, .write .prose .fig figcaption:focus-within { grid-template-rows: 1fr; margin-top: 0.8rem; }
+
+.fig-caption { display: block; width: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; resize: none; overflow: hidden; text-align: center; font: inherit; letter-spacing: inherit; color: inherit; caret-color: var(--blue); }
+.fig-caption::placeholder { color: rgb(104 109 133 / 0.65); }
+.fig-caption:focus-visible { outline: none; }
+.fig figcaption:focus-within .fig-caption { color: var(--ink-2); }
+
+@media (hover: hover) {
+  .fig:hover .fig-tools { opacity: 1; pointer-events: auto; }
+  .fig-tools button:hover, .fig-alt button:hover { background: rgb(18 22 43 / 0.06); color: var(--ink); }
+  .fig-tools button.has-alt:hover, .fig-alt button:hover { color: var(--blue); }
+}

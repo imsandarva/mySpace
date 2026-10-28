@@ -34,6 +34,7 @@
   .wr-lead:hover .thumb img { transform: scale(1.035); }
   .wr-lead:hover .wr-title, .wr-item:hover .wr-title { color: var(--blue); }
   .wr-lead:hover .arrow, .wr-item:hover .arrow { color: var(--blue); transform: translate(2px, -2px); }
+  .wr-lead:hover .arrow.is-right, .wr-item:hover .arrow.is-right { transform: translateX(3px); }
   .wr-item:hover .thumb img { transform: scale(1.06); }
 }
 .wr-lead:active, .wr-item:active { opacity: 0.7; }

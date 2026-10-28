@@ -1,8 +1,13 @@
-/* Font delivery — two self-hosted variable families, nothing fetched from a third party.
-   Fraunces (display serif) carries an optical-size axis: large sizes draw a high-contrast cut, text sizes a sturdier one.
-   Hanken Grotesk (text sans) is one weight axis. Both come split by unicode-range, so only the Latin subset a page uses is fetched. */
+/* Font delivery — self-hosted variable families, nothing fetched from a third party.
+   Fraunces (display serif, optical size) and Hanken Grotesk (text sans) are the site.
+   Newsreader (optical size + weight) and Inter (weight) are the essay: the writing, and the chrome around it.
+   Files are split by unicode-range, so a page fetches only the scripts it actually sets. Italic is a separate file, fetched only when italic is used. */
 @import '@fontsource-variable/fraunces/opsz.css';
+@import '@fontsource-variable/fraunces/opsz-italic.css';
 @import '@fontsource-variable/hanken-grotesk/wght.css';
+@import '@fontsource-variable/newsreader/opsz.css';
+@import '@fontsource-variable/newsreader/opsz-italic.css';
+@import '@fontsource-variable/inter/wght.css';
 
 /* Metric-matched fallbacks: until the real face arrives, a system face is stretched to the same width and line box,
    so the swap changes the letterforms but never reflows the page (near-zero CLS). Values derived from the fonts' own metrics. */
@@ -21,5 +26,40 @@
   size-adjust: 100.9%;
   ascent-override: 99%;
   descent-override: 30%;
+  line-gap-override: 0%;
+}
+
+/* Newsreader at reading size (opsz 19, the body) against Georgia; Inter Regular against Arial.
+   Width is the average advance of a prose sample, not the font's OS/2 average, so a paragraph wraps in the same place before the face arrives. */
+@font-face {
+  font-family: 'Newsreader Fallback';
+  font-style: normal;
+  font-weight: 200 800;
+  src: local('Georgia'), local('Times New Roman');
+  size-adjust: 91.8%;
+  ascent-override: 80.1%;
+  descent-override: 28.9%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Newsreader Fallback';
+  font-style: italic;
+  font-weight: 200 800;
+  src: local('Georgia Italic'), local('Times New Roman Italic');
+  size-adjust: 82.5%;
+  ascent-override: 89.1%;
+  descent-override: 32.1%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  font-style: normal;
+  font-weight: 100 900;
+  src: local('Arial'), local('Helvetica Neue'), local('Liberation Sans');
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.5%;
   line-gap-override: 0%;
 }

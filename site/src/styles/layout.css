@@ -39,6 +39,18 @@
   padding-top: clamp(1.5rem, 1rem + 2.5vw, 3rem);
   padding-bottom: clamp(2rem, 1rem + 4vw, 4.5rem);
 }
+.page-head.is-snug { padding-bottom: clamp(1.35rem, 0.9rem + 1.6vw, 2.25rem); }
+
+/* Back link on the left, optional tools on the right, one row. Tools wrap under rather than cover the link. */
+.page-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: clamp(1.25rem, 1rem + 2vw, 2.5rem);
+}
+.page-nav > .back { margin-bottom: 0; }
+.page-tools { display: flex; margin-left: auto; }
 
 .back {
   display: inline-flex;

@@ -12,4 +12,4 @@ export const views = {
 }
 
 /* Pages that render their own chrome instead of the site shell. */
-export const bare = new Set(['pin'])
+export const bare = new Set(['pin', ...(import.meta.env.DEV ? ['write'] : [])])

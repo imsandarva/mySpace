@@ -1,0 +1,76 @@
+/* Floating surfaces of the writing desk: the selection bar, the "+" and its menu, the settings panel.
+   One surface language — warm white, a hairline, a soft two-layer shadow — so they read as one family. */
+
+.pop {
+  background: #fffdf9;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgb(18 22 43 / 0.06), 0 14px 34px -10px rgb(18 22 43 / 0.2);
+}
+
+.ico { display: block; flex: none; }
+
+/* ── Selection bar ───────────────────────────────────────────────────────── */
+.bub { display: flex; align-items: center; gap: 2px; padding: 4px; }
+.bub-btn { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 7px; color: var(--ink-2); transition: color var(--fast), background var(--fast); }
+.bub-btn[aria-pressed='true'] { color: var(--blue); background: rgb(42 61 179 / 0.12); }
+.bub-sep { width: 1px; height: 1.1rem; margin-inline: 4px; background: var(--rule); }
+
+.bub-link { gap: 2px; padding: 4px 4px 4px 0.8rem; }
+.bub-link input { width: min(15rem, 56vw); height: 2rem; border: 0; background: transparent; font: var(--text-ui); color: var(--ink); caret-color: var(--blue); }
+.bub-link input::placeholder { color: var(--ink-3); }
+.bub-link input:focus-visible { outline: none; }
+.bub-text { height: 2rem; padding-inline: 0.7rem; border-radius: 7px; font: var(--text-meta); color: var(--blue); transition: background var(--fast); }
+.bub-text.is-quiet { color: var(--ink-3); }
+
+/* ── The "+" and its menu ────────────────────────────────────────────────── */
+.ins { position: relative; }
+.ins-plus { display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%; border: 1px solid var(--rule-strong); background: var(--paper); color: var(--ink-2); transition: color var(--fast), border-color var(--fast), background var(--fast); }
+.ins-plus .ico { transition: rotate var(--fast); }
+.ins.is-open .ins-plus { color: var(--ink); border-color: var(--ink); }
+.ins.is-open .ins-plus .ico { rotate: 45deg; }
+
+.ins-pop { position: absolute; top: calc(100% + 8px); left: 0; z-index: 2; width: 17.5rem; padding: 6px; list-style: none; }
+.ins.is-end .ins-pop { left: auto; right: 0; }
+.ins-pop li { display: flex; align-items: center; gap: 0.75rem; padding: 6px 8px; border-radius: 7px; cursor: pointer; }
+.ins-pop li.is-active { background: rgb(18 22 43 / 0.06); }
+.ins-icon { display: grid; place-items: center; flex: none; width: 2.1rem; height: 2.1rem; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); color: var(--ink-2); }
+.ins-text b { display: block; font: var(--w-medium) 0.875rem/1.25 var(--font-text); color: var(--ink); }
+.ins-text small { display: block; font: var(--w-regular) 0.78rem/1.3 var(--font-text); color: var(--ink-3); }
+
+/* ── Settings ────────────────────────────────────────────────────────────── */
+.set { position: relative; }
+.set-pop { position: absolute; top: calc(100% + 8px); right: 0; z-index: 40; display: grid; gap: 1.4rem; width: min(22rem, calc(100vw - 2 * var(--pad))); max-height: calc(100svh - var(--header-h) - 1.5rem); overflow-y: auto; padding: 1.1rem; }
+.set-label { margin-bottom: 0.6rem; font: var(--text-meta); color: var(--ink-3); }
+.set-card { overflow: hidden; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.set-card img { width: 100%; aspect-ratio: 1200 / 630; object-fit: cover; background: var(--paper-deep); }
+.set-card-title { padding: 0.65rem 0.8rem 0; font: var(--w-medium) 0.875rem/1.3 var(--font-text); color: var(--ink); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.set-card-text { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; padding: 0.15rem 0.8rem 0.75rem; font: var(--w-regular) 0.8125rem/1.4 var(--font-text); color: var(--ink-3); }
+.set-note { margin-top: 0.6rem; font: var(--w-regular) 0.8125rem/1.45 var(--font-text); color: var(--ink-3); }
+.set-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+.set-btn { padding: 0.4rem 0.75rem; border: 1px solid var(--rule-strong); border-radius: 6px; font: var(--text-meta); color: var(--ink); transition: background var(--fast), color var(--fast); }
+.set-btn.is-quiet { border-color: transparent; color: var(--ink-2); }
+.set-address { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; font: var(--w-regular) 0.8125rem/1.3 var(--font-text); color: var(--ink-2); }
+.set-address span { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.set-danger { display: flex; gap: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.set-danger button { font: var(--text-meta); color: var(--ink-3); transition: color var(--fast); }
+.set-danger button.is-armed { color: var(--accent-rose); font-weight: var(--w-semibold); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .bub, .set-pop, .ins-pop, .ins-plus { animation: pop-in 140ms var(--ease) backwards; }
+}
+
+@media (hover: hover) {
+  .bub-btn:hover, .bub-text:hover { background: rgb(18 22 43 / 0.06); color: var(--ink); }
+  .bub-btn[aria-pressed='true']:hover { color: var(--blue); }
+  .ins-plus:hover { color: var(--ink); border-color: var(--ink); }
+  .set-btn:hover { background: rgb(18 22 43 / 0.05); }
+  .set-danger button:hover { color: var(--ink); }
+  .set-danger button.is-armed:hover { color: var(--accent-rose); }
+}
+
+@media (pointer: coarse) {
+  .bub-btn { width: 2.5rem; height: 2.5rem; }
+  .ins-plus { width: 2.25rem; height: 2.25rem; }
+  .ins-pop li { padding-block: 9px; }
+}
