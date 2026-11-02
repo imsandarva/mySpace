@@ -67,16 +67,41 @@ export const listUnpublished = async () => {
 
 export const blank = (id) => ({ schemaVersion: 1, id, slug: null, title: '', subtitle: '', published: todayISO(), updatedAt: null, preview: null, og: null, doc: emptyDoc() })
 
+/* Two opens of the same piece (a double click, or React mounting twice) must share one copy. */
+const opening = new Map()
+
 /* Editing a published piece copies it into drafts first, so autosave never touches the live files. */
-export const openSession = async (id) => {
+export const openSession = (id) => {
   assertId(id)
+  const inflight = opening.get(id)
+  if (inflight) return inflight
+  const job = openSessionOnce(id).finally(() => opening.delete(id))
+  opening.set(id, job)
+  return job
+}
+
+const openSessionOnce = async (id) => {
   const live = await findPublished(id)
   if (await readDraft(id)) return { post: await readDraft(id), live: !!live, saved: true }
   if (!live) return { post: blank(id), live: false, saved: false }
   await mkdir(draftsDir, { recursive: true })
-  try { await cp(piecePath(live.slug), draftPath(id), { recursive: true }) }
-  catch (err) { if (!await readDraft(id)) throw err }
-  return { post: await readDraft(id), live: true, saved: true }
+  const dest = draftPath(id)
+  const staging = path.join(draftsDir, `.opening-${id}`)
+  await rm(staging, { recursive: true, force: true })
+  try {
+    await cp(piecePath(live.slug), staging, { recursive: true })
+    try { await rename(staging, dest) }
+    catch (err) {
+      await rm(staging, { recursive: true, force: true })
+      if (err.code !== 'EEXIST' && err.code !== 'ENOTEMPTY') throw err
+    }
+  } catch (err) {
+    await rm(staging, { recursive: true, force: true })
+    if (!await readDraft(id)) throw err
+  }
+  const post = await readDraft(id)
+  if (!post) throw fail(500, 'Could not open this piece.')
+  return { post, live: true, saved: true }
 }
 
 export const saveDraft = async (input) => {
