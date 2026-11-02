@@ -17,7 +17,7 @@ Everything the site shows comes from `site/src/data/`. Edit these files; no comp
 ## Writings — `data/writings.js`
 
 Each entry: `slug`, `title`, `subtitle`, `published` (ISO `YYYY-MM-DD`), `date` (display), `url` (Substack), optional `thumb`.
-Array order does not matter. `lib/writings.js` sorts by `published`, newest first, for the archive and the homepage.
+Array order does not matter. `lib/post/order.js` sorts every list by `published` (ISO `YYYY-MM-DD`), newest first; ties use slug.
 Optional `thumb` is usually the Substack cover URL from the post’s `og:image`, using the same `substackcdn.com/image/fetch/…,f_auto,q_auto:good,fl_progressive:steep/…` pattern as existing entries.
 Subtitles are tidied for display (sentence case, curly apostrophes, no trailing full stop) in `lib/writings.js`; the data stays as typed.
 

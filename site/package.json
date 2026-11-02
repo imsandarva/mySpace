@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "node scripts/og-default.mjs && vite build && node scripts/prerender-writings.mjs && node scripts/assert-prod.mjs",
-    "check": "node --test src/lib/post/post.test.js src/lib/post/summary.test.js src/features/drafts/labels.test.js server/paths.test.js server/related.test.js",
+    "check": "node --test src/lib/post/post.test.js src/lib/post/summary.test.js src/lib/post/order.test.js src/features/drafts/labels.test.js server/paths.test.js server/related.test.js",
     "preview": "vite preview"
   },
   "dependencies": {

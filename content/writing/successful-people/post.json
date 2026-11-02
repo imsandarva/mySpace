@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "1a08ec0e-d650-4725-8919-4cdb21bd5c8a",
+  "slug": "successful-people",
+  "title": "Successful People",
+  "subtitle": "I heard on the internet, probably from sam altman",
+  "published": "2026-02-11",
+  "updatedAt": "2026-11-01T23:53:26.276Z",
+  "preview": null,
+  "og": null,
+  "doc": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "I heard on the internet, probably from sam altman, who seemed to have heard it from qi lu, where he said:"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "“Successful people create big company. More successful people create big country. The most successful people create big religion.”",
+            "marks": [
+              {
+                "type": "italic"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "It really seems soo true. The most successful people creates religion. And I guess, the sucessful founders tries to do that as well, and instead end up making a great company."
+          }
+        ]
+      }
+    ]
+  }
+}

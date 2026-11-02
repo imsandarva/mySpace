@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "id": "6528eb53-2f9a-4bd9-82dc-366cab867ae7",
+  "slug": "antifragile",
+  "title": "Antifragile",
+  "subtitle": "things that thrive in chaos",
+  "published": "2026-10-15",
+  "updatedAt": "2026-11-01T23:47:57.736Z",
+  "preview": null,
+  "og": null,
+  "doc": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "i really find this concept of anti-fragility super interesting."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "fragile means vulnerable or weak, it breaks when stress or force are applied in some way. then what’s the opposite of that? “robuts” or “resilient” means stronger, things that can endure stress and doesn’t break, atleast not easily, from it."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "but anti-fragile means things that benefits from stress. not only it benefits, but might actually need stress even just to survive. It thrives in chaos and stress."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Nassim taleb coined the term “antifragile”, and he describes it like:"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Just as human bones get stronger when subjected to stress and tension, and rumors or riots intensify when someone tries to repress them, many things in life benefit from stress, disorder, volatility, and turmoil. What Taleb has identified and calls “antifragile” is that category of things that not only gain from chaos but need it in order to survive and flourish.",
+            "marks": [
+              {
+                "type": "italic"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": []
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Antifragile systems are, by definition, able to get the upside but are not affected by the downside. And failure events end up making the system more stronger."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "i find this concept soo fascinating and interesting. and whenever i try think about some idea, i always try to think in terms of its anti-fragility."
+          }
+        ]
+      }
+    ]
+  }
+}

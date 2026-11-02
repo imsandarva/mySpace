@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+HOST="127.0.0.1"
+PORT="${MYSITE_PORT:-5173}"
+URL="http://${HOST}:${PORT}"
+BRAVE="${BRAVE:-/usr/bin/brave-browser}"
+
+open_when_ready() {
+  for _ in $(seq 1 120); do
+    if curl -sf -o /dev/null "$URL" 2>/dev/null; then
+      "$BRAVE" "$URL" >/dev/null 2>&1 &
+      return
+    fi
+    sleep 0.25
+  done
+}
+
+open_when_ready &
+exec npm run dev -- --host "$HOST" --port "$PORT" --strictPort

@@ -1,6 +1,7 @@
 import { createHash } from 'crypto'
 import { access, cp, mkdir, readdir, readFile, rename, rm, writeFile } from 'fs/promises'
 import path from 'path'
+import { sortByPublishedDesc } from '../src/lib/post/order.js'
 import { emptyDoc, fail, isBlank, normalize } from '../src/lib/post/schema.js'
 import { todayISO } from '../src/lib/post/dates.js'
 import { firstFigure, referencedImages } from '../src/lib/post/figures.js'
@@ -40,7 +41,7 @@ export const listPublished = async () => {
     if (post) posts.push(post)
     else console.warn(`Skipping content/writing/${name}: unreadable or a newer format.`)
   }
-  return posts
+  return sortByPublishedDesc(posts)
 }
 
 export const findPublished = async (id) => (await listPublished()).find((p) => p.id === id) || null

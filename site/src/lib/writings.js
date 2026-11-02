@@ -1,10 +1,10 @@
 import published from 'virtual:published-posts'
 import { writings as raw } from '../data/writings'
+import { sortByPublishedDesc } from './post/order'
 import { tidy } from './text'
 
-/* Newest first. Pieces written on this site join the Substack entries; order in either source does not matter. */
-export const writings = [...published, ...raw]
-  .sort((a, b) => b.published.localeCompare(a.published))
+/* Newest publication day first everywhere this list is shown (home lead, archive, year groups). */
+export const writings = sortByPublishedDesc([...published, ...raw])
   .map((w) => ({ ...w, year: w.published.slice(0, 4), blurb: tidy(w.subtitle) }))
 
 /* Homepage: newest piece is the large lead; the next few, still newest first, are the rows. */
