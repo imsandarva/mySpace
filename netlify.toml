@@ -1,0 +1,10 @@
+# Every push compiles the essays in content/writing into the pages visitors open.
+# Localhost reads those files directly; the live site only changes when this build runs.
+
+[build]
+  base = "site"
+  command = "npm ci && npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

@@ -3,7 +3,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 /* The editor and its write API must not be in the JavaScript that gets deployed. */
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist')
 const html = await readFile(path.join(root, 'index.html'), 'utf8')
 const entry = html.match(/src="(\.\/assets\/[^"]+\.js)"/)?.[1]
 if (!entry) throw new Error('The built script was not found in index.html.')

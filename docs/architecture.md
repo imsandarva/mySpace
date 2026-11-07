@@ -47,5 +47,6 @@ Fonts are self-hosted via `@fontsource-variable/fraunces` (display serif, optica
 
 ## Build
 
-Vite builds into the repository root (`outDir: ../`, `emptyOutDir: false`, `base: './'`), so the site works from any static host or sub-path.
+Vite builds into `site/dist` (`emptyOutDir: true`, `base: './'`). `netlify.toml` runs that build on every push and publishes `site/dist`.
+The essays in `content/writing` are read while the build runs: the homepage list is baked into the script, and each essay page is written by `scripts/prerender-writings.mjs`. A date change in `post.json` reaches the live site only through that build. Localhost reads the same files directly, so it updates before Netlify does.
 `three` is split into its own `three-*.js` chunk and is only requested after the page is idle.

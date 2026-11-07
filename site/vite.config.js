@@ -11,9 +11,9 @@ export default defineConfig({
   base: './',
   server: { host: '127.0.0.1' },
   build: {
-    outDir: path.resolve(__dirname, '../'),
+    outDir: path.resolve(__dirname, 'dist'),
     assetsDir: 'assets',
-    emptyOutDir: false,
+    emptyOutDir: true,
     /* three.js is loaded lazily (after the page is idle), so it lives in its own chunk and is allowed to be large. */
     chunkSizeWarningLimit: 700,
     rollupOptions: { output: { manualChunks: (id) => (id.includes('node_modules/three') ? 'three' : undefined) } },

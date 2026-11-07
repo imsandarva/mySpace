@@ -23,6 +23,8 @@ Subtitles are tidied for display (sentence case, curly apostrophes, no trailing 
 
 **Homepage (automatic).** The newest piece is the large lead on the left. The next three, still newest first, are the rows on the right (`HOME_ROWS` in `lib/writings.js`). Adding an entry with a later `published` date moves it into that layout on its own; nothing in `data/home.js` names a writing. The archive still lists every piece.
 
+Pieces written in the editor are stored in `content/writing/<slug>/post.json`. The `published` field there is the date visitors see. Localhost shows it immediately. The live site shows it after Netlify’s build copies it into `site/dist`.
+
 ## Homepage curation — `data/home.js`
 
 - `shelf` — how many books appear beside the current one (the composition uses up to six on desktop, four on phones).

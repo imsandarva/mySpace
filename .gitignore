@@ -1,3 +1,4 @@
 .cursor/
 site/node_modules/
+site/dist/
 zinfo.md

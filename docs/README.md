@@ -16,10 +16,10 @@ React 18 + Vite, hash-routed, deployed as static files.
 cd site
 npm install
 npm run dev        # http://localhost:5173
-npm run build      # writes index.html + assets/ into the repository root (what gets deployed)
+npm run build      # writes the site into site/dist (what Netlify publishes)
 ```
 
-- The source lives in `site/`; the **repository root is the build output** (`index.html`, `assets/`). Rebuild before committing a release.
+- The source lives in `site/`. Essays live in `content/writing`. Netlify runs `npm run build` on every push (`netlify.toml`) and publishes `site/dist`, so a new published date goes live without a separate local rebuild.
 - `site/public/assets/` is copied into the build as-is — that is where `hardcover.glb` and the portrait live.
 - Hash routes: `#/` (home), `#/writings`, `#/readings`, and the hidden `#/pin` (Pinterest widget comparison).
 
