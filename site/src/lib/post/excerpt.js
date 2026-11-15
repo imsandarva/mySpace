@@ -1,6 +1,6 @@
 import { walk } from './walk.js'
 
-/* Plain words for a list blurb or a link description, when the piece has no subtitle. */
+/* Plain words from the body — share previews, editor settings, prerender meta. Not used for list blurbs. */
 export const excerpt = (doc, max = 160) => {
   let text = ''
   walk(doc, (n) => {

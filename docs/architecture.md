@@ -39,6 +39,8 @@ Dev only (`#/write`, `#/drafts`) — these routes are not in the production bund
 
 A figure is one block (image, alt, caption, layout). `layout` is `column` (the text measure) or `wide`. Wide breaks out of the column on desktop with a modest `--fig-inset` (about 17–28px per side), a touch narrower than edge-to-edge; on viewports under 48rem wide stays column-width. The writer toggles **Full width** on the figure toolbar (press again for column). Upload keeps three WebP widths — 800, 1600, 2400 — and the browser fetches the one the layout actually shows.
 
+Writings lists (home preview, archive, drafts) show a second line only when `subtitle` is set — body text is never substituted.
+
 ## Styles
 
 Plain CSS, split by responsibility, imported in order from `styles/index.css`:

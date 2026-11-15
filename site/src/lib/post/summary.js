@@ -1,4 +1,3 @@
-import { excerpt } from './excerpt.js'
 import { wordsIn } from './words.js'
 
 const flat = (s) => String(s || '').replace(/\s+/g, ' ').trim()
@@ -15,11 +14,10 @@ const clip = (s, max = 180) => {
 export const summarizeDraft = (post) => {
   const title = flat(post?.title)
   const subtitle = flat(post?.subtitle)
-  const preview = subtitle || flat(excerpt(post?.doc, 180))
   return {
     id: post.id,
     title,
-    excerpt: preview ? clip(preview, 180) : '',
+    excerpt: subtitle ? clip(subtitle, 180) : '',
     updatedAt: typeof post?.updatedAt === 'string' && post.updatedAt ? post.updatedAt : null,
     words: wordsIn(post?.doc),
   }

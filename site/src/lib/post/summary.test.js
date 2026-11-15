@@ -23,6 +23,14 @@ test('a summary keeps the subtitle, and invents nothing when the piece is empty'
   assert.equal(empty[0].words, 0)
 })
 
+test('a summary does not borrow body text when the subtitle is empty', () => {
+  const row = visibleDrafts([{
+    schemaVersion: 1, id: 'c', title: 'Only title', subtitle: '',
+    updatedAt: '2026-10-28T08:00:00.000Z', doc: doc('opening paragraph that should stay hidden'),
+  }], new Set())
+  assert.equal(row[0].excerpt, '')
+})
+
 test('published copies are hidden, and an old draft stays, behind the newer one', () => {
   const posts = [
     { schemaVersion: 1, id: 'old', title: 'Years ago', updatedAt: '2019-01-01T00:00:00.000Z', doc: doc('still mine') },
