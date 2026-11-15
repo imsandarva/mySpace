@@ -12,16 +12,8 @@
 
 .hero-name { grid-area: name; margin-left: -0.04em; }
 
-.hero-copy {
-  grid-area: copy;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1.5rem;
-}
-
-.hero-links { display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem; }
-.hero-links a { display: inline-block; padding-block: 0.35rem; }
+/* The sentence is the last thing in the text group. It top-aligns with the plate on a phone. */
+.hero-copy { grid-area: copy; align-self: start; }
 
 .plate { grid-area: plate; }
 
@@ -45,7 +37,8 @@
       'copy copy copy copy copy copy . . plate plate plate plate';
     row-gap: clamp(2rem, 4vw, 4rem);
   }
-  .hero-copy { align-self: end; padding-bottom: 2.2rem; gap: 2rem; }
-  .hero-links { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.75rem; }
+  /* Sit the sentence in the same band beside the portrait the text group used to occupy.
+     The inset closes the old link row without dropping the line onto the caption. */
+  .hero-copy { align-self: end; padding-bottom: clamp(3.25rem, 2rem + 3.5vw, 5.5rem); }
   .plate img { aspect-ratio: 4 / 5.2; }
 }

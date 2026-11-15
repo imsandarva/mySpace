@@ -32,7 +32,7 @@ Pieces written in the editor are stored in `content/writing/<slug>/post.json`. T
 
 ## Identity — `data/identity.js`
 
-Name, the one-line voice, email and the "elsewhere" links (footer + hero).
+Name, the one-line voice, the footer email (labeled Contact), and the "elsewhere" links. The hero does not repeat them.
 
 ## Homepage composition — `features/readings/collection/compositions.js`
 

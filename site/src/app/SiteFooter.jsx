@@ -5,14 +5,21 @@ import { reducedMotion } from '../lib/viewTransition'
 
 const toTop = () => window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' })
 
-/* The last composed moment of every page: the address set large, everywhere else listed plainly. */
+/* Break after @ so a narrow footer wraps the domain, never the local part mid-word. */
+const addressText = (email) => {
+  const at = email.indexOf('@')
+  if (at < 0) return email
+  return <>{email.slice(0, at + 1)}<wbr />{email.slice(at + 1)}</>
+}
+
+/* The last composed moment of every page: contact set as type, everywhere else listed plainly. */
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="wrap footer-grid">
         <div className="footer-mail">
-          <p className="t-meta">Email</p>
-          <a className="footer-address" href={mailto}>{contact.email}</a>
+          <p className="t-meta">Contact</p>
+          <a className="t-address footer-address" href={mailto}>{addressText(contact.email)}</a>
         </div>
         <nav className="footer-links" aria-label="Elsewhere">
           <p className="t-meta">Elsewhere</p>

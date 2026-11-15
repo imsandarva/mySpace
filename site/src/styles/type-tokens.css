@@ -24,6 +24,9 @@
   --fs-section: clamp(2.5rem, 1.75rem + 3.4vw, 4.5rem);
   --fs-feature: clamp(2rem, 1.35rem + 2.6vw, 3.5rem);
   --fs-title: clamp(1.75rem, 1.35rem + 1.7vw, 2.75rem);
+  /* Footer address: a display moment, a step under the section titles. Large enough to anchor
+     the footer, no longer loud enough to outrank the page. */
+  --fs-address: clamp(1.5rem, 1.1rem + 1.85vw, 2.625rem);
   --fs-title-s: clamp(1.3125rem, 1.2rem + 0.5vw, 1.5rem);
   --fs-lede: clamp(1.3125rem, 1.05rem + 1.05vw, 1.875rem);
   --fs-body: 1rem;
@@ -36,6 +39,7 @@
   --lh-section: 1.05;
   --lh-feature: 1.06;
   --lh-title: 1.12;
+  --lh-address: 1.16;
   --lh-title-s: 1.2;
   --lh-lede: 1.36;
   --lh-body: 1.6;
@@ -48,6 +52,7 @@
   --ls-section: -0.026em;
   --ls-feature: -0.024em;
   --ls-title: -0.016em;
+  --ls-address: -0.02em;
   --ls-title-s: -0.01em;
   --ls-lede: -0.006em;
   --ls-text: 0;

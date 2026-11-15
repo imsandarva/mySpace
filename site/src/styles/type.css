@@ -18,6 +18,9 @@
 
 .t-title { font: var(--w-title) var(--fs-title)/var(--lh-title) var(--font-display); letter-spacing: var(--ls-title); text-wrap: balance; }
 
+/* The footer address: same serif, held quieter than a section title so it anchors without dominating. */
+.t-address { font: var(--w-display) var(--fs-address)/var(--lh-address) var(--font-display); letter-spacing: var(--ls-address); }
+
 .t-title-s { font: var(--w-title) var(--fs-title-s)/var(--lh-title-s) var(--font-display); letter-spacing: var(--ls-title-s); text-wrap: balance; }
 
 /* The voice of a page: one sentence set in the serif, at a size that reads as speech rather than a heading. */

@@ -81,12 +81,11 @@
 
 .footer-address {
   display: inline-block;
-  margin-top: 0.75rem;
-  font: var(--w-display) clamp(1.5rem, 0.85rem + 3.1vw, 3.25rem)/1.15 var(--font-display);
-  letter-spacing: var(--ls-section);
-  overflow-wrap: anywhere;
+  max-width: 100%;
+  margin-top: 0.85rem;
+  overflow-wrap: break-word;
   background: linear-gradient(var(--blue), var(--blue)) 0 100% / 0% 1px no-repeat;
-  padding-bottom: 0.1em;
+  padding-bottom: 0.08em;
   transition: color var(--fast), background-size 420ms var(--ease);
 }
 @media (hover: hover) {
