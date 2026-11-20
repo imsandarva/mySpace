@@ -4,3 +4,4 @@ export const byPublishedDesc = (a, b) =>
   (b.published || '').localeCompare(a.published || '') || (a.slug || '').localeCompare(b.slug || '')
 
 export const sortByPublishedDesc = (items) => [...items].sort(byPublishedDesc)
+
