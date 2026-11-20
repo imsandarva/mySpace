@@ -16,6 +16,20 @@ Book-cloth tones (`[data-tone='…']`: ink, slate, moss, sage, sand, ochre, terr
 The 3D layer reads them from there (`three/tones.js`), as does the flat fallback cover, so one edit recolours both.
 `data/books.js` picks a tone per book via `accent`.
 
+## Reading environment
+
+Article pages only (`body.essay`), and only from 69rem wide. Below that — including every phone — the page is the ordinary paper layout. The masthead is unchanged and stays on `--paper`; the room begins under it.
+
+| Token | Value | Role |
+| --- | --- | --- |
+| `--read-surround` | `#a9ad98` | Muted olive field in the side margins. Solid. No grain. Dark enough to frame the page. |
+| `--read-surface` | `#fcfbf7` | Bright warm ivory canvas. Cleaner than the site paper. Not pure white, not parchment. |
+| `--read-canvas` | `52rem` | Canvas width (848px). It does not grow on a wider monitor; the olive does. |
+
+The canvas runs from the masthead through the article ending (title, text, both image widths, more writing) and is at least as tall as the screen, so a short essay is a page rather than a card. No radius, shadow, or border. The colophon returns to `--paper`, the same surface as the masthead.
+
+The text column is `--measure-essay` (40rem, about 71 characters of Sorts Mill Goudy at 22px). The open 1.9 leading carries that length, and the column fills the canvas instead of sitting in a wide empty margin. A column image is that measure. A wide image is the canvas minus 2rem each side (48rem): wider than the text, still inside the olive, never the viewport edge. Under 69rem, wide images keep the previous page inset; under 48rem they stay column-width.
+
 ## Typography
 
 Two site voices, both self-hosted variable fonts (`@fontsource-variable`, latin subsets fetched by `unicode-range`). An article adds a third face, described below.
@@ -34,8 +48,9 @@ A third voice, and only on a piece you are reading (the writing desk shares it, 
 | Role | Family | Setting |
 | --- | --- | --- |
 | Article text | **Sorts Mill Goudy** regular, self-hosted, OFL | 22px, line-height 1.9 (41.8px), letter-spacing 0, `--ink-essay` `#3a3a3a`. Paragraphs and lists sit 1.5em apart. |
-| Date | **Sorts Mill Goudy** italic | 16px, the same 1.9 line (30.4px), letter-spacing 0, the same ink. |
-| Caption, share, way back, editor chrome | **Inter** | Unchanged. |
+| Title, subtitle, image caption | **Sorts Mill Goudy** regular | The essay scale for title and subtitle (letter-spacing 0). Caption stays 13px, centered, `--ink-3`. |
+| Date | **Sorts Mill Goudy** italic | 13px, the same 1.9 line (24.7px), letter-spacing 0, `--ink-essay`. |
+| Share, way back, editor chrome | **Inter** | Unchanged. |
 
 The family has one weight (400). Title, subtitle and headings use that real weight and the existing essay scale; size, not a synthesized bold, makes the hierarchy. `em` and quotes use the italic file at the body size. The face is declared for the latin subset and downloaded only when an article (or the desk) uses it.
 
@@ -45,7 +60,7 @@ Everything is in `styles/type-tokens.css` (values) and `styles/type.css` (roles)
 - **Scale** (fluid `clamp`, deliberately uneven, each role art-directed): `--fs-name` · `--fs-display` · `--fs-detail` · `--fs-section` · `--fs-feature` · `--fs-title` · `--fs-address` · `--fs-title-s` · `--fs-lede` · `--fs-body` 16 · `--fs-small` 15 · `--fs-meta` 13.
 - **Leading** (`--lh-*`) opens as size drops: 0.92 name → 1.0–1.12 display/titles → 1.36 lede → 1.5–1.6 text.
 - **Tracking** (`--ls-*`): the serif tightens as it grows (−0.035em name → −0.01em small titles); the sans stays natural (0) with meta opened a hair (+0.012em). No uppercase labels except lettering on book covers.
-- **Measure**: `--measure` 34rem for descriptions and the focused book's words; `--measure-title` 38rem for the lead title. `--measure-essay` 35rem is the text of a piece. `--measure-page` 76rem (`tokens.css`) is the site header/footer frame (inset by `--pad`). A **wide** figure uses `--fig-inset` — a little wider than the text with small side margins, column-width on phones. Balanced wrapping (`text-wrap: balance`) on every title, `pretty` on prose.
+- **Measure**: `--measure` 34rem for descriptions and the focused book's words; `--measure-title` 38rem for the lead title. `--measure-essay` 40rem is the text of a piece. `--measure-page` 76rem (`tokens.css`) is the site header/footer frame (inset by `--pad`). A **wide** figure is the reading canvas minus 2rem a side from 69rem, the page minus `--fig-inset` below that, and column-width on phones. Balanced wrapping (`text-wrap: balance`) on every title, `pretty` on prose.
 - **Roles**: `t-name`, `t-display`, `t-detail`, `t-section`, `t-feature` (lead writing, book in hand), `t-title`, `t-address` (footer email — same serif, a step under the section titles so it anchors the footer without outranking the page), `t-title-s`, `t-lede`, `t-small`, `t-meta`, `.count`, `.link`. Sans controls share the composite tokens `--text-ui` and `--text-meta`, so nav, buttons, back links, captions and authors cannot drift apart.
 - **Hero**: the name, the one sentence, and the portrait. Nothing sits under the sentence — reach-me links live only in the footer, under the label Contact. The address is the whole link (`mailto:`); hover draws the same quiet ultramarine rule the rest of the site uses.
 - **Rendering**: `font-optical-sizing: auto` (Fraunces redraws itself per size), kerning and `liga`/`calt` on, tabular figures in counts and dates, lining figures in year/count numerals.

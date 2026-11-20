@@ -1,6 +1,7 @@
 /* A piece of writing. The editor wears these same rules, so the page you write is the page someone reads.
-   Sorts Mill Goudy is the essay text. Inter is everything that isn't the essay: the caption, the way back.
-   The date is the one exception — it is the italic of the essay face, not the UI face. */
+   Sorts Mill Goudy is the essay: title, subtitle, body, and the caption under a picture.
+   Inter is the furniture around it — the way back, share, the editor's controls.
+   The date is the italic of the essay face, set smaller than the body. */
 
 .piece { padding-bottom: clamp(3rem, 2rem + 4vw, 6rem); }
 
@@ -28,7 +29,7 @@
 .piece-title, .write-title {
   margin: 0;
   font: var(--w-display) var(--fs-essay-title)/var(--lh-essay-title) var(--font-essay);
-  letter-spacing: var(--ls-essay-title);
+  letter-spacing: var(--ls-essay-body);
   font-optical-sizing: auto;
   text-wrap: balance;
   color: var(--ink);
@@ -53,7 +54,7 @@
 }
 .piece-edit { color: var(--blue); }
 
-/* Reading page only. Italic Sorts Mill Goudy, quieter than the body: 16px, line 1.9 (30.4px), no tracking. */
+/* Reading page only. Italic Sorts Mill Goudy, held down to the meta size: 13px, line 1.9 (24.7px), no tracking. */
 .piece-head .piece-meta time {
   font: italic var(--w-regular) var(--fs-essay-date)/var(--lh-essay-body) var(--font-essay);
   letter-spacing: var(--ls-essay-body);
@@ -113,7 +114,7 @@
 .prose li p { margin: 0; }
 
 /* A figure is one object: the picture on the column, its caption close beneath. An empty caption takes no room.
-   Wide breaks out of the text with a small, fixed-feeling inset — not edge-to-edge, wider than the header frame. */
+   Wide breaks out of the text toward the reading canvas (or the page, below the reading room), with a small inset — never the viewport edge. */
 .prose .fig { position: relative; width: 100%; margin: 2.25rem 0 2.5rem; }
 .prose .fig.is-wide {
   --fig-wide: calc(100cqi - 2 * var(--fig-inset));
@@ -130,7 +131,7 @@
   margin: 0.6rem auto 0;
   max-width: 32rem;
   text-align: center;
-  font: var(--w-regular) var(--fs-essay-caption)/1.45 var(--font-essay-ui);
+  font: var(--w-regular) var(--fs-essay-caption)/1.45 var(--font-essay);
   letter-spacing: 0;
   color: var(--ink-3);
   text-wrap: pretty;
@@ -180,4 +181,29 @@
 .colophon-mail { font: var(--text-ui); color: var(--ink-2); transition: color var(--fast); }
 @media (hover: hover) {
   .colophon-mail:hover { color: var(--blue); }
+}
+
+/* The reading room. From 69rem the viewport holds a 52rem canvas with 8.5rem of olive on each side.
+   Below that the olive would thin into a stripe, so the article returns to the ordinary paper page (including every phone).
+   The canvas is flat: no radius, shadow, or border. Colour and proportion do the separating.
+   Text is --measure-essay, centered, so it belongs to the canvas. A column image is that width.
+   A wide image is the canvas minus 2rem a side (48rem): wider than the text, still inside the olive, never the viewport edge. */
+@media (min-width: 69rem) {
+  html:has(body.essay),
+  body.essay { background: var(--read-surround); }
+
+  .essay .site-header { background: var(--paper); }
+
+  .essay .piece {
+    --fig-inset: 2rem;
+    width: min(var(--read-canvas), 100%);
+    margin-inline: auto;
+    background: var(--read-surface);
+    min-height: calc(100svh - var(--header-h));
+  }
+
+  .essay .piece-wrap { padding-top: clamp(3.5rem, 2.6rem + 1.6vw, 5rem); }
+
+  /* The masthead's paper again, so leaving the essay feels like leaving the room, not falling off a card. */
+  .essay .colophon { background: var(--paper); }
 }

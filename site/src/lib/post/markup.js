@@ -5,10 +5,11 @@ import { safeHref } from './schema.js'
 
 const IMAGE = /^images\/(?:[a-f0-9]{16}-(?:800|1600|2400)|preview)\.webp$/
 
-/* Match article.css: column on the essay measure; wide on the viewport minus --fig-inset (≈17–28px per side). */
+/* Match article.css. Column is the essay measure. At the reading room (viewport ≥ 69rem) a wide
+   figure is the 52rem canvas minus 2rem a side (48rem), not the viewport. Below that it is the page minus --fig-inset. */
 export const FIGURE_SIZES = {
-  column: '(min-width: 48rem) 35rem, calc(100vw - 2.5rem)',
-  wide: '(min-width: 64rem) calc(100vw - 3.5rem), calc(100vw - 2.25rem)',
+  column: '(min-width: 48rem) 40rem, calc(100vw - 2.5rem)',
+  wide: '(min-width: 69rem) 48rem, (min-width: 64rem) calc(100vw - 3.5rem), calc(100vw - 2.25rem)',
 }
 
 export const esc = (s = '') => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')

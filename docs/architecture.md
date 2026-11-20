@@ -37,7 +37,7 @@ features compose `ui/`, `hooks/` and `lib/`.
 
 Dev only (`#/write`, `#/drafts`) — these routes are not in the production bundle. A piece is JSON (`lib/post/schema.js`); `lib/post/markup.js` renders it to the reading page, and the editor wears that same CSS.
 
-A figure is one block (image, alt, caption, layout). `layout` is `column` (the text measure) or `wide`. Wide breaks out of the column on desktop with a modest `--fig-inset` (about 17–28px per side), a touch narrower than edge-to-edge; on viewports under 48rem wide stays column-width. The writer toggles **Full width** on the figure toolbar (press again for column). Upload keeps three WebP widths — 800, 1600, 2400 — and the browser fetches the one the layout actually shows.
+A figure is one block (image, alt, caption, layout). `layout` is `column` (the text measure) or `wide`. From 69rem, the article is a reading room (see [design-system.md](design-system.md#reading-environment)): a wide figure is the ivory canvas minus 2rem a side (48rem), not the viewport. Below that, wide breaks out of the column with `--fig-inset` (about 17–28px per side); under 48rem it stays column-width. The writer toggles **Full width** on the figure toolbar (press again for column). Upload keeps three WebP widths — 800, 1600, 2400 — and the browser fetches the one the layout actually shows. The desk itself is not the reading room; it still wears the shared article type on the full page.
 
 Writings lists (home preview, archive, drafts) show a second line only when `subtitle` is set — body text is never substituted.
 

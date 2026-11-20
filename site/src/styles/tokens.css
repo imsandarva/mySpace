@@ -26,6 +26,14 @@
   /* Space. The page frame is the header and the footer — inset by --pad. A wide figure uses the tighter --fig-inset. */
   --pad: clamp(1.25rem, 0.6rem + 2.8vw, 3rem);
   --fig-inset: clamp(1.0625rem, 0.6rem + 1.55vw, 1.75rem);
+
+  /* Reading room — an article, from 69rem. Muted olive around a bright ivory canvas.
+     The two are far enough apart in lightness that the page reads as a room, not a tint.
+     The canvas stays 52rem so a wider monitor grows the olive, not the page.
+     A wide figure insets 2rem from that canvas (article.css). */
+  --read-surround: #a9ad98;
+  --read-surface: #fcfbf7;
+  --read-canvas: 52rem;
   --measure-page: 76rem;
   --gap: clamp(1rem, 0.6rem + 1.6vw, 2rem);
   --section: clamp(4rem, 2.5rem + 6vw, 8rem);
