@@ -66,15 +66,17 @@
   --text-ui: var(--w-medium) var(--fs-small) / 1.2 var(--font-text);
   --text-meta: var(--w-medium) var(--fs-meta) / var(--lh-meta) var(--font-text);
 
-  /* The essay has its own pair. Newsreader is the writing (optical size redraws the title and the body differently);
-     Inter is the furniture around it — date, caption, share, the editor's controls. Not used anywhere else. */
-  --font-essay: 'Newsreader Variable', 'Newsreader Fallback', Georgia, 'Times New Roman', serif;
+  /* The essay has its own pair, used only while reading a piece (and on the desk that writes it).
+     Sorts Mill Goudy is the writing. Inter is the furniture around it — caption, share, the way back, the editor's controls. */
+  --font-essay: 'Sorts Mill Goudy', 'Sorts Mill Goudy Fallback', Georgia, 'Times New Roman', serif;
   --font-essay-ui: 'Inter Variable', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
 
-  /* Fluid between the phone and the desktop reading sizes. Body lands at 18px, then 20px; the title at 34px, then up to 54px. */
+  /* Title and subtitle stay fluid. The body is the specimen, fixed: 22px on a 1.9 line (41.8px), no tracking.
+     The date is the same italic, held quieter than the body: 16px on that 1.9 line (30.4px). */
   --fs-essay-title: clamp(2.125rem, 1.4rem + 1.9vw, 3.375rem);
   --fs-essay-dek: clamp(1.25rem, 1.08rem + 0.62vw, 1.75rem);
-  --fs-essay-body: clamp(1.125rem, 1.02rem + 0.35vw, 1.25rem);
+  --fs-essay-body: 1.375rem;
+  --fs-essay-date: 1rem;
   --fs-essay-h2: clamp(1.625rem, 1.4rem + 0.75vw, 2.0625rem);
   --fs-essay-h3: clamp(1.375rem, 1.22rem + 0.48vw, 1.6875rem);
   --fs-essay-quote: clamp(1.1875rem, 1.05rem + 0.42vw, 1.4375rem);
@@ -84,16 +86,17 @@
 
   --lh-essay-title: 1.16;
   --lh-essay-dek: 1.4;
-  --lh-essay-body: 1.7;
+  --lh-essay-body: 1.9;
   --lh-essay-h2: 1.22;
   --lh-essay-h3: 1.28;
   --lh-essay-quote: 1.55;
 
-  /* Body keeps the face's own spacing. Only the title takes a slight optical tighten. */
+  /* Body and date keep the face's own spacing. Only the title takes a slight optical tighten. */
   --ls-essay-title: -0.012em;
   --ls-essay-h: -0.008em;
+  --ls-essay-body: 0;
 
-  /* ~68 characters of Newsreader at 20px. Wider than this and the eye loses the next line.
+  /* ~62 characters of Sorts Mill Goudy at 22px. Wider than this and the eye loses the next line.
      A wide figure does not use this measure; it uses --measure-page. */
   --measure-essay: 35rem;
 }

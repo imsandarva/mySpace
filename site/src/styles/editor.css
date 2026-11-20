@@ -2,7 +2,7 @@
    so what you write is what is read. This file is only the chrome around it: the bar, the sheet's fields, notices.
    Menus are in editor-menus.css; the figure in editor-figure.css. */
 
-/* The desk's chrome is Inter. The piece itself (title, subtitle, body) keeps the reader's Newsreader, from article.css. */
+/* The desk's chrome is Inter. The piece itself (title, subtitle, body) keeps the reader's Sorts Mill Goudy, from article.css. */
 .write {
   min-height: 100svh;
   --font-text: var(--font-essay-ui);

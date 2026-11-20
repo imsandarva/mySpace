@@ -18,14 +18,26 @@ The 3D layer reads them from there (`three/tones.js`), as does the flat fallback
 
 ## Typography
 
-Two voices, both self-hosted variable fonts (`@fontsource-variable`, latin subsets fetched by `unicode-range`; ~100 KB total):
+Two site voices, both self-hosted variable fonts (`@fontsource-variable`, latin subsets fetched by `unicode-range`). An article adds a third face, described below.
 
 | Voice | Family | Job |
 | --- | --- | --- |
 | Display | **Fraunces** (`opsz` + `wght`) | Identity and editorial moments: the name, section/page titles, writing and book titles, the lede, big numerals, the footer address, lettering on generated book covers |
 | Text | **Hanken Grotesk** (`wght`) | Everything functional: navigation, links, buttons, metadata, descriptions, authors, counts |
 
-Why this pair: Fraunces has real personality at large sizes (its optical-size axis draws a high-contrast, quietly literary cut) and stays sturdy at 20–30 px, so one family covers hero and titles. Hanken Grotesk is a warm, open grotesque with a generous x-height — comfortable at 13–16 px and neutral enough to let the serif lead. No third family, no italics.
+Why this pair: Fraunces has real personality at large sizes (its optical-size axis draws a high-contrast, quietly literary cut) and stays sturdy at 20–30 px, so one family covers hero and titles. Hanken Grotesk is a warm, open grotesque with a generous x-height — comfortable at 13–16 px and neutral enough to let the serif lead.
+
+### Essay
+
+A third voice, and only on a piece you are reading (the writing desk shares it, so the page you write is the page you read). Nothing else on the site uses it.
+
+| Role | Family | Setting |
+| --- | --- | --- |
+| Article text | **Sorts Mill Goudy** regular, self-hosted, OFL | 22px, line-height 1.9 (41.8px), letter-spacing 0, `--ink-essay` `#3a3a3a`. Paragraphs and lists sit 1.5em apart. |
+| Date | **Sorts Mill Goudy** italic | 16px, the same 1.9 line (30.4px), letter-spacing 0, the same ink. |
+| Caption, share, way back, editor chrome | **Inter** | Unchanged. |
+
+The family has one weight (400). Title, subtitle and headings use that real weight and the existing essay scale; size, not a synthesized bold, makes the hierarchy. `em` and quotes use the italic file at the body size. The face is declared for the latin subset and downloaded only when an article (or the desk) uses it.
 
 Everything is in `styles/type-tokens.css` (values) and `styles/type.css` (roles); components only choose a role.
 
@@ -37,7 +49,7 @@ Everything is in `styles/type-tokens.css` (values) and `styles/type.css` (roles)
 - **Roles**: `t-name`, `t-display`, `t-detail`, `t-section`, `t-feature` (lead writing, book in hand), `t-title`, `t-address` (footer email — same serif, a step under the section titles so it anchors the footer without outranking the page), `t-title-s`, `t-lede`, `t-small`, `t-meta`, `.count`, `.link`. Sans controls share the composite tokens `--text-ui` and `--text-meta`, so nav, buttons, back links, captions and authors cannot drift apart.
 - **Hero**: the name, the one sentence, and the portrait. Nothing sits under the sentence — reach-me links live only in the footer, under the label Contact. The address is the whole link (`mailto:`); hover draws the same quiet ultramarine rule the rest of the site uses.
 - **Rendering**: `font-optical-sizing: auto` (Fraunces redraws itself per size), kerning and `liga`/`calt` on, tabular figures in counts and dates, lining figures in year/count numerals.
-- **Loading**: `fonts.css` declares metric-matched fallback faces (`Fraunces Fallback` over Georgia, `Hanken Fallback` over Arial; size-adjust and ascent/descent overrides computed from the fonts' own metrics) so the swap never reflows the page.
+- **Loading**: `fonts.css` declares metric-matched fallback faces (`Fraunces Fallback` over Georgia, `Hanken Fallback` over Arial, `Sorts Mill Goudy Fallback` over a Times-metric serif; size-adjust and ascent/descent overrides computed from the fonts' own metrics) so the swap never reflows the page.
 - **Colour**: type is only ever `--ink` (primary), `--ink-2` (descriptions, secondary), `--ink-3` (meta, counts), `--blue` (interactive) — hierarchy comes from size, weight and spacing first, colour second.
 - **Book covers** (`three/covers.js`) are set with the same two voices: Fraunces 520 for titles, Hanken Grotesk 600 tracked-open capitals for authors, like a printed jacket. Weights live as constants at the top of that file and mirror the tokens.
 

@@ -1,12 +1,13 @@
-/* Font delivery — self-hosted variable families, nothing fetched from a third party.
+/* Font delivery — self-hosted, nothing fetched from a third party.
    Fraunces (display serif, optical size) and Hanken Grotesk (text sans) are the site.
-   Newsreader (optical size + weight) and Inter (weight) are the essay: the writing, and the chrome around it.
-   Files are split by unicode-range, so a page fetches only the scripts it actually sets. Italic is a separate file, fetched only when italic is used. */
+   Sorts Mill Goudy (regular + italic, latin) is the article text. Inter is the chrome around an article.
+   A face is downloaded only when something on the page actually uses it, so the rest of the site never fetches Goudy.
+   Italic is its own file, fetched with the article because the date is set in it. */
 @import '@fontsource-variable/fraunces/opsz.css';
 @import '@fontsource-variable/fraunces/opsz-italic.css';
 @import '@fontsource-variable/hanken-grotesk/wght.css';
-@import '@fontsource-variable/newsreader/opsz.css';
-@import '@fontsource-variable/newsreader/opsz-italic.css';
+@import '@fontsource/sorts-mill-goudy/latin-400.css';
+@import '@fontsource/sorts-mill-goudy/latin-400-italic.css';
 @import '@fontsource-variable/inter/wght.css';
 
 /* Metric-matched fallbacks: until the real face arrives, a system face is stretched to the same width and line box,
@@ -29,27 +30,28 @@
   line-gap-override: 0%;
 }
 
-/* Newsreader at reading size (opsz 19, the body) against Georgia; Inter Regular against Arial.
-   Width is the average advance of a prose sample, not the font's OS/2 average, so a paragraph wraps in the same place before the face arrives. */
+/* Sorts Mill Goudy against a Times-metric serif (Liberation Serif, the face Linux actually resolves).
+   Width is the average advance of a prose sample, so a paragraph wraps in the same place before the face arrives.
+   Ascent and descent are the font's own typo metrics, scaled back out of size-adjust. Line gap is 0, matching the face. */
 @font-face {
-  font-family: 'Newsreader Fallback';
+  font-family: 'Sorts Mill Goudy Fallback';
   font-style: normal;
-  font-weight: 200 800;
-  src: local('Georgia'), local('Times New Roman');
-  size-adjust: 91.8%;
-  ascent-override: 80.1%;
-  descent-override: 28.9%;
+  font-weight: 400;
+  src: local('Times New Roman'), local('Liberation Serif'), local('Georgia');
+  size-adjust: 106.6%;
+  ascent-override: 90.1%;
+  descent-override: 44.8%;
   line-gap-override: 0%;
 }
 
 @font-face {
-  font-family: 'Newsreader Fallback';
+  font-family: 'Sorts Mill Goudy Fallback';
   font-style: italic;
-  font-weight: 200 800;
-  src: local('Georgia Italic'), local('Times New Roman Italic');
-  size-adjust: 82.5%;
-  ascent-override: 89.1%;
-  descent-override: 32.1%;
+  font-weight: 400;
+  src: local('Times New Roman Italic'), local('Liberation Serif Italic'), local('Georgia Italic');
+  size-adjust: 95.6%;
+  ascent-override: 100.4%;
+  descent-override: 50%;
   line-gap-override: 0%;
 }
 

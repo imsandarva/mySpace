@@ -14,6 +14,8 @@
   --ink: #12162b;
   --ink-2: #444960;
   --ink-3: #686d85;
+  /* Article text only. The reading specimen's ink; about 10.5:1 on --paper. */
+  --ink-essay: #3a3a3a;
 
   /* Accents — ultramarine marks what you can act on; marigold marks what is alive (never used for text) */
   --blue: #2a3db3;

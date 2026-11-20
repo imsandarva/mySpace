@@ -45,7 +45,7 @@ Writings lists (home preview, archive, drafts) show a second line only when `sub
 
 Plain CSS, split by responsibility, imported in order from `styles/index.css`:
 `fonts` (faces + metric fallbacks) → `tokens` (colour, space, motion) → `type-tokens` (every typographic value) → `base` → `type` (typographic roles) → `layout` → `chrome` (header/footer) → `hero` → `writings` → `readings` (collection, slots, archive) → `focus` → `motion` → `pin`.
-Fonts are self-hosted via `@fontsource-variable/fraunces` (display serif, optical-size axis) and `@fontsource-variable/hanken-grotesk` (text sans). The same two families letter the generated book covers. See [design-system.md](design-system.md#typography).
+Fonts are self-hosted. `@fontsource-variable/fraunces` (display serif) and `@fontsource-variable/hanken-grotesk` (text sans) are the site, and they letter the generated book covers. An article adds `@fontsource/sorts-mill-goudy` (regular and italic) for its text and its date; that face is not used anywhere else. See [design-system.md](design-system.md#typography).
 
 ## Build
 

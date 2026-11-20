@@ -1,5 +1,6 @@
 /* A piece of writing. The editor wears these same rules, so the page you write is the page someone reads.
-   Newsreader is the essay. Inter is everything that isn't the essay: the date, the caption, the way back. */
+   Sorts Mill Goudy is the essay text. Inter is everything that isn't the essay: the caption, the way back.
+   The date is the one exception — it is the italic of the essay face, not the UI face. */
 
 .piece { padding-bottom: clamp(3rem, 2rem + 4vw, 6rem); }
 
@@ -41,7 +42,7 @@
   text-wrap: pretty;
 }
 
-/* Date, and Edit while developing. Inter, regular, no tracking — quiet enough to lead without competing. */
+/* Edit, while developing, stays the UI face. The date itself is restyled below, on the reading page only. */
 .piece-meta {
   display: flex; align-items: baseline; gap: 0.9rem;
   margin: var(--rhythm-meta) 0 0;
@@ -52,6 +53,14 @@
 }
 .piece-edit { color: var(--blue); }
 
+/* Reading page only. Italic Sorts Mill Goudy, quieter than the body: 16px, line 1.9 (30.4px), no tracking. */
+.piece-head .piece-meta time {
+  font: italic var(--w-regular) var(--fs-essay-date)/var(--lh-essay-body) var(--font-essay);
+  letter-spacing: var(--ls-essay-body);
+  font-variant-numeric: normal;
+  color: var(--ink-essay);
+}
+
 .piece .back { font-family: var(--font-essay-ui); }
 
 /* The masthead stays the site's. Only the links beside it, on an essay, switch to Inter. */
@@ -60,20 +69,21 @@
 .prose {
   margin-top: var(--rhythm-body);
   font: var(--w-regular) var(--fs-essay-body)/var(--lh-essay-body) var(--font-essay);
-  letter-spacing: 0;
-  font-optical-sizing: auto;
+  letter-spacing: var(--ls-essay-body);
   text-align: start;
   hanging-punctuation: first allow-end last;
   overflow-wrap: break-word;
-  color: var(--ink);
+  color: var(--ink-essay);
 }
 
-.prose p { margin: 0 0 1em; text-wrap: pretty; }
+/* 1.5em is the specimen's paragraph gap, so the air between blocks matches the line box above. */
+.prose p { margin: 0 0 1.5em; text-wrap: pretty; }
 .prose > :last-child { margin-bottom: 0; }
 .prose > :first-child { margin-top: 0; }
-.prose h2, .prose h3 { font-optical-sizing: auto; text-wrap: balance; letter-spacing: var(--ls-essay-h); color: var(--ink); }
-.prose h2 { margin: 1.65em 0 0.4em; font: var(--w-medium) var(--fs-essay-h2)/var(--lh-essay-h2) var(--font-essay); }
-.prose h3 { margin: 1.4em 0 0.35em; font: var(--w-medium) var(--fs-essay-h3)/var(--lh-essay-h3) var(--font-essay); }
+/* The face has one weight. Size carries the heading; 400 keeps the real outlines instead of a synthesized bold. */
+.prose h2, .prose h3 { text-wrap: balance; letter-spacing: var(--ls-essay-h); color: inherit; }
+.prose h2 { margin: 1.65em 0 0.4em; font: var(--w-regular) var(--fs-essay-h2)/var(--lh-essay-h2) var(--font-essay); }
+.prose h3 { margin: 1.4em 0 0.35em; font: var(--w-regular) var(--fs-essay-h3)/var(--lh-essay-h3) var(--font-essay); }
 .prose strong { font-weight: 600; }
 .prose em { font-style: italic; }
 .prose a {
@@ -91,12 +101,11 @@
   padding-left: 1.15rem;
   border-left: 2px solid rgb(42 61 179 / 0.32);
   font: italic var(--w-regular) var(--fs-essay-quote)/var(--lh-essay-quote) var(--font-essay);
-  font-optical-sizing: auto;
-  color: var(--ink);
+  color: inherit;
 }
 .prose blockquote em { font-style: normal; }
 .prose blockquote p:last-child { margin-bottom: 0; }
-.prose ul, .prose ol { margin: 0 0 1em; padding-left: 1.25em; }
+.prose ul, .prose ol { margin: 0 0 1.5em; padding-left: 1.25em; }
 .prose ul { list-style: disc; }
 .prose ol { list-style: decimal; }
 .prose li { margin: 0.35em 0; padding-left: 0.25em; }
